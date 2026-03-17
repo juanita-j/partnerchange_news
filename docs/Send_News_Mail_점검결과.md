@@ -94,7 +94,52 @@
 
 ---
 
-## (추가) 스케줄만 안 되고 수동 실행은 될 때
+## (추가) 스케줄만 안 되고 수동 실행은 될 때 · 11시 넘어도 자동 발송 안 될 때
+
+- **원인**: GitHub가 저장소를 60일 미활동으로 판단하면 **스케줄 트리거만 자동 비활성화**하는 경우가 있음. UI에는 "Disabled"가 안 보일 수 있음.
+- **시도할 것**  
+  1. **Actions** → **Send News Mail** → 오른쪽 상단/설정에서 **"Enable workflow"** 또는 스케줄 관련 **재활성화**가 있으면 실행.  
+  2. **Settings** → **Actions** → **General** → **"Allow scheduled workflows"** 등 스케줄 허용 옵션 확인.  
+  3. 워크플로 파일을 **한 줄 수정 후 푸시**해 스케줄을 다시 등록시키기 (예: 주석 한 줄 추가 후 `git push origin main`).
+- **그래도 스케줄이 안 돌면**: GitHub 스케줄러에 의존하지 않고, **외부 cron으로 같은 워크플로를 실행**하는 방식으로 보완 (아래 "외부 cron으로 workflow_dispatch 실행" 참고).
+
+---
+
+## 외부 cron으로 workflow_dispatch 실행 (스케줄 대체)
+
+GitHub 스케줄이 계속 안 될 때, **cron-job.org**·**Windows 작업 스케줄러** 등에서 정해진 시간에 아래 API를 호출하면 수동 실행과 동일한 워크플로가 실행됩니다.
+
+1. **GitHub Personal Access Token (PAT)** 발급  
+   - GitHub → **Settings** → **Developer settings** → **Personal access tokens**  
+   - 권한: `repo`, `workflow`  
+   - 토큰 값을 복사해 안전한 곳에 보관.
+
+2. **API 호출 (PowerShell)**  
+   - `YOUR_GITHUB_TOKEN` 자리에 PAT 넣기.  
+   - `juanita-j/partnerchange_news` 대신 본인 저장소가 다르면 `OWNER/REPO` 수정.
+
+```powershell
+$token = "YOUR_GITHUB_TOKEN"
+$headers = @{
+  "Accept" = "application/vnd.github.v3+json"
+  "Authorization" = "token $token"
+}
+$body = '{"ref":"main"}'
+Invoke-RestMethod -Uri "https://api.github.com/repos/juanita-j/partnerchange_news/actions/workflows/send-news-mail.yml/dispatches" -Method POST -Headers $headers -Body $body -ContentType "application/json"
+```
+
+3. **cron-job.org 설정 예시**  
+   - 매일 9:05, 10:05, …, 19:05 KST에 1시간마다 실행하려면, UTC 기준 0:05, 1:05, …, 10:05에 위 URL로 POST 요청 (Authorization 헤더에 PAT 포함).  
+   - 또는 **한국 시간 9시, 10시, …, 19시**에 맞춰 11개 스케줄 등록.
+
+4. **Windows 작업 스케줄러**  
+   - 1시간마다 실행할 작업 하나 만들고, **프로그램**을 `powershell.exe`, **인수**에 위 `Invoke-RestMethod` 한 줄 스크립트 또는 `.ps1` 경로 지정.
+
+이렇게 하면 GitHub 내부 스케줄 없이도, 지정한 시간에 메일 발송 워크플로가 실행됩니다.
+
+---
+
+## (기존) 스케줄만 안 되고 수동 실행은 될 때 (정각 부하)
 
 - **원인**: GitHub에서 **매시 정각(분=0)** 에 전 세계 cron이 몰려 부하가 커서, 정각 스케줄이 지연·누락되는 경우가 있음. 공식/커뮤니티에서도 “정각 피해서 몇 분 뒤로 잡으라”고 권장함.
 - **조치**: cron을 **정각에서 5~10분 뒤**로 변경함.  
