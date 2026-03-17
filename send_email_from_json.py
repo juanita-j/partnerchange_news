@@ -4,6 +4,7 @@ news_summary.json 을 읽어 HTML 메일로 Gmail 발송.
 
 - 파이프라인: send_exec_news_timed.py → news_raw.json → summarize_exec_news_llm.py → news_summary.json → 본 스크립트
 - sent_log.json 기반 재발송 방지: 동일 content_hash + 당일 이미 발송 시 스킵. FORCE_SEND=1 이면 무시.
+- sent_dedup_store.json: 이전 메일로 이미 보낸 (회사, 인물, 인사유형) / (회사, 조직개편) 저장. 중복은 제외하고 새 소식만 발송.
 - 환경 변수: GMAIL_APP_PASSWORD 필수. GMAIL_SENDER, GMAIL_TO 는 JSON 또는 env 로 덮어쓸 수 있음.
 """
 
@@ -23,6 +24,7 @@ from email.utils import parsedate_to_datetime
 OUTPUT_DIR = Path(__file__).resolve().parent
 NEWS_SUMMARY_JSON = OUTPUT_DIR / "news_summary.json"
 SENT_LOG_JSON = OUTPUT_DIR / "sent_log.json"
+SENT_DEDUP_STORE_JSON = OUTPUT_DIR / "sent_dedup_store.json"
 # 레거시: email_content.json (직접 HTML 있는 경우)
 EMAIL_CONTENT_JSON = OUTPUT_DIR / "email_content.json"
 
@@ -46,6 +48,49 @@ def _format_person_name(name: str) -> str:
     if s.startswith("'") and s.endswith("'"):
         return s
     return f"'{s}'"
+
+
+def _normalize_person_for_dedup(name: str) -> str:
+    """이전 발송 여부 비교용 인물명 정규화 (따옴표 제거, trim)."""
+    s = (name or "").strip().strip("'\"").strip()
+    return s
+
+
+def _load_sent_dedup_store() -> dict:
+    """이미 발송한 (회사,인물,인사유형) / (회사,조직개편) 집합 반환. 키: exec_set, org_set (set of tuple)."""
+    out = {"exec": set(), "org": set()}
+    if not SENT_DEDUP_STORE_JSON.exists():
+        return out
+    try:
+        with open(SENT_DEDUP_STORE_JSON, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        for t in data.get("exec") or []:
+            if isinstance(t, list) and len(t) >= 3:
+                out["exec"].add((str(t[0]).strip(), str(t[1]).strip(), str(t[2]).strip()))
+        for t in data.get("org") or []:
+            if isinstance(t, list) and len(t) >= 2:
+                out["org"].add((str(t[0]).strip(), str(t[1]).strip()))
+    except Exception:
+        pass
+    return out
+
+
+def _save_sent_dedup_store(exec_keys: list, org_keys: list) -> None:
+    """새로 발송한 키들을 기존 저장소에 추가해 저장."""
+    existing = _load_sent_dedup_store()
+    for t in exec_keys:
+        if isinstance(t, (list, tuple)) and len(t) >= 3:
+            existing["exec"].add((str(t[0]).strip(), str(t[1]).strip(), str(t[2]).strip()))
+    for t in org_keys:
+        if isinstance(t, (list, tuple)) and len(t) >= 2:
+            existing["org"].add((str(t[0]).strip(), str(t[1]).strip()))
+    data = {
+        "exec": [list(t) for t in existing["exec"]],
+        "org": [list(t) for t in existing["org"]],
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    }
+    with open(SENT_DEDUP_STORE_JSON, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
 
 def _title_from_key_points(key_points: list, max_len: int = 60) -> str:
@@ -107,27 +152,52 @@ def _bullets_from_item(it: dict) -> list[str]:
 
 
 def _action_line(it: dict) -> str:
-    """'사람명': 인사내용 형식. 브리핑 스타일."""
+    """'이름', 변동 내용. 직위 중복 없이, 이전 직함이 있으면 '직함의 변동 내용' 형태로."""
     person = _format_person_name(it.get("대상 인물") or "")
     action_type = (it.get("인사 유형") or "").strip()
     prev = (it.get("기존 직책") or "").strip()
     new = (it.get("신규 직책") or "").strip()
+    timing = (it.get("인사 시기") or "").strip()
+
     if prev and new:
-        part = f"{prev} → {new}"
+        # 이전 직함의 신규 내용. action_type에 이미 신규 직책이 포함된 경우 중복 제거 (예: CFO의 사내이사 신규 선임)
+        if new and (new in action_type or action_type.startswith(new)):
+            part = f"{prev}의 {action_type}"
+        else:
+            part = f"{prev}의 {new} {action_type}" if action_type else f"{prev} → {new}"
     elif prev:
-        part = f"{prev} {action_type}"
+        # action_type에 이미 기존 직책이 포함되면 직책 한 번만 (예: 사외이사 연임 포기)
+        if prev in action_type or action_type.startswith(prev):
+            part = action_type
+        else:
+            part = f"{prev} {action_type}"
     elif new:
-        part = f"{new} {action_type}"
+        if new in action_type or action_type.startswith(new):
+            part = action_type
+        else:
+            part = f"{new} {action_type}" if action_type else new
     else:
         part = action_type
+
+    if timing:
+        part = f"{part} ({timing})"
     if person:
-        return f"{person}: {part}"
+        return f"{person}, {part}"
     return part
 
 
-def _build_html_from_summary(items: list[dict], subject: str) -> str:
-    """회사별로 묶고, 회사당 [임원인사] / [조직개편] 섹션으로 HTML 본문 생성."""
+def _build_html_from_summary(
+    items: list[dict],
+    subject: str,
+    sent_dedup: dict | None = None,
+) -> tuple[str, list[tuple], list[tuple]]:
+    """회사별로 묶고 [임원인사]/[조직개편] 섹션으로 HTML 생성.
+    sent_dedup 있으면 이전 메일과 중복된 (회사,인물,인사유형)/(회사,조직개편) 제외.
+    반환: (html, 이번 메일에 포함한 exec 키 목록, org 키 목록)
+    """
     from collections import defaultdict
+    sent_exec = (sent_dedup or {}).get("exec") or set()
+    sent_org = (sent_dedup or {}).get("org") or set()
     by_company: dict[str, list[dict]] = defaultdict(list)
     for it in items:
         company = (it.get("회사명") or "").strip() or "(회사명 없음)"
@@ -138,6 +208,9 @@ def _build_html_from_summary(items: list[dict], subject: str) -> str:
         f"<h2>{subject}</h2>",
         "<ul>",
     ]
+    sent_exec_this = []
+    sent_org_this = []
+
     for company in sorted(by_company.keys(), key=lambda x: (x.startswith("("), x)):
         group = by_company[company]
         rep_date = ""
@@ -171,51 +244,81 @@ def _build_html_from_summary(items: list[dict], subject: str) -> str:
             has_exec = True
             exec_items = group
 
-        if has_exec and has_org:
+        # 이전 메일과 중복 제거: 임원인사
+        seen_exec = set()
+        for it in exec_items:
+            line = _action_line(it)
+            if not line:
+                continue
+            person_norm = _normalize_person_for_dedup(it.get("대상 인물") or "")
+            action_type = (it.get("인사 유형") or "").strip()
+            c = (company, person_norm, action_type)
+            if sent_dedup and c in sent_exec:
+                continue
+            if line in seen_exec:
+                continue
+            seen_exec.add(line)
+            exec_lines_out.append(line)
+            sent_exec_this.append(c)
+
+        # 이전 메일과 중복 제거: 조직개편
+        org_filtered = []
+        for oc in org_changes_list:
+            c = (company, oc)
+            if sent_dedup and c in sent_org:
+                continue
+            org_filtered.append(oc)
+            sent_org_this.append(c)
+        org_changes_list = org_filtered
+
+        # 새 소식만 있던 항목이 하나도 없으면 이 회사 블록 생략
+        if not exec_lines_out and not org_changes_list:
+            continue
+
+        if exec_lines_out and org_changes_list:
             section_label = f"{company}, 임원인사 및 조직개편 진행"
-        elif has_org:
+        elif org_changes_list:
             section_label = f"{company}, 조직개편 진행"
         else:
             section_label = f"{company}, 임원인사 진행"
 
-        lines.append("  <li>")
-        lines.append("    <p>")
-        lines.append(f"      <strong>{section_label}</strong>")
+        # 제목·날짜·링크: 스페이스 하나로 구분
+        p_parts = [f"<strong>{section_label}</strong>"]
         if rep_date:
-            lines.append(f"      &nbsp; ({rep_date})")
+            p_parts.append(f"({rep_date})")
         if rep_url:
-            lines.append(f'      &nbsp; <a href="{rep_url}">기사 보기</a>')
-        lines.append("    </p>")
-        if has_exec and exec_items:
-            seen_exec = set()
-            exec_lines_out = []
-            for it in exec_items:
-                line = _action_line(it)
-                if line and line not in seen_exec:
-                    seen_exec.add(line)
-                    exec_lines_out.append(line)
-            if exec_lines_out:
-                lines.append("    <p><strong>[임원인사]</strong></p>")
-                lines.append("    <ul>")
-                for line in exec_lines_out:
-                    lines.append(f"      <li>{line}</li>")
-                lines.append("    </ul>")
-        if has_org and org_changes_list:
-            lines.append("    <p><strong>[조직개편]</strong></p>")
+            p_parts.append(f'<a href="{rep_url}">기사 보기</a>')
+        lines.append("  <li>")
+        lines.append("    <p>" + " ".join(p_parts) + "</p>")
+        # 임원인사/조직개편: 한 가지만 있으면 라벨 없이 내용만. 둘 다 있으면 라벨을 두 번째 단계, 내용을 세 번째 단계로
+        if exec_lines_out and org_changes_list:
+            lines.append("    <ul>")
+            lines.append("      <li>임원인사")
+            lines.append("        <ul>")
+            for line in exec_lines_out:
+                lines.append(f"          <li>{line}</li>")
+            lines.append("        </ul>")
+            lines.append("      </li>")
+            lines.append("      <li>조직개편")
+            lines.append("        <ul>")
+            for oc in org_changes_list:
+                lines.append(f"          <li>{oc}</li>")
+            lines.append("        </ul>")
+            lines.append("      </li>")
+            lines.append("    </ul>")
+        elif exec_lines_out:
+            lines.append("    <ul>")
+            for line in exec_lines_out:
+                lines.append(f"      <li>{line}</li>")
+            lines.append("    </ul>")
+        elif org_changes_list:
             lines.append("    <ul>")
             for oc in org_changes_list:
                 lines.append(f"      <li>{oc}</li>")
             lines.append("    </ul>")
-        if has_exec and exec_items and not exec_lines_out and not org_changes_list:
-            bullets = _bullets_from_item(group[0])
-            if bullets:
-                lines.append("    <ul>")
-                for b in bullets:
-                    lines.append(f"      <li>{b}</li>")
-                lines.append("    </ul>")
         lines.append("  </li>")
     lines.append("</ul></body></html>")
-    return "\n".join(lines)
+    return "\n".join(lines), sent_exec_this, sent_org_this
 
 
 def _content_hash(body: str) -> str:
@@ -269,6 +372,8 @@ def send_gmail_from_json(
 
     # news_summary.json 우선
     items = []
+    sent_exec_keys: list = []
+    sent_org_keys: list = []
     if json_path == NEWS_SUMMARY_JSON and json_path.exists():
         with open(json_path, "r", encoding="utf-8") as f:
             payload = json.load(f)
@@ -277,7 +382,11 @@ def send_gmail_from_json(
             print("요약 항목 0건. 메일 발송 스킵.")
             return 0
         subject = f"인사변동 업데이트 ({datetime.now().strftime('%y/%m/%d')})"
-        body = _build_html_from_summary(items, subject)
+        sent_dedup = _load_sent_dedup_store()
+        body, sent_exec_keys, sent_org_keys = _build_html_from_summary(items, subject, sent_dedup)
+        if not sent_exec_keys and not sent_org_keys:
+            print("이전 메일과 중복만 있음. 새 소식 없음. 메일 발송 스킵.")
+            return 0
         to = os.environ.get("GMAIL_TO", "juan.jung@navercorp.com").strip()
     else:
         # 레거시: email_content.json (to, subject, body, contentType)
@@ -326,6 +435,13 @@ def send_gmail_from_json(
             json.dump(log, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"sent_log 저장 경고: {e}")
+
+    # 이번 메일에 포함된 항목을 중복 제거 저장소에 추가 (다음 메일에서 제외용)
+    if sent_exec_keys or sent_org_keys:
+        try:
+            _save_sent_dedup_store(sent_exec_keys, sent_org_keys)
+        except Exception as e:
+            print(f"sent_dedup_store 저장 경고: {e}")
 
     print(f"발송 완료: {to} / 제목: {subject}")
     return 0

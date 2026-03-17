@@ -18,25 +18,29 @@ NEWS_RAW_JSON = OUTPUT_DIR / "news_raw.json"
 NEWS_SUMMARY_JSON = OUTPUT_DIR / "news_summary.json"
 DEBUG_SUMMARY_JSON = OUTPUT_DIR / "debug_summary.json"
 
-# LLM 출력 스키마. is_exec_news=true 이면 포함(임원인사 또는 조직개편 또는 둘 다).
-# category_flags: exec_personnel(임원인사), org_restructuring(주요 조직개편). 둘 다 해당 가능.
-# org_changes: 조직개편만 있을 때도 채움. 본부/실/센터/사업부/부문 단위.
+# LLM 출력 스키마. 한 기사에 여러 기업이 나오면 items 배열에 기업별로 분리.
+# is_exec_news=true 이면 items(기업별 1개 이상) + article_url. 단일 기업이면 items 1개 또는 기존 flat 형식도 허용.
 SUMMARY_SCHEMA = """
 {
   "is_exec_news": true | false,
   "reason": "판별 이유 한 줄 (제외 시에만)",
-  "category_flags": { "exec_personnel": true|false, "org_restructuring": true|false },
-  "company": "회사명",
-  "personnel_type": "인사 유형 (임원인사 해당 시)",
-  "person_name": "대상 인물 이름",
-  "previous_role": "기존 직책 (불명이면 빈 문자열)",
-  "new_role": "신규 직책 (불명이면 빈 문자열)",
-  "org_changes": ["조직개편 내용1", "조직개편 내용2"],
-  "summary_2sent": "2문장 요약",
-  "key_points": ["중요 포인트1", "중요 포인트2"],
-  "bullet_points": ["브리핑 문장 또는 (경력: 직책1, 직책2)", "..."],
-  "relevance_score": 1-5,
-  "article_url": "기사 URL"
+  "items": [
+    {
+      "company": "회사명 (한 기업만)",
+      "category_flags": { "exec_personnel": true|false, "org_restructuring": true|false },
+      "personnel_type": "인사 유형 (내정/선임/임명/안건·승인대기/연임포기 등 단계 구분)",
+      "personnel_timing": "실행 시기 (언급 시만. 예: 2026년 3월부터, 주총 승인 후)",
+      "person_name": "대상 인물 이름",
+      "previous_role": "기존 직책",
+      "new_role": "신규 직책",
+      "org_changes": ["조직개편 내용 (통합/신설/폐지 등 + (예정)/(완료) 및 시기 필요 시)"],
+      "summary_2sent": "해당 기업 관련 2문장 요약",
+      "key_points": ["중요 포인트"],
+      "bullet_points": ["해당 기업만의 브리핑 문장 (진행 단계·시기 포함)"],
+      "relevance_score": 1-5
+    }
+  ],
+  "article_url": "기사 URL (items 전체 공통)"
 }
 """
 
@@ -61,11 +65,20 @@ SYSTEM_PROMPT = """당신은 한국 기업의 **임원인사**와 **주요 조�
 - 1~2: 인사변동이 불명확하거나 단순 언급만 → is_exec_news: false 권장
 
 [category_flags] exec_personnel: 임원인사 해당 여부. org_restructuring: 주요 조직개편 해당 여부. 둘 다 true일 수 있음.
-[org_changes] 조직개편 해당 시 배열로 채움. 예: ["AI전략본부 신설", "글로벌사업부 통합"]. 본부/실/센터/사업부/부문 단위만.
 
-[bullet_points] 브리핑 스타일, 2~5개. 명사형 또는 "~함"체. 인사·조직 사실만, 논란/의견/추측 제외.
-- 임원인사 예: '윤종수' 사외이사 연임 포기, '홍길동' 대표이사 내정
-- 조직개편 예: AI전략본부 신설, 글로벌사업부 통합. 경력: (경력: 직책1, 직책2). 인물명은 작은따옴표(')로 감쌈.
+[진행 여부·시기 구분] 반드시 구분해서 요약하세요.
+- **임원인사**: '내정'(예정)·'선임'/'임명'(확정)·'주총 안건'/'승인 대기'(통과 여부가 안건)를 구분. personnel_type에 단계를 넣고(예: 사내이사 신규 선임 안건, 부회장 내정, 대표이사 선임). 실행 시기가 언급되면 personnel_timing에 넣고(예: 2026년 3월부터, 주총 승인 후) bullet_points에도 반영.
+- **조직개편**: '예정'과 '완료'를 구분. org_changes에 괄호로 표기: 예) "AI전략본부 신설(예정)", "글로벌사업부 통합(완료)". 시기 언급 시 함께 적기: "DX부문 재편(예정, 2분기)".
+
+[org_changes] 조직개편 해당 시 배열로 채움. **조직이 어떻게 바뀌었는지** 구체적 동작 단어 사용: 신설, 통합, 폐지, 재편, 슬림화, 통폐합, 확대, 강화 등. 각 항목에 **(예정)/(완료)** 및 시기(언급 시) 포함. '개편·변동·변화'는 쓰지 말 것. 본부/실/센터/사업부/부문 단위만.
+
+[previous_role·new_role·personnel_type] 기존 직책(previous_role)은 현재/이전 직위만(예: CFO, 사외이사, 최고재무책임자). 신규 직책(new_role)은 취임·선임되는 직위만. 인사 유형(personnel_type)은 변동 내용(예: 사내이사 신규 선임, 연임 포기). 표시 시 '이전 직함의 변동 내용'으로 나가므로, personnel_type에 직함이 이미 들어가면(예: 사내이사 신규 선임) previous_role에는 이전 직함만(예: CFO) 넣어 중복되지 않게 하세요. 연임 포기처럼 직책이 하나면 previous_role만 채우고 personnel_type은 '연임 포기'만.
+
+[bullet_points] 브리핑 스타일, 2~5개. 명사형 또는 "~함"체. 인사·조직 사실만. **진행 단계(내정/선임/안건 등)와 실행 시기(언급 시)를 문장에 포함.**
+- 임원인사 예: '김희철' CFO의 사내이사 신규 선임 가능성, '윤종수' 사외이사 연임 포기. 인물명은 작은따옴표(')로 감쌈.
+- 조직개편 예: AI전략본부 신설(예정), 글로벌사업부 통합(완료).
+
+[한 기사에 여러 기업] 제목에 '네이버·카카오'처럼 두 기업이 같이 나와도, 본문 내용을 기업별로 구분해 items에 **기업당 하나의 항목**으로 분리하세요. 회사명(company)은 한 기업만 넣고(예: 네이버, 카카오 각각), 블록 제목이 '네이버 임원인사 진행' / '카카오 임원인사 진행'처럼 기업별로 나뉘도록 하세요. 기사 URL은 동일하게 article_url 하나만 두세요.
 
 [출력]
 반드시 유효한 JSON 한 덩어리만 출력. 앞뒤 설명·마크다운 없이."""
@@ -77,7 +90,7 @@ USER_PROMPT_TEMPLATE = """아래 뉴스가 **임원인사** 또는 **주요 조�
 요약: {description}
 본문(일부): {body}
 
-[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외.
+[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. 한 기사에 네이버·카카오 등 여러 기업이 나오면 items에 기업별로 항목을 나누고, company는 각각 '네이버', '카카오'만 넣으세요. 조직개편 요약 시 통합·신설·폐지·재편·강화 사용, 개편·변동·변화는 쓰지 마세요. **진행 여부 구분**: 임원인사는 내정/선임/안건을 구분하고, 조직개편은 (예정)/(완료) 표기. 실행 시기 언급 시 personnel_timing·bullet_points·org_changes에 반영하세요.
 
 출력 형식 (이 키만 사용, JSON만 출력):
 {schema}"""
@@ -104,12 +117,45 @@ def _build_article_text(article: dict) -> str:
     return f"{title}\n{desc}"[:2000]
 
 
-def _parse_llm_response(text: str, url: str) -> tuple[dict | None, dict]:
+def _one_item_to_summary(item: dict, url: str) -> dict:
+    """items[] 한 요소를 news_summary 항목 형식으로 변환."""
+    company = (item.get("company") or "").strip()
+    person = (item.get("person_name") or "").strip()
+    action_type = (item.get("personnel_type") or "").strip()
+    personnel_timing = (item.get("personnel_timing") or "").strip()
+    cf = item.get("category_flags") or {}
+    exec_personnel = bool(cf.get("exec_personnel"))
+    org_restructuring = bool(cf.get("org_restructuring"))
+    org_changes_raw = item.get("org_changes")
+    org_changes = [str(s).strip() for s in org_changes_raw] if isinstance(org_changes_raw, list) else []
+    org_changes = [s for s in org_changes if s][:15]
+    bullet_points = item.get("bullet_points")
+    if not isinstance(bullet_points, list):
+        bullet_points = []
+    bullet_points = [str(s).strip() for s in bullet_points if s][:10]
+    out = {
+        "회사명": company,
+        "인사 유형": action_type,
+        "대상 인물": person,
+        "기존 직책": (item.get("previous_role") or "").strip(),
+        "신규 직책": (item.get("new_role") or "").strip(),
+        "2문장 요약": (item.get("summary_2sent") or "").strip(),
+        "중요 포인트": item.get("key_points") if isinstance(item.get("key_points"), list) else [],
+        "bullet_points": bullet_points,
+        "category_flags": {"exec_personnel": exec_personnel, "org_restructuring": org_restructuring},
+        "org_changes": org_changes,
+        "관련도 점수": int(item.get("relevance_score", 0)) if item.get("relevance_score") is not None else 0,
+        "기사 URL": url,
+    }
+    if personnel_timing:
+        out["인사 시기"] = personnel_timing
+    return out
+
+
+def _parse_llm_response(text: str, url: str) -> tuple[list[dict], dict]:
     """
     LLM 응답 텍스트 파싱.
-    반환: (summary_item 또는 None, debug_필드용 dict)
-    - summary_item: is_exec_news 이고 필드 정상일 때만, 아니면 None
-    - debug용: company, person, action_type, exclude_reason(비관련 시)
+    반환: (summary_item 리스트, debug_필드용 dict). 한 기사에 여러 기업이면 리스트에 기업별 항목이 여러 개.
     """
     cleaned = re.sub(r"^```(?:json)?\s*", "", text)
     cleaned = re.sub(r"\s*```\s*$", "", cleaned)
@@ -121,64 +167,89 @@ def _parse_llm_response(text: str, url: str) -> tuple[dict | None, dict]:
         data = json.loads(cleaned)
     except json.JSONDecodeError as e:
         print(f"JSON 파싱 실패 (link={url[:50]}…): {e}")
-        return None, {
+        return [], {
             "company": "",
             "person": "",
             "action_type": "",
             "exclude_reason": f"JSON 파싱 실패: {e!s}",
         }
 
-    company = (data.get("company") or "").strip()
-    person = (data.get("person_name") or "").strip()
-    action_type = (data.get("personnel_type") or "").strip()
-    cf = data.get("category_flags") or {}
-    exec_personnel = bool(cf.get("exec_personnel"))
-    org_restructuring = bool(cf.get("org_restructuring"))
-    include = data.get("is_exec_news") or exec_personnel or org_restructuring
+    include = data.get("is_exec_news")
+    if include is None:
+        include = bool(data.get("items"))
     if not include:
         exclude_reason = (data.get("reason") or "").strip() or "is_exec_news=false"
-        return None, {
-            "company": company,
-            "person": person,
-            "action_type": action_type,
+        return [], {
+            "company": (data.get("company") or "").strip(),
+            "person": (data.get("person_name") or "").strip(),
+            "action_type": (data.get("personnel_type") or "").strip(),
             "exclude_reason": exclude_reason,
             "exec_personnel": False,
             "org_restructuring": False,
             "org_changes": [],
         }
 
-    org_changes_raw = data.get("org_changes")
-    org_changes = [str(s).strip() for s in org_changes_raw] if isinstance(org_changes_raw, list) else []
-    org_changes = [s for s in org_changes if s][:15]
+    article_url = (data.get("article_url") or url or "").strip() or url
+    items_raw = data.get("items")
+    summaries = []
 
-    bullet_points = data.get("bullet_points")
-    if not isinstance(bullet_points, list):
-        bullet_points = []
-    bullet_points = [str(s).strip() for s in bullet_points if s][:10]
+    if isinstance(items_raw, list) and len(items_raw) > 0:
+        for it in items_raw:
+            if not isinstance(it, dict):
+                continue
+            company = (it.get("company") or "").strip()
+            if not company:
+                continue
+            summaries.append(_one_item_to_summary(it, article_url))
+    else:
+        # 기존 flat 형식: 상위에 company, person_name 등
+        company = (data.get("company") or "").strip()
+        person = (data.get("person_name") or "").strip()
+        action_type = (data.get("personnel_type") or "").strip()
+        cf = data.get("category_flags") or {}
+        exec_personnel = bool(cf.get("exec_personnel"))
+        org_restructuring = bool(cf.get("org_restructuring"))
+        org_changes_raw = data.get("org_changes")
+        org_changes = [str(s).strip() for s in org_changes_raw] if isinstance(org_changes_raw, list) else []
+        org_changes = [s for s in org_changes if s][:15]
+        bullet_points = data.get("bullet_points")
+        if not isinstance(bullet_points, list):
+            bullet_points = []
+        bullet_points = [str(s).strip() for s in bullet_points if s][:10]
+        summary = {
+            "회사명": company,
+            "인사 유형": action_type,
+            "대상 인물": person,
+            "기존 직책": (data.get("previous_role") or "").strip(),
+            "신규 직책": (data.get("new_role") or "").strip(),
+            "2문장 요약": (data.get("summary_2sent") or "").strip(),
+            "중요 포인트": data.get("key_points") if isinstance(data.get("key_points"), list) else [],
+            "bullet_points": bullet_points,
+            "category_flags": {"exec_personnel": exec_personnel, "org_restructuring": org_restructuring},
+            "org_changes": org_changes,
+            "관련도 점수": int(data.get("relevance_score", 0)) if data.get("relevance_score") is not None else 0,
+            "기사 URL": article_url,
+        }
+        pt = (data.get("personnel_timing") or "").strip()
+        if pt:
+            summary["인사 시기"] = pt
+        summaries.append(summary)
 
-    summary = {
-        "회사명": company,
-        "인사 유형": action_type,
-        "대상 인물": person,
-        "기존 직책": (data.get("previous_role") or "").strip(),
-        "신규 직책": (data.get("new_role") or "").strip(),
-        "2문장 요약": (data.get("summary_2sent") or "").strip(),
-        "중요 포인트": data.get("key_points") if isinstance(data.get("key_points"), list) else [],
-        "bullet_points": bullet_points,
-        "category_flags": {"exec_personnel": exec_personnel, "org_restructuring": org_restructuring},
-        "org_changes": org_changes,
-        "관련도 점수": int(data.get("relevance_score", 0)) if data.get("relevance_score") is not None else 0,
-        "기사 URL": url,
-    }
-    return summary, {
-        "company": company,
-        "person": person,
-        "action_type": action_type,
+    if not summaries:
+        return [], {"company": "", "person": "", "action_type": "", "exclude_reason": "items 비어 있음", "exec_personnel": False, "org_restructuring": False, "org_changes": []}
+
+    first = summaries[0]
+    cf = first.get("category_flags") or {}
+    debug_extra = {
+        "company": first.get("회사명", ""),
+        "person": first.get("대상 인물", ""),
+        "action_type": first.get("인사 유형", ""),
         "exclude_reason": "",
-        "exec_personnel": exec_personnel,
-        "org_restructuring": org_restructuring,
-        "org_changes": org_changes,
+        "exec_personnel": bool(cf.get("exec_personnel")),
+        "org_restructuring": bool(cf.get("org_restructuring")),
+        "org_changes": first.get("org_changes", []),
     }
+    return summaries, debug_extra
 
 
 def _is_body_missing(article: dict) -> bool:
@@ -243,11 +314,12 @@ def _call_llm_once(client, article: dict) -> tuple[dict | None, dict]:
                 max_tokens=1024,
             )
             raw_text = (resp.choices[0].message.content or "").strip()
-            summary, debug_extra = _parse_llm_response(raw_text, url)
-            if summary is not None and body_missing:
-                summary["요약_근거"] = "제목·요약 기반"
-            return summary, make_debug(
-                is_relevant=(summary is not None),
+            summaries, debug_extra = _parse_llm_response(raw_text, url)
+            if summaries and body_missing:
+                for s in summaries:
+                    s["요약_근거"] = "제목·요약 기반"
+            return summaries, make_debug(
+                is_relevant=bool(summaries),
                 raw=raw_text,
                 exclude_reason=debug_extra.get("exclude_reason", ""),
                 company=debug_extra.get("company", ""),
@@ -260,7 +332,7 @@ def _call_llm_once(client, article: dict) -> tuple[dict | None, dict]:
         except Exception as e:
             print(f"LLM 호출 실패 attempt={attempt+1} (link={url[:50]}…): {e}")
             if attempt == 1:
-                return None, make_debug(
+                return [], make_debug(
                     is_relevant=False,
                     raw="",
                     exclude_reason=f"LLM 호출 실패: {e!s}",
@@ -273,7 +345,7 @@ def _call_llm_once(client, article: dict) -> tuple[dict | None, dict]:
                 )
             import time
             time.sleep(1)
-    return None, make_debug(False, "", "LLM 호출 실패(재시도 소진)", "", "", False, False, [])
+    return [], make_debug(False, "", "LLM 호출 실패(재시도 소진)", "", "", False, False, [])
 
 
 def _dedupe_items(items: list[dict]) -> list[dict]:
@@ -321,11 +393,11 @@ def main() -> int:
     items = []
     debug_records = []
     for i, art in enumerate(articles):
-        result, debug_record = _call_llm_once(client, art)
+        result_list, debug_record = _call_llm_once(client, art)
         debug_records.append(debug_record)
-        if result:
-            result["pubDate"] = art.get("pubDate", "")
-            items.append(result)
+        for s in result_list:
+            s["pubDate"] = art.get("pubDate", "")
+            items.append(s)
         if (i + 1) % 5 == 0 and i + 1 < len(articles):
             import time
             time.sleep(0.5)

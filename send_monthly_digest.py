@@ -87,21 +87,35 @@ def _format_person(s: str) -> str:
 
 
 def _action_line(entry: dict) -> str:
-    """'사람명': 인사내용 형식. 명사형/간결."""
+    """'이름', 변동 내용. 직위 중복 없이, 이전 직함이 있으면 '직함의 변동 내용' 형태로."""
     person = _format_person(entry.get("person") or "")
     action_type = (entry.get("action_type") or "").strip()
     prev = (entry.get("previous_role") or "").strip()
     new = (entry.get("new_role") or "").strip()
+    timing = (entry.get("personnel_timing") or "").strip()
+
     if prev and new:
-        part = f"{prev} → {new}"
+        if new and (new in action_type or action_type.startswith(new)):
+            part = f"{prev}의 {action_type}"
+        else:
+            part = f"{prev}의 {new} {action_type}" if action_type else f"{prev} → {new}"
     elif prev:
-        part = f"{prev} {action_type}"
+        if prev in action_type or action_type.startswith(prev):
+            part = action_type
+        else:
+            part = f"{prev} {action_type}"
     elif new:
-        part = f"{new} {action_type}"
+        if new in action_type or action_type.startswith(new):
+            part = action_type
+        else:
+            part = f"{new} {action_type}" if action_type else new
     else:
         part = action_type
+
+    if timing:
+        part = f"{part} ({timing})"
     if person:
-        return f"{person}: {part}"
+        return f"{person}, {part}"
     return part
 
 
@@ -148,22 +162,27 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
                         org_lines.append(oc)
         lines.append(f"  <li><strong>{company}</strong>")
         lines.append("    <ul>")
-        if exec_lines:
-            lines.append("    <li><strong>[임원인사]</strong>")
+        if exec_lines and org_lines:
+            lines.append("    <li>임원인사")
             lines.append("    <ul>")
             for line in exec_lines:
                 lines.append(f"      <li>{line}</li>")
             lines.append("    </ul>")
             lines.append("    </li>")
-        if org_lines:
-            lines.append("    <li><strong>[조직개편]</strong>")
+            lines.append("    <li>조직개편")
             lines.append("    <ul>")
             for oc in sorted(org_lines):
                 lines.append(f"      <li>{oc}</li>")
             lines.append("    </ul>")
             lines.append("    </li>")
+        elif exec_lines:
+            for line in exec_lines:
+                lines.append(f"    <li>{line}</li>")
+        elif org_lines:
+            for oc in sorted(org_lines):
+                lines.append(f"    <li>{oc}</li>")
         if rep_link:
-            lines.append(f'      <li><a href="{rep_link}">기사 보기</a></li>')
+            lines.append(f'    <li><a href="{rep_link}">기사 보기</a></li>')
         lines.append("    </ul>")
         lines.append("  </li>")
     lines.append("</ol></body></html>")

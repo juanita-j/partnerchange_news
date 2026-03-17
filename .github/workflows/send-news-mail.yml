@@ -50,6 +50,12 @@ jobs:
           pip install -r requirements.txt
           pip install python-dotenv
 
+      - name: Restore sent_dedup_store (이전 메일 중복 제거용)
+        uses: actions/cache@v4
+        with:
+          path: sent_dedup_store.json
+          key: sent-dedup-store-v1
+
       - name: Collect news (Naver API)
         run: |
           echo "github.event_name=${{ github.event_name }}"

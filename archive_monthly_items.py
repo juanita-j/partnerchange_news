@@ -42,12 +42,13 @@ def _item_to_archive_entry(it: dict, date_iso: str) -> dict:
         bullet_points = []
     article_url = (it.get("기사 URL") or "").strip()
     pub_date = (it.get("pubDate") or "").strip()
+    personnel_timing = (it.get("인사 시기") or "").strip()
     category_flags = it.get("category_flags") or {}
     org_changes = it.get("org_changes") or []
     if not isinstance(org_changes, list):
         org_changes = []
 
-    return {
+    out = {
         "date": date_iso,
         "company": company,
         "person": person,
@@ -62,6 +63,9 @@ def _item_to_archive_entry(it: dict, date_iso: str) -> dict:
         "category_flags": {"exec_personnel": bool(category_flags.get("exec_personnel")), "org_restructuring": bool(category_flags.get("org_restructuring"))},
         "org_changes": [str(x).strip() for x in org_changes if x],
     }
+    if personnel_timing:
+        out["personnel_timing"] = personnel_timing
+    return out
 
 
 def run() -> int:
