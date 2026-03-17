@@ -74,6 +74,16 @@ def strip_html(text: str) -> str:
     return re.sub(r"<[^>]+>", "", text).replace("&quot;", '"').replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
 
 
+def _is_valid_article_url(s: str) -> bool:
+    """실제 기사 URL만 허용. placeholder·설명 문구 포함 시 False."""
+    if not s or not (str(s).strip().startswith("http://") or str(s).strip().startswith("https://")):
+        return False
+    s = str(s)
+    if "기사 URL" in s or "items 전체 공통" in s:
+        return False
+    return True
+
+
 def fetch_news(client_id: str, client_secret: str, query: str, display: int = 30, start: int = 1):
     headers = {"X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret}
     params = {"query": query, "display": min(display, 100), "start": start, "sort": "date"}
@@ -149,7 +159,8 @@ def format_block_a(article: dict, company: str, mmdd: str) -> str:
     """A. 인사변동 전용 블록 (명사형)."""
     title = article.get("title", "")
     desc = article.get("description", "")
-    link = article.get("link", "")
+    raw_link = (article.get("link") or "").strip()
+    link = raw_link if _is_valid_article_url(raw_link) else ""
     lines = [f"{company} 임원인사 내용 공유드립니다. ({mmdd} 발표)", ""]
     # 신규 [직함]에 '[이름]' 전 [이전 직함] [선임/영입/내정]
     name_match = re.search(r"[\'\"]([^\'\"]{2,10})[\'\"]\s*(?:전\s*)?([^선임영입내정임명]{2,20}?)\s*(선임|영입|내정|임명)", title + desc)
@@ -170,7 +181,8 @@ def format_block_a(article: dict, company: str, mmdd: str) -> str:
 def format_block_b(article: dict, company: str, mmdd: str) -> str:
     """B. 조직개편 전용 블록 (명사형)."""
     desc = article.get("description", "")
-    link = article.get("link", "")
+    raw_link = (article.get("link") or "").strip()
+    link = raw_link if _is_valid_article_url(raw_link) else ""
     lines = [f"{company} 조직개편 내용 공유드립니다. ({mmdd} 발표)", ""]
     lines.append("신설·개편된 조직 및 담당 업무: 기사 참조")
     lines.append(f"이번 조직개편은 {extract_lead_sentence(desc, 60)} 목적으로 단행된 것으로 추정")
@@ -182,7 +194,8 @@ def format_block_c(article: dict, company: str, mmdd: str) -> str:
     """C. 인사변동 + 조직개편 블록 (명사형)."""
     title = article.get("title", "")
     desc = article.get("description", "")
-    link = article.get("link", "")
+    raw_link = (article.get("link") or "").strip()
+    link = raw_link if _is_valid_article_url(raw_link) else ""
     lines = [f"{company} 임원인사 및 조직개편 내용 공유드립니다. ({mmdd} 발표)", "", "1) 임원인사", ""]
     name_match = re.search(r"[\'\"]([^\'\"]{2,10})[\'\"]\s*(?:전\s*)?([^선임영입내정임명]{2,20}?)\s*(선임|영입|내정|임명)", title + desc)
     if name_match:

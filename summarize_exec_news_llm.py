@@ -18,26 +18,27 @@ NEWS_RAW_JSON = OUTPUT_DIR / "news_raw.json"
 NEWS_SUMMARY_JSON = OUTPUT_DIR / "news_summary.json"
 DEBUG_SUMMARY_JSON = OUTPUT_DIR / "debug_summary.json"
 
-# LLM 출력 스키마. 한 기사에 여러 기업이 나오면 items 배열에 기업별로 분리.
-# is_exec_news=true 이면 items(기업별 1개 이상) + article_url. 단일 기업이면 items 1개 또는 기존 flat 형식도 허용.
+# LLM 출력 스키마. items는 **인사변동 건별(인물별)** 로 항목을 나눔. 한 기업에 여러 명이면 같은 company로 항목을 여러 개 둠.
+# is_exec_news=true 이면 items(인물별 1개 이상) + article_url.
 SUMMARY_SCHEMA = """
 {
   "is_exec_news": true | false,
   "reason": "판별 이유 한 줄 (제외 시에만)",
   "items": [
     {
-      "company": "회사명 (한 기업만)",
+      "company": "회사명 (한 기업만. 같은 기업이어도 인물별로 항목을 여러 개 둠)",
       "category_flags": { "exec_personnel": true|false, "org_restructuring": true|false },
       "personnel_type": "인사 유형 (내정/선임/재선임/임명/안건·승인대기/연임포기 등 단계 구분)",
       "personnel_timing": "실행 시기 (언급 시만. 예: 2026년 3월부터, 주총 승인 후)",
       "person_name": "대상 인물 이름",
       "previous_role": "기존 직책",
       "new_role": "신규 직책",
-      "org_changes": ["조직개편 내용 (통합/신설/폐지 등 + (예정)/(완료) 및 시기 필요 시)"],
+      "org_changes": ["조직개편 내용 (예정은 (예정), 완료는 띄어쓰기 후 '완료')"],
       "summary_2sent": "해당 기업 관련 2문장 요약",
       "key_points": ["중요 포인트"],
       "bullet_points": ["해당 기업만의 브리핑 문장 (진행 단계·시기 포함)"],
-      "relevance_score": 1-5
+      "relevance_score": 1-5,
+      "reason_for_change": "임원인사 또는 조직개편이 진행된 이유를 기사에서 찾아 한 문장으로 작성. 예: 현대모비스 대표이사로서 지정학적 리스크, 전기차 캐즘 등 대내외적 경영환경 불확실성에도 불구, 사상 최대 매출 및 영업이익 실적 달성에 따라 재선임됨. 기사에 명시적 이유가 없으면 빈 문자열."
     }
   ],
   "article_url": "기사 URL (items 전체 공통)"
@@ -68,17 +69,21 @@ SYSTEM_PROMPT = """당신은 한국 기업의 **임원인사**와 **주요 조�
 
 [진행 여부·시기 구분] 반드시 구분해서 요약하세요.
 - **임원인사**: '내정'(예정)·'선임'/'임명'(확정)·'주총 안건'/'승인 대기'(통과 여부가 안건)를 구분. personnel_type에 단계를 넣고(예: 사내이사 신규 선임 안건, 부회장 내정, 대표이사 선임). 실행 시기가 언급되면 personnel_timing에 넣고(예: 2026년 3월부터, 주총 승인 후) bullet_points에도 반영.
-- **조직개편**: '예정'과 '완료'를 구분. org_changes에 괄호로 표기: 예) "AI전략본부 신설(예정)", "글로벌사업부 통합(완료)". 시기 언급 시 함께 적기: "DX부문 재편(예정, 2분기)".
+- **조직개편**: '예정'과 '완료'를 구분. 완료는 괄호 없이 띄어쓰기 한 칸 + '완료': 예) "글로벌사업부 통합 완료". 예정은 "(예정)" 표기: "AI전략본부 신설(예정)". 시기 언급 시: "DX부문 재편(예정, 2분기)".
 
-[org_changes] 조직개편 해당 시 배열로 채움. **조직이 어떻게 바뀌었는지** 구체적 동작 단어 사용: 신설, 통합, 폐지, 재편, 슬림화, 통폐합, 확대, 강화 등. 각 항목에 **(예정)/(완료)** 및 시기(언급 시) 포함. '개편·변동·변화'는 쓰지 말 것. 본부/실/센터/사업부/부문 단위만.
+[org_changes] 조직개편 해당 시 배열로 채움. 구체적 동작 단어: 신설, 통합, 폐지, 재편 등. 완료는 문장 끝에 띄어쓰기 한 칸 + '완료'(괄호 없음). 예정은 '(예정)'. 예: "AI전략본부 신설(예정)", "글로벌사업부 통합 완료". '개편·변동·변화'는 쓰지 말 것.
 
-[previous_role·new_role·personnel_type] 기존 직책(previous_role)은 현재/이전 직위만(예: CFO, 사외이사, 최고재무책임자). 신규 직책(new_role)은 취임·선임되는 직위만. 인사 유형(personnel_type)은 변동 내용(예: 사내이사 신규 선임, 연임 포기). 표시 시 '이전 직함의 변동 내용'으로 나가므로, personnel_type에 직함이 이미 들어가면(예: 사내이사 신규 선임) previous_role에는 이전 직함만(예: CFO) 넣어 중복되지 않게 하세요. 연임 포기처럼 직책이 하나면 previous_role만 채우고 personnel_type은 '연임 포기'만.
+[previous_role·new_role·personnel_type] 기존 직책(previous_role)은 현재/이전 직위 또는 소속(예: CFO, 사외이사, 현대모비스 FTCI 담당(전무), 주한미국상공회의소 회장, BNY 뉴욕멜론은행 한국 대표). 신규 직책(new_role)은 취임·선임되는 직위·담당(예: 감사위원회 위원장 담당 전망). 인사 유형(personnel_type)은 변동 내용(예: 사내이사 재선임, 신규 사내이사 선임, 사외이사 재선임). personnel_type에 직함이 이미 들어가면 previous_role에는 이전 직함/소속만 넣어 중복 없이. 연임 포기처럼 직책이 하나면 previous_role만 채우고 personnel_type은 '연임 포기'만.
 
-[bullet_points] 브리핑 스타일, 2~5개. 명사형 또는 "~함"체. 인사·조직 사실만. **진행 단계(내정/선임/안건 등)와 실행 시기(언급 시)를 문장에 포함.**
-- 임원인사 예: '김희철' CFO의 사내이사 신규 선임 가능성, '윤종수' 사외이사 연임 포기. 인물명은 작은따옴표(')로 감쌈.
-- 조직개편 예: AI전략본부 신설(예정), 글로벌사업부 통합(완료).
+[bullet_points] 각 item은 **한 명의 인물(또는 한 조직개편)** 만 담음. 브리핑 스타일, 해당 인물/항목 관련 1~3개. 명사형 또는 "~함"체. **진행 단계(내정/선임/안건 등)와 실행 시기(언급 시) 포함.** 인물명은 작은따옴표(')로 감쌈. 한 기사에 여러 명이면 items를 인물별로 나눈 뒤 각 item의 bullet_points는 그 인물만.
+- 임원인사 예: '정의선' 회장의 사내이사 재선임, '성낙섭' FTCI 담당(전무)의 신규 사내이사 선임, '박현주' BNY 뉴욕멜론은행 한국 대표의 사외이사 신규 선임·감사위원회 위원장 담당 전망.
+- 조직개편 예: AI전략본부 신설(예정), 글로벌사업부 통합 완료.
 
-[한 기사에 여러 기업] 제목에 '네이버·카카오'처럼 두 기업이 같이 나와도, 본문 내용을 기업별로 구분해 items에 **기업당 하나의 항목**으로 분리하세요. 회사명(company)은 한 기업만 넣고(예: 네이버, 카카오 각각), 블록 제목이 '네이버 임원인사 진행' / '카카오 임원인사 진행'처럼 기업별로 나뉘도록 하세요. 기사 URL은 동일하게 article_url 하나만 두세요.
+[reason_for_change] **임원인사 또는 조직개편이 진행된 이유**를 기사 본문·인용에서 찾아 각 item(기업)별로 한 문장으로 작성. "~에 따라 선임됨", "~를 위해 재편함" 등 인사/조직 결정의 배경·근거를 담을 것. 기사에 이유가 명시되지 않으면 빈 문자열. 예: "현대모비스 대표이사로서 지정학적 리스크, 전기차 캐즘 등 대내외적 경영환경 불확실성에도 불구, 사상 최대 매출 및 영업이익 실적 달성에 따라 재선임됨".
+
+[items 분리 원칙] **한 건의 인사변동(한 명의 인물)당 items에 항목 하나.** 한 기사에 한 기업만 나와도 임원인사가 여러 명이면 **인물별로** 항목을 나누세요. 같은 회사(company)가 여러 번 나와도 됨.
+- **한 기업·여러 명**: 예) 현대모비스 기사에 정의선 사내이사 재선임, 성낙섭 신규 사내이사 선임, 제임스 김 사외이사 재선임, 박현주 사외이사 신규 선임 → items 4개(모두 company '현대모비스', person_name·personnel_type·previous_role·new_role은 각각 다르게).
+- **한 기사에 여러 기업**: 네이버·카카오 등 두 기업이 같이 나오면 기업별로 구분해 각 기업의 인물별 항목을 넣으세요. 회사명(company)은 항목마다 한 기업만. 기사 URL은 article_url 하나만 두세요.
 
 [출력]
 반드시 유효한 JSON 한 덩어리만 출력. 앞뒤 설명·마크다운 없이."""
@@ -90,7 +95,7 @@ USER_PROMPT_TEMPLATE = """아래 뉴스가 **임원인사** 또는 **주요 조�
 요약: {description}
 본문(일부): {body}
 
-[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. 한 기사에 네이버·카카오 등 여러 기업이 나오면 items에 기업별로 항목을 나누고, company는 각각 '네이버', '카카오'만 넣으세요. 조직개편 요약 시 통합·신설·폐지·재편·강화 사용, 개편·변동·변화는 쓰지 마세요. **진행 여부 구분**: 임원인사는 내정/선임/안건을 구분하고, 조직개편은 (예정)/(완료) 표기. 실행 시기 언급 시 personnel_timing·bullet_points·org_changes에 반영하세요.
+[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **한 기사에 인사가 여러 명이면 items에 인물별로 항목을 나누세요**(한 기업이라도 정의선·성낙섭·제임스 김·박현주 등 각각 항목 1개). 여러 기업(네이버·카카오)이면 기업별로 구분한 뒤 각 기업 내 인물별 항목. 조직개편 요약 시 통합·신설·폐지·재편·강화 사용, 개편·변동·변화는 쓰지 마세요. **진행 여부 구분**: 임원인사는 내정/선임/안건 구분. 조직개편은 예정=(예정), 완료= 띄어쓰기 후 '완료'. **reason_for_change**: 기사에서 진행 이유(배경·근거)를 한 문장으로. 없으면 빈 문자열.
 
 출력 형식 (이 키만 사용, JSON만 출력):
 {schema}"""
@@ -149,6 +154,9 @@ def _one_item_to_summary(item: dict, url: str) -> dict:
     }
     if personnel_timing:
         out["인사 시기"] = personnel_timing
+    reason = (item.get("reason_for_change") or "").strip()
+    if reason:
+        out["진행 이유"] = reason
     return out
 
 
@@ -189,7 +197,16 @@ def _parse_llm_response(text: str, url: str) -> tuple[list[dict], dict]:
             "org_changes": [],
         }
 
-    article_url = (data.get("article_url") or url or "").strip() or url
+    raw_article_url = (data.get("article_url") or url or "").strip() or url
+    # LLM이 스키마 예시 문구 "기사 URL (items 전체 공통)"을 그대로 반환하면 실제 URL로 교체
+    _placeholder_in_url = "기사 URL" in raw_article_url or "items 전체 공통" in raw_article_url
+    if (
+        not (raw_article_url.startswith("http://") or raw_article_url.startswith("https://"))
+        or _placeholder_in_url
+    ):
+        article_url = url
+    else:
+        article_url = raw_article_url
     items_raw = data.get("items")
     summaries = []
 
@@ -233,6 +250,9 @@ def _parse_llm_response(text: str, url: str) -> tuple[list[dict], dict]:
         pt = (data.get("personnel_timing") or "").strip()
         if pt:
             summary["인사 시기"] = pt
+        reason = (data.get("reason_for_change") or "").strip()
+        if reason:
+            summary["진행 이유"] = reason
         summaries.append(summary)
 
     if not summaries:

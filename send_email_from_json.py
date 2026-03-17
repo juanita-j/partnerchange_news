@@ -29,6 +29,25 @@ SENT_DEDUP_STORE_JSON = OUTPUT_DIR / "sent_dedup_store.json"
 EMAIL_CONTENT_JSON = OUTPUT_DIR / "email_content.json"
 
 
+def _is_valid_article_url(s: str) -> bool:
+    """실제 기사 URL만 허용. placeholder·설명 문구 포함 시 False."""
+    if not s or not (s.startswith("http://") or s.startswith("https://")):
+        return False
+    if "기사 URL" in s or "items 전체 공통" in s:
+        return False
+    return True
+
+
+def _normalize_display(s: str) -> str:
+    """본문 표기: (완료) → 공백+완료, (예정) → 공백+예정, '이름', → '이름' (콤마 제거)."""
+    if not s:
+        return s
+    s = (s or "").replace("(완료)", " 완료").replace("(예정)", " 예정")
+    # '이름' 뒤 콤마 제거: ', ' 또는 ',\s*' → ' '
+    s = re.sub(r"',\s*", "' ", s)
+    return s
+
+
 def _pubdate_to_mmdd(pub_date_str: str) -> str:
     """pubDate 문자열에서 mm/dd 추출. 실패 시 빈 문자열."""
     if not pub_date_str or not str(pub_date_str).strip():
@@ -38,6 +57,50 @@ def _pubdate_to_mmdd(pub_date_str: str) -> str:
         return dt.strftime("%m/%d")
     except Exception:
         return ""
+
+
+def _pubdate_to_utc(pub_date_str: str) -> datetime | None:
+    """pubDate 문자열을 UTC datetime으로 변환. 실패 시 None."""
+    if not pub_date_str or not str(pub_date_str).strip():
+        return None
+    try:
+        dt = parsedate_to_datetime(str(pub_date_str).strip())
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc)
+    except Exception:
+        return None
+
+
+def _get_last_sent_at_utc() -> datetime | None:
+    """sent_log.json의 last_sent_at을 UTC datetime으로 반환. 없으면 None."""
+    if not SENT_LOG_JSON.exists():
+        return None
+    try:
+        with open(SENT_LOG_JSON, "r", encoding="utf-8") as f:
+            log = json.load(f)
+        raw = log.get("last_sent_at")
+        if not raw:
+            return None
+        dt = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc)
+    except Exception:
+        return None
+
+
+def _filter_items_since_last_send(items: list[dict]) -> list[dict]:
+    """직전 발송 시각(last_sent_at) 이후 pubDate인 항목만 포함. 첫 발송이면 전부 포함."""
+    last_sent = _get_last_sent_at_utc()
+    if last_sent is None:
+        return items
+    out = []
+    for it in items:
+        pub_utc = _pubdate_to_utc(it.get("pubDate") or "")
+        if pub_utc is not None and pub_utc > last_sent:
+            out.append(it)
+    return out
 
 
 def _format_person_name(name: str) -> str:
@@ -152,21 +215,23 @@ def _bullets_from_item(it: dict) -> list[str]:
 
 
 def _action_line(it: dict) -> str:
-    """'이름', 변동 내용. 직위 중복 없이, 이전 직함이 있으면 '직함의 변동 내용' 형태로."""
+    """'이름' 변동 내용 (이름 뒤 콤마 없음). 재선임/연임 시 직함 한 번만. 이전 직함이 있으면 '직함의 변동 내용' 형태."""
     person = _format_person_name(it.get("대상 인물") or "")
     action_type = (it.get("인사 유형") or "").strip()
     prev = (it.get("기존 직책") or "").strip()
     new = (it.get("신규 직책") or "").strip()
     timing = (it.get("인사 시기") or "").strip()
 
+    # 재선임/연임: 기존·신규 직함이 같을 수 있으므로 action_type 앞의 직함 중복 제거 (예: 회장 사내이사 재선임 → 사내이사 재선임)
+    if prev and ("재선임" in action_type or "연임" in action_type) and action_type.startswith(prev):
+        action_type = action_type[len(prev):].strip()
+
     if prev and new:
-        # 이전 직함의 신규 내용. action_type에 이미 신규 직책이 포함된 경우 중복 제거 (예: CFO의 사내이사 신규 선임)
         if new and (new in action_type or action_type.startswith(new)):
             part = f"{prev}의 {action_type}"
         else:
             part = f"{prev}의 {new} {action_type}" if action_type else f"{prev} → {new}"
     elif prev:
-        # action_type에 이미 기존 직책이 포함되면 직책 한 번만 (예: 사외이사 연임 포기)
         if prev in action_type or action_type.startswith(prev):
             part = action_type
         else:
@@ -182,7 +247,7 @@ def _action_line(it: dict) -> str:
     if timing:
         part = f"{part} ({timing})"
     if person:
-        return f"{person}, {part}"
+        return f"{person} {part}"
     return part
 
 
@@ -215,13 +280,15 @@ def _build_html_from_summary(
         group = by_company[company]
         rep_date = ""
         rep_url = ""
+        rep_reason = ""
         for it in group:
-            if it.get("pubDate"):
+            if not rep_date and it.get("pubDate"):
                 rep_date = _pubdate_to_mmdd(it.get("pubDate") or "")
-            if (it.get("기사 URL") or "").strip():
-                rep_url = (it.get("기사 URL") or "").strip()
-            if rep_date and rep_url:
-                break
+            raw_url = (it.get("기사 URL") or "").strip()
+            if not rep_url and _is_valid_article_url(raw_url):
+                rep_url = raw_url
+            if not rep_reason and (it.get("진행 이유") or "").strip():
+                rep_reason = (it.get("진행 이유") or "").strip()
 
         exec_items = []
         org_changes_set = set()
@@ -286,7 +353,7 @@ def _build_html_from_summary(
         p_parts = [f"<strong>{section_label}</strong>"]
         if rep_date:
             p_parts.append(f"({rep_date})")
-        if rep_url:
+        if rep_url and _is_valid_article_url(rep_url):
             p_parts.append(f'<a href="{rep_url}">기사 보기</a>')
         lines.append("  <li>")
         lines.append("    <p>" + " ".join(p_parts) + "</p>")
@@ -296,26 +363,28 @@ def _build_html_from_summary(
             lines.append("      <li>임원인사")
             lines.append("        <ul>")
             for line in exec_lines_out:
-                lines.append(f"          <li>{line}</li>")
+                lines.append(f"          <li>{_normalize_display(line)}</li>")
             lines.append("        </ul>")
             lines.append("      </li>")
             lines.append("      <li>조직개편")
             lines.append("        <ul>")
             for oc in org_changes_list:
-                lines.append(f"          <li>{oc}</li>")
+                lines.append(f"          <li>{_normalize_display(oc)}</li>")
             lines.append("        </ul>")
             lines.append("      </li>")
             lines.append("    </ul>")
         elif exec_lines_out:
             lines.append("    <ul>")
             for line in exec_lines_out:
-                lines.append(f"      <li>{line}</li>")
+                lines.append(f"      <li>{_normalize_display(line)}</li>")
             lines.append("    </ul>")
         elif org_changes_list:
             lines.append("    <ul>")
             for oc in org_changes_list:
-                lines.append(f"      <li>{oc}</li>")
+                lines.append(f"      <li>{_normalize_display(oc)}</li>")
             lines.append("    </ul>")
+        if rep_reason:
+            lines.append("    <p><strong>진행 이유:</strong> " + rep_reason + "</p>")
         lines.append("  </li>")
     lines.append("</ul></body></html>")
     return "\n".join(lines), sent_exec_this, sent_org_this
@@ -378,8 +447,9 @@ def send_gmail_from_json(
         with open(json_path, "r", encoding="utf-8") as f:
             payload = json.load(f)
         items = payload.get("items") or []
+        items = _filter_items_since_last_send(items)
         if not items:
-            print("요약 항목 0건. 메일 발송 스킵.")
+            print("직전 발송 이후 기사 0건. 메일 발송 스킵.")
             return 0
         subject = f"인사변동 업데이트 ({datetime.now().strftime('%y/%m/%d')})"
         sent_dedup = _load_sent_dedup_store()
