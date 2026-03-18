@@ -8,3 +8,5 @@ __pycache__/
 .vscode/
 sent_log.json
 .monthly_archives/
+.cache_dedup/
+sent_dedup_store.json
