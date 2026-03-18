@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-18T18:03:33.233253+09:00",
+  "updated_at": "2026-03-18T19:07:30.962421+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -663,6 +663,73 @@
         "AI 중심으로 사업구조 재편",
         "DS부문은 메모리·파운드리·시스템LSI를 아우르는 ‘종합 AI 반도체 솔루션 기업’ 입지 강화를 내세움",
         "DX부문은 제품과 서비스 전반에 AI를 접목해 시장 변화를 주도할 계획"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성SDS",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "AI 전환 시장 공략에 속도",
+      "bullet_points": [
+        "클라우드와 생성형 AI 중심으로 사업 구조 재편 완료"
+      ],
+      "article_url": "https://www.ngetnews.com/news/articleView.html?idxno=549274",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 18:46:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "클라우드와 생성형 AI 중심으로 사업 구조 재편 완료"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "company": "카카오",
+      "person": "고정희",
+      "action_type": "선임",
+      "previous_role": "카카오뱅크 AI그룹장",
+      "new_role": "CA협의체 그룹재무전략실 위원",
+      "important_point": "직방 출신 김민규 영입",
+      "bullet_points": [
+        "'고정희' CA협의체 그룹재무전략실 위원 선임",
+        "'김민규' 신규 성과리더 영입, 'M TF' 조직 신설"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/030/0003408909?sid=101",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 18:33:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "M TF 조직 신설"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성전자",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "AI 중심으로 사업 재편",
+      "bullet_points": [
+        "AI 중심으로 전 사업 포트폴리오 재편"
+      ],
+      "article_url": "https://www.getnews.co.kr/news/articleView.html?idxno=864932",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 18:16:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "AI 중심으로 전 사업 포트폴리오 재편"
       ]
     }
   ]
