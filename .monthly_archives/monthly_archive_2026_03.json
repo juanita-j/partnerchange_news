@@ -1,0 +1,492 @@
+{
+  "year": 2026,
+  "month": 3,
+  "updated_at": "2026-03-18T16:59:53.908084+09:00",
+  "items": [
+    {
+      "date": "2026-03-18",
+      "company": "LG전자",
+      "person": "서흥규",
+      "action_type": "임명",
+      "previous_role": "",
+      "new_role": "ES M&A 담당",
+      "important_point": "ES사업본부 신설",
+      "bullet_points": [
+        "'서흥규' 상무의 ES M&A 담당 임명"
+      ],
+      "article_url": "https://www.thebell.co.kr/free/Content/ArticleView.asp?key=202303160100001080000000",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 07:02:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "ES사업본부 M&A 담당 신설 완료"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성SDS",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "AI 중심 사업구조 재편",
+      "bullet_points": [
+        "AI 중심으로 사업구조 재편",
+        "AX센터를 중심으로 AI 사업 실행력 강화 예정"
+      ],
+      "article_url": "http://www.seoulwire.com/news/articleView.html?idxno=711948",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 16:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "AI 중심으로 사업구조 재편"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성전자",
+      "person": "김용관",
+      "action_type": "사내이사 선임",
+      "previous_role": "디바이스솔루션(DS)부문 경영전략총괄(사장)",
+      "new_role": "사내이사",
+      "important_point": "반도체 사업 경쟁력 회복",
+      "bullet_points": [
+        "'김용관' 사장의 사내이사 선임, 주주총회 의결을 통해 신규 선임됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/015/0005263879?sid=101",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 16:44:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "호텔신라",
+      "person": "김현웅",
+      "action_type": "연임 포기",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "사외이사 수 감소",
+      "bullet_points": [
+        "'김현웅' 사외이사의 자진 사임, 사외이사 수 4명에서 3명으로 감소"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/293/0000081136?sid=101",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 16:17:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "롯데에너지머티리얼즈",
+      "person": "김훈",
+      "action_type": "사내이사 선임",
+      "previous_role": "기획부문장",
+      "new_role": "사내이사",
+      "important_point": "정기주총에서 6개 안건 모두 원안대로 승인",
+      "bullet_points": [
+        "'김훈' 기획부문장의 사내이사 선임",
+        "'이필재' 사외이사 재선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/031/0001014454?sid=101",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 14:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "롯데에너지머티리얼즈",
+      "person": "이필재",
+      "action_type": "사외이사 재선임",
+      "previous_role": "",
+      "new_role": "사외이사",
+      "important_point": "정기주총에서 6개 안건 모두 원안대로 승인",
+      "bullet_points": [
+        "'이필재' 사외이사 재선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/031/0001014454?sid=101",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 14:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성전자",
+      "person": "유명희",
+      "action_type": "사외이사 사임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "제57기 주총에서 이사 선임 원안 가결",
+      "bullet_points": [
+        "'유명희' 사외이사 사임"
+      ],
+      "article_url": "http://www.srtimes.kr/news/articleView.html?idxno=198933",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 14:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성SDS",
+      "person": "김태호",
+      "action_type": "사내이사 선임",
+      "previous_role": "",
+      "new_role": "사내이사",
+      "important_point": "제41기 정기 주주총회에서 이사 4명 선임",
+      "bullet_points": [
+        "'김태호' 사내이사 선임",
+        "'이재진' 사외이사 재선임",
+        "'문무일' 감사위원회 위원 재선임",
+        "'박정수' 감사위원회 위원 신규 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/003/0013829389?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 11:21:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "롯데쇼핑",
+      "person": "임재철",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "전무",
+      "new_role": "사내이사",
+      "important_point": "사내이사 신규 선임 예정",
+      "bullet_points": [
+        "'임재철' 전무의 사내이사 신규 선임 예정(주총 안건)"
+      ],
+      "article_url": "https://www.thebell.co.kr/free/content/ArticleView.asp?key=202603161050258560108953",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 11:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성전자",
+      "person": "김용관",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "DS부문 경영전략총괄",
+      "new_role": "사내이사",
+      "important_point": "이사회 규모 축소",
+      "bullet_points": [
+        "'김용관' DS부문 경영전략총괄의 사내이사 신규 선임",
+        "이사회 8인 체제로 축소 완료"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/092/0002414912?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 11:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "이사회 8인 체제로 축소 완료"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성전자",
+      "person": "송재혁",
+      "action_type": "사외이사 사임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "이사회 규모 축소",
+      "bullet_points": [
+        "'송재혁' 사외이사 사임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/092/0002414912?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 11:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성전자",
+      "person": "송재혁",
+      "action_type": "사내이사 사임",
+      "previous_role": "디바이스솔루션(DS)부문 최고기술책임자(CTO)",
+      "new_role": "",
+      "important_point": "사내이사 인원 3명으로 유지",
+      "bullet_points": [
+        "'송재혁' 디바이스솔루션(DS)부문 최고기술책임자(CTO)의 사내이사 사임."
+      ],
+      "article_url": "https://www.newspim.com/news/view/20260318000354",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 10:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "한국양자산업협회",
+      "person": "김성혁",
+      "action_type": "선임",
+      "previous_role": "LG전자 차세대컴퓨팅(연) 상무",
+      "new_role": "제2대 회장",
+      "important_point": "김성혁 회장 선임",
+      "bullet_points": [
+        "'김성혁' LG전자 차세대컴퓨팅(연) 상무의 한국양자산업협회 제2대 회장 선임"
+      ],
+      "article_url": "http://www.worktoday.co.kr/news/articleView.html?idxno=82628",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 10:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "한진칼",
+      "person": "조원태",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "사내이사",
+      "new_role": "사내이사",
+      "important_point": "조원태 회장 4번째 연임",
+      "bullet_points": [
+        "'조원태' 사내이사 재선임 안건 상정",
+        "'최종구' 사외이사 후보 영입 예정"
+      ],
+      "article_url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=437439",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 08:06:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "대한항공",
+      "person": "우기홍",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "부회장",
+      "new_role": "사내이사",
+      "important_point": "우기홍 부회장 통합 실무 총괄",
+      "bullet_points": [
+        "'우기홍' 사내이사 재선임 안건 상정",
+        "'김석동' 사외이사 내정"
+      ],
+      "article_url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=437439",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 08:06:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "KT",
+      "person": "박윤영",
+      "action_type": "대표이사 내정",
+      "previous_role": "",
+      "new_role": "신임 대표이사",
+      "important_point": "미디어 부문 전략 재편",
+      "bullet_points": [
+        "'박윤영' 신임 대표이사 내정, 주총 승인 후 선임 예정.",
+        "미디어 부문 컨트롤 타워 신설 완료.",
+        "AI 스튜디오 랩 신설 완료."
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/417/0001134634?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 06:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "미디어 부문 컨트롤 타워 신설 완료",
+        "AI 스튜디오 랩 신설 완료"
+      ],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-18",
+      "company": "오픈AI",
+      "person": "신시아 게일러",
+      "action_type": "신규 선임",
+      "previous_role": "도큐사인 CFO",
+      "new_role": "투자자 관계(IR) 총괄",
+      "important_point": "기업 고객 집중 전략 재편",
+      "bullet_points": [
+        "'신시아 게일러' 도큐사인 전 CFO의 투자자 관계(IR) 총괄 신규 선임"
+      ],
+      "article_url": "https://example.com/news",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 09:00:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "오픈AI",
+      "person": "아즈미어 데일",
+      "action_type": "신규 선임",
+      "previous_role": "블록 최고회계책임자",
+      "new_role": "CFO",
+      "important_point": "기업 고객 집중 전략 재편",
+      "bullet_points": [
+        "'아즈미어 데일' 블록 전 최고회계책임자의 CFO 신규 선임"
+      ],
+      "article_url": "https://example.com/news",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 09:00:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-18",
+      "company": "현대카드",
+      "person": "심수옥",
+      "action_type": "사외이사 신규 선임",
+      "previous_role": "",
+      "new_role": "사외이사",
+      "important_point": "사외이사 4명 임기 만료",
+      "bullet_points": [
+        "'심수옥' 사외이사 신규 선임(주총 안건)"
+      ],
+      "article_url": "http://www.hansbiz.co.kr/news/articleView.html?idxno=824824",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 08:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-18",
+      "company": "현대카드",
+      "person": "유용근",
+      "action_type": "사외이사 신규 선임",
+      "previous_role": "",
+      "new_role": "사외이사",
+      "important_point": "사외이사 4명 임기 만료",
+      "bullet_points": [
+        "'유용근' 사외이사 신규 선임(주총 안건)"
+      ],
+      "article_url": "http://www.hansbiz.co.kr/news/articleView.html?idxno=824824",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 08:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-18",
+      "company": "현대카드",
+      "person": "더글라스 차이",
+      "action_type": "사외이사 재선임",
+      "previous_role": "",
+      "new_role": "사외이사",
+      "important_point": "사외이사 4명 임기 만료",
+      "bullet_points": [
+        "'더글라스 차이' 사외이사 재선임(주총 안건)"
+      ],
+      "article_url": "http://www.hansbiz.co.kr/news/articleView.html?idxno=824824",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 08:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-18",
+      "company": "현대카드",
+      "person": "린치펑",
+      "action_type": "사외이사 재선임",
+      "previous_role": "",
+      "new_role": "사외이사",
+      "important_point": "사외이사 4명 임기 만료",
+      "bullet_points": [
+        "'린치펑' 사외이사 재선임(주총 안건)"
+      ],
+      "article_url": "http://www.hansbiz.co.kr/news/articleView.html?idxno=824824",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 08:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-18",
+      "company": "삼성전자",
+      "person": "허은녕",
+      "action_type": "감사위원 선임 안건",
+      "previous_role": "",
+      "new_role": "감사위원",
+      "important_point": "삼성전자 주주총회에서 감사위원 선임 안건 상정",
+      "bullet_points": [
+        "'허은녕' 서울대 교수의 감사위원 선임 안건이 상정됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Wed, 18 Mar 2026 08:44:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    }
+  ]
+}
