@@ -43,7 +43,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Set archive cache key (대상 연월 = daily 아카이브와 동일 키)
+      - name: Set target year-month (스크립트용)
         run: |
           if [ -n "${{ inputs.target_year }}" ] && [ -n "${{ inputs.target_month }}" ]; then
             ym=$(python3 -c "print('${{ inputs.target_year }}-'+'${{ inputs.target_month }}'.zfill(2))")
@@ -51,13 +51,7 @@ jobs:
             ym=$(TZ=Asia/Seoul date +%Y-%m)
           fi
           echo "YM=$ym" >> $GITHUB_ENV
-          echo "Restoring monthly archive cache for YM=$ym"
-
-      - name: Restore monthly archive cache
-        uses: actions/cache@v4
-        with:
-          path: .monthly_archives
-          key: monthly-archives-${{ runner.os }}-${{ env.YM }}
+          echo "Target month archive: $ym (from repo .monthly_archives/)"
 
       - name: Send monthly digest (last Friday only)
         run: python send_monthly_digest.py
