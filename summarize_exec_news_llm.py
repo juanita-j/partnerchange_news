@@ -18,7 +18,7 @@ NEWS_RAW_JSON = OUTPUT_DIR / "news_raw.json"
 NEWS_SUMMARY_JSON = OUTPUT_DIR / "news_summary.json"
 DEBUG_SUMMARY_JSON = OUTPUT_DIR / "debug_summary.json"
 
-# LLM 출력 스키마. items는 **인사변동 건별(인물별)** 로 항목을 나눔. 한 기업에 여러 명이면 같은 company로 항목을 여러 개 둠.
+# LLM 출력 스키마. items는 **인사변동 건별(인물별)** 로 항목을 나눔. 한 기업에 여러 명이면 같은 company로 항목을 여러 개 둠. **한 기사에 선임·사임·교체가 여러 명 나오면 전원 각각 item으로 넣고 누락 금지.**
 # is_exec_news=true 이면 items(인물별 1개 이상) + article_url.
 SUMMARY_SCHEMA = """
 {
@@ -68,7 +68,7 @@ SYSTEM_PROMPT = """당신은 한국 기업의 **임원인사**와 **주요 조�
 [category_flags] exec_personnel: 임원인사 해당 여부. org_restructuring: 주요 조직개편 해당 여부. 둘 다 true일 수 있음.
 
 [진행 여부·시기 구분] 반드시 구분해서 요약하세요.
-- **임원인사**: '내정'(예정)·'선임'/'임명'(확정)·'주총 안건'/'승인 대기'(통과 여부가 안건)를 구분. personnel_type에 단계를 넣고(예: 사내이사 신규 선임 안건, 부회장 내정, 대표이사 선임). **personnel_timing "주총 승인 후" 사용 조건**: **아직 주총이 열리지 않았거나, 안건으로 상정·승인 대기 단계**일 때만 "주총 승인 후"를 넣는다. **이미 주총이 열렸고 의안이 가결·선임이 확정된 경우**(예: "이날 주총에서 O가 선임됐다", "주총를 열고 선임안을 가결했다", "제57기 정기 주주총회에서 가결했다")에는 personnel_timing에 "주총 승인 후"를 넣지 말 것(이미 승인 완료이므로). 그 외 실행 시기(2026년 3월부터 등)가 언급되면 personnel_timing에만 넣고, 문장 끝에 괄호로 "(주총 승인 후)" 적지 말 것.
+- **임원인사**: '내정'(예정)·'선임'/'임명'(확정)·'주총 안건'/'승인 대기'(통과 여부가 안건)를 구분. personnel_type에 단계를 넣고(예: 사내이사 신규 선임 안건, 부회장 내정, 대표이사 선임). **personnel_timing "주총 승인 후" 사용 조건**: **아직 주총이 열리지 않았거나, 안건으로 상정·승인 대기 단계**일 때만 "주총 승인 후"를 넣는다. **이미 진행된 주총(과거 완료)**: 기사에 "이날 주주총회에서 … 승인됐다", "선임했고", "재선임했다", "가결되었다", "원안대로 승인됐다고 밝혔다" 등 **이미 주총이 열려 결의가 완료된** 내용이 나오면 personnel_timing을 **비워 두고**, bullet_points·요약에 "주총 승인 후"와 "예정"을 **절대 넣지 말 것**. 확정된 사실만 쓴다. 예: "이날 주주총회에서는 6개 안건 모두 원안대로 승인됐다. 김훈 기획부문장을 선임했고, 이필재 사외이사를 재선임했다" → personnel_timing 빈 문자열, 요약은 "'김훈' 기획부문장의 사내이사 선임, '이필재' 사외이사 재선임" (주총 승인 후·예정 없음). 그 외 실행 시기(2026년 3월부터 등)가 언급되면 personnel_timing에만 넣고, 문장 끝에 괄호로 "(주총 승인 후)" 적지 말 것.
 - **조직개편**: '예정'과 '완료'를 구분. 완료는 괄호 없이 띄어쓰기 한 칸 + '완료': 예) "글로벌사업부 통합 완료". 예정은 "(예정)" 표기: "AI전략본부 신설(예정)". 시기 언급 시: "DX부문 재편(예정, 2분기)".
 - **단행 시기 반영**: 기사에 "지난해 말", "올해 3월", "2025년 4분기", "OO시기에 임원인사/조직개편을 단행했다" 등 **단행된 시기**가 명시되어 있으면 반드시 요약에 포함한다. 임원인사는 personnel_timing에, 조직개편은 org_changes·bullet_points 문장 **맨 앞에** 넣는다.
 - **조직개편 진행 시기 필수**: 기사에 조직개편이 **언제** 이뤄졌는지("지난해 말", "올해 3월", "지난 해", "2025년 4분기" 등) 나오면 **빼먹지 말고** org_changes·bullet_points 각 문장 **맨 앞에** 반드시 쓴다. 예: 기사에 "지난해 말 고객가치혁신실 산하에 CX 조직을 신설했다" → org_changes에 **"지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설"** 처럼 시기(지난해 말)를 포함한다.
@@ -91,8 +91,9 @@ SYSTEM_PROMPT = """당신은 한국 기업의 **임원인사**와 **주요 조�
 - 한 문장으로 정리. 기사에 명시가 없으면 빈 문자열. 예: "신성장동력인 냉난방공조(HVAC) 사업을 키우기 위해 외부 기업 인수 전략을 적극 구사하기 위함", "현대모비스 대표이사로서 지정학적 리스크, 전기차 캐즘 등에도 불구 사상 최대 매출·영업이익 실적 달성에 따라 재선임됨".
 
 [items 분리 원칙] **한 건의 인사변동(한 명의 인물)당 items에 항목 하나.** 한 기사에 한 기업만 나와도 임원인사가 여러 명이면 **인물별로** 항목을 나누세요. 같은 회사(company)가 여러 번 나와도 됨.
-- **기사에 이름이 언급된 인물은 한 명도 빠짐없이** items에 넣으세요. 사임·선임·내정 등 변동이 여러 명이면(예: "유명희, 송재혁 이사 사임") **각자 별도 item**으로 작성. 한 명만 쓰고 나머지를 누락하지 말 것.
-- **한 기업·여러 명**: 예) 현대모비스 기사에 정의선 사내이사 재선임, 성낙섭 신규 사내이사 선임, 제임스 김 사외이사 재선임, 박현주 사외이사 신규 선임 → items 4개(모두 company '현대모비스', person_name·personnel_type·previous_role·new_role은 각각 다르게). 예) "유명희, 송재혁 이사 사임" → 유명희 이사 사임 1건 + 송재혁 이사 사임 1건, 총 2개 item.
+- **기사에 이름이 언급된 인물은 한 명도 빠짐없이** items에 넣으세요. 선임·사임·내정·교체 등 **변동이 있는 모든 인물을 각각 별도 item**으로 작성. **한 명이라도 누락 금지.** 예: "유명희, 송재혁 이사 사임" → 유명희 1건 + 송재혁 1건, 총 2개 item.
+- **주총에서 여러 명 선임·사임·교체**: 기사에 "OO 이사 선임", "OO 감사위원 선임", "OO에서 OO로 교체"(→ 기존 이사 사임 + 신규 선임 각각 item), "OO 이사 사임" 등이 **함께** 나오면 **선임·사임·교체된 모든 인물을 각각** item으로 넣는다. **일부만 넣고 나머지를 빼면 안 된다.** 예: "제57기 주총에서 김용관 이사 선임, 허은녕 감사위원 선임, 송재혁에서 김용관으로 교체됐고, 유명희 이사 사임" → items **4개**: (1) 김용관(DS부문 경영전략총괄) 사내이사 선임 (2) 허은녕(서울대 교수) 감사위원 선임 (3) 송재혁 사내이사 사임 (4) 유명희 사외이사 사임.
+- **한 기업·여러 명**: 예) 현대모비스 기사에 정의선 사내이사 재선임, 성낙섭 신규 사내이사 선임, 제임스 김 사외이사 재선임, 박현주 사외이사 신규 선임 → items 4개(모두 company '현대모비스', person_name·personnel_type·previous_role·new_role은 각각 다르게).
 - **한 기사에 여러 기업**: 네이버·카카오 등 두 기업이 같이 나오면 기업별로 구분해 각 기업의 인물별 항목을 넣으세요. 회사명(company)은 항목마다 **한 기업만**(쉼표로 "네이버, 카카오" 같이 쓰지 말 것). 기사 URL은 article_url 하나만 두세요.
 
 [출력]
@@ -105,7 +106,7 @@ USER_PROMPT_TEMPLATE = """아래 뉴스가 **임원인사** 또는 **주요 조�
 요약: {description}
 본문(일부): {body}
 
-[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **기사에 이름 나온 인물은 한 명도 빠짐없이 인물별 item으로.** **이미 주총에서 가결·선임 확정된 내용에는 personnel_timing에 "주총 승인 후" 넣지 말 것.** **조직개편 시기 필수**: 기사에 "지난해 말", "올해 3월" 등 조직개편 진행 시기가 나오면 org_changes 각 문장 **맨 앞에 반드시** 포함. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **조직 담당 업무**: 기사에 해당 조직이 담당하는 업무(▲… 등)가 나오면 org_changes/bullet_points에 그다음 줄로 요약 포함. **단행 시기**: 임원인사는 personnel_timing에. **연관 조직명**: "OO 산하에", "OO 소속" 등 상위·연관 조직이 있으면 요약에 포함. **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) 어떤 사업(OO) 중심인지, (2) 함께 진행하는 사업(협업·구축·제공 등)을 bullet_points/org_changes에 각각 포함. **부서명**: 알파벳 약어는 기사에 풀이 있으면 괄호 표기. **reason_for_change**: "이는 ~ 위한 조치다" 등에서 ~ 부분 추출. 없으면 빈 문자열.
+[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **한 기사에 여러 명 임원인사(선임·사임·교체)가 나오면 선임·사임·교체된 모든 인물을 각각 item으로 넣고, 한 명이라도 누락 금지.** **이미 진행된 주총**(이날 주주총회에서 … 승인됐다, 선임했고, 재선임했다, 가결되었다 등)이면 personnel_timing 빈 문자열, **"주총 승인 후"·"예정" 절대 사용 금지.** 요약은 "'OO' 직함의 사내이사 선임, 'OO' 사외이사 재선임"처럼 확정 사실만. **조직개편 시기 필수**: 기사에 "지난해 말", "올해 3월" 등 조직개편 진행 시기가 나오면 org_changes 각 문장 **맨 앞에 반드시** 포함. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **조직 담당 업무**: 기사에 해당 조직이 담당하는 업무(▲… 등)가 나오면 org_changes/bullet_points에 그다음 줄로 요약 포함. **단행 시기**: 임원인사는 personnel_timing에. **연관 조직명**: "OO 산하에", "OO 소속" 등 상위·연관 조직이 있으면 요약에 포함. **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) 어떤 사업(OO) 중심인지, (2) 함께 진행하는 사업(협업·구축·제공 등)을 bullet_points/org_changes에 각각 포함. **부서명**: 알파벳 약어는 기사에 풀이 있으면 괄호 표기. **reason_for_change**: "이는 ~ 위한 조치다" 등에서 ~ 부분 추출. 없으면 빈 문자열.
 
 출력 형식 (이 키만 사용, JSON만 출력):
 {schema}"""
@@ -136,6 +137,21 @@ def _build_article_text(article: dict) -> str:
     title = (article.get("title") or "").strip()
     desc = (article.get("description") or "").strip()
     return f"{title}\n{desc}"[:2000]
+
+
+def _clear_timing_when_article_reports_completed_shmeeting(summaries: list[dict], body: str) -> None:
+    """기사 본문에 이미 주총 가결·선임 완료 표현이 있으면 '주총 승인 후'·예정을 붙이지 않도록 인사 시기를 제거."""
+    if not body or not summaries:
+        return
+    body_lower = body.replace(" ", "")
+    # 이미 진행된 주총(과거 완료) 지시어: 승인됐다, 가결, 선임했, 재선임했 등
+    completed_markers = ("승인됐다", "승인됐다고", "가결되었다", "가결했다", "선임했", "재선임했", "원안대로승인")
+    if not any(m in body_lower for m in completed_markers):
+        return
+    for s in summaries:
+        timing = (s.get("인사 시기") or "").strip()
+        if timing and "주총" in timing and "승인" in timing:
+            s.pop("인사 시기", None)
 
 
 def _one_item_to_summary(item: dict, url: str) -> dict:
@@ -354,6 +370,9 @@ def _call_llm_once(client, article: dict) -> tuple[dict | None, dict]:
             if summaries and body_missing:
                 for s in summaries:
                     s["요약_근거"] = "제목·요약 기반"
+            # 이미 진행된 주총(가결·선임 완료)인데 LLM이 '주총 승인 후'를 넣은 경우 제거
+            if body and summaries:
+                _clear_timing_when_article_reports_completed_shmeeting(summaries, body)
             return summaries, make_debug(
                 is_relevant=bool(summaries),
                 raw=raw_text,

@@ -315,7 +315,6 @@ def _build_html_from_summary(
 
     lines = [
         "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>",
-        f"<p>{subject}</p>",
         "<ul>",
     ]
     sent_exec_this = []
@@ -424,33 +423,21 @@ def _build_html_from_summary(
             lines.append("        </ul>")
             lines.append("      </li>")
             if rep_reason:
-                lines.append("      <li>진행 이유")
-                lines.append("        <ul>")
-                lines.append(f"          <li>{_reason_to_noun_form(rep_reason)}</li>")
-                lines.append("        </ul>")
-                lines.append("      </li>")
+                lines.append(f"      <li>진행 이유: {_reason_to_noun_form(rep_reason)}</li>")
             lines.append("    </ul>")
         elif exec_lines_out:
             lines.append("    <ul>")
             for line in exec_lines_out:
                 lines.append(f"      <li>{_normalize_display(line)}</li>")
             if rep_reason:
-                lines.append("      <li>진행 이유")
-                lines.append("        <ul>")
-                lines.append(f"          <li>{_reason_to_noun_form(rep_reason)}</li>")
-                lines.append("        </ul>")
-                lines.append("      </li>")
+                lines.append(f"      <li>진행 이유: {_reason_to_noun_form(rep_reason)}</li>")
             lines.append("    </ul>")
         elif org_changes_list:
             lines.append("    <ul>")
             for oc in org_changes_list:
                 lines.append(f"      <li>{_normalize_display(oc)}</li>")
             if rep_reason:
-                lines.append("      <li>진행 이유")
-                lines.append("        <ul>")
-                lines.append(f"          <li>{_reason_to_noun_form(rep_reason)}</li>")
-                lines.append("        </ul>")
-                lines.append("      </li>")
+                lines.append(f"      <li>진행 이유: {_reason_to_noun_form(rep_reason)}</li>")
             lines.append("    </ul>")
         lines.append("  </li>")
     lines.append("</ul></body></html>")
