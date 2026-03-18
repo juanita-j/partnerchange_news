@@ -312,7 +312,7 @@ def _build_html_from_summary(
 
     lines = [
         "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>",
-        f"<h2>{subject}</h2>",
+        f"<p>{subject}</p>",
         "<ul>",
     ]
     sent_exec_this = []
@@ -514,7 +514,7 @@ def send_gmail_from_json(
             print("직전 발송 이후 기사 0건. 메일 발송 스킵.")
             return 0
         now = datetime.now()
-        subject = f"[파트너십] Daily 인사변동 업데이트 ({now.strftime('%y/%m/%d')}, {now.hour}시)"
+        subject = f"[뉴스클리핑] Daily 인사변동 업데이트 ({now.strftime('%y/%m/%d')})"
         sent_dedup = _load_sent_dedup_store()
         body, sent_exec_keys, sent_org_keys = _build_html_from_summary(items, subject, sent_dedup)
         if not sent_exec_keys and not sent_org_keys:

@@ -303,7 +303,7 @@ def build_body_html(articles: list) -> str:
 
 def build_subject() -> str:
     now = datetime.now(KST)
-    return f"[파트너십] Daily 인사변동 업데이트 ({now.strftime('%y/%m/%d')}, {now.hour}시)"
+    return f"[뉴스클리핑] Daily 인사변동 업데이트 ({now.strftime('%y/%m/%d')})"
 
 
 def _build_from_news_summary() -> bool:
@@ -326,7 +326,7 @@ def _build_from_news_summary() -> bool:
     if not items:
         return False
     now = datetime.now(KST)
-    subject = f"[파트너십] Daily 인사변동 업데이트 ({now.strftime('%y/%m/%d')}, {now.hour}시)"
+    subject = f"[뉴스클리핑] Daily 인사변동 업데이트 ({now.strftime('%y/%m/%d')})"
     sent_dedup = _load_sent_dedup_store()
     body_html, sent_exec_keys, sent_org_keys = _build_html_from_summary(items, subject, sent_dedup)
     out = {"to": MAIL_TO, "subject": subject, "body": body_html, "contentType": "html"}
