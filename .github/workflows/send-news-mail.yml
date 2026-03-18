@@ -62,16 +62,13 @@ jobs:
           [ -f .cache_dedup/sent_dedup_store.json ] && cp .cache_dedup/sent_dedup_store.json . || true
 
       - name: Collect news (Naver API)
-        run: |
-          echo "github.event_name=${{ github.event_name }}"
-          echo "REQUEST_SCOPE=${{ github.event_name == 'workflow_dispatch' && 'today' || 'scheduled' }}"
-          python send_exec_news_timed.py
+        run: python send_exec_news_timed.py
         env:
           NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
           NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
           TZ: Asia/Seoul
           FETCH_ARTICLE_BODY: "1"
-          # workflow_dispatch → 당일 00:00~현재 전체 수집. schedule → 직전 업데이트 이후만 수집
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
           REQUEST_SCOPE: ${{ github.event_name == 'workflow_dispatch' && 'today' || 'scheduled' }}
 
       - name: Summarize with LLM
@@ -86,6 +83,9 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
           GMAIL_TO: ${{ secrets.GMAIL_TO }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          REQUEST_SCOPE: ${{ github.event_name == 'workflow_dispatch' && 'today' || 'scheduled' }}
+          APPLY_RECENT_DEDUPE: ${{ github.event_name == 'workflow_dispatch' && '0' || '1' }}
 
       - name: Save sent_dedup_store for next run
         run: |

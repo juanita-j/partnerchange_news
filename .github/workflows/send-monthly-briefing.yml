@@ -1,5 +1,6 @@
 # 매월 마지막 주 금요일 KST 09:00에 월간 인사변동 브리핑 메일 발송
 # cron: 매주 금요일 00:00 UTC = KST 09:00. 스크립트 내부에서 "해당 월 마지막 금요일" 여부 검사 후 발송
+# 수동 실행 시 inputs으로 target_year, target_month 지정 가능 → 해당 월 daily 누적분 전체 사용
 # 필수 Secrets: GMAIL_APP_PASSWORD, GMAIL_SENDER, GMAIL_TO
 
 name: Send Monthly Briefing
@@ -8,6 +9,15 @@ on:
   schedule:
     - cron: '0 0 * * 5'
   workflow_dispatch:
+    inputs:
+      target_year:
+        description: '대상 연도 (해당 월 아카이브 캐시 복원용, 미입력 시 현재 연도)'
+        required: false
+        type: string
+      target_month:
+        description: '대상 월 1-12 (미입력 시 현재 월)'
+        required: false
+        type: string
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -20,8 +30,9 @@ jobs:
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
       GMAIL_TO: ${{ secrets.GMAIL_TO }}
-      # 수동 실행 시 마지막 금요일 체크 무시하고 발송
       FORCE_SEND_MONTHLY: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+      TARGET_YEAR: ${{ inputs.target_year }}
+      TARGET_MONTH: ${{ inputs.target_month }}
 
     steps:
       - name: Checkout
@@ -32,8 +43,15 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Set archive cache key (KST year-month)
-        run: echo "YM=$(TZ=Asia/Seoul date +%Y-%m)" >> $GITHUB_ENV
+      - name: Set archive cache key (대상 연월 = daily 아카이브와 동일 키)
+        run: |
+          if [ -n "${{ inputs.target_year }}" ] && [ -n "${{ inputs.target_month }}" ]; then
+            ym=$(python3 -c "print('${{ inputs.target_year }}-'+'${{ inputs.target_month }}'.zfill(2))")
+          else
+            ym=$(TZ=Asia/Seoul date +%Y-%m)
+          fi
+          echo "YM=$ym" >> $GITHUB_ENV
+          echo "Restoring monthly archive cache for YM=$ym"
 
       - name: Restore monthly archive cache
         uses: actions/cache@v4

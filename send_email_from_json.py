@@ -15,7 +15,7 @@ import re
 import smtplib
 import ssl
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -501,20 +501,42 @@ def send_gmail_from_json(
         with open(json_path, "r", encoding="utf-8") as f:
             payload = json.load(f)
         items = payload.get("items") or []
-        items = _filter_items_since_last_send(items)
-        if not items:
-            print("직전 발송 이후 기사 0건. 메일 발송 스킵.")
-            return 0
+        request_scope = (os.environ.get("REQUEST_SCOPE") or "").strip().lower()
+        apply_dedupe = (os.environ.get("APPLY_RECENT_DEDUPE", "1") or "").strip() == "1"
+        # workflow_dispatch(today): 직전 발송 시각 필터·recent dedupe 사용 안 함
+        if request_scope != "today":
+            items = _filter_items_since_last_send(items)
+        if request_scope == "today" or not apply_dedupe:
+            sent_dedup = {}
+        else:
+            sent_dedup = _load_sent_dedup_store()
         now = datetime.now()
-        subject = f"[뉴스클리핑] Daily 인사변동 업데이트 ({now.strftime('%y/%m/%d')})"
-        sent_dedup = _load_sent_dedup_store()
-        body, sent_exec_keys, sent_org_keys = _build_html_from_summary(items, subject, sent_dedup)
-        if not sent_exec_keys and not sent_org_keys:
-            print("이전 메일과 중복만 있음. 새 소식 없음. 메일 발송 스킵.")
-            return 0
+        if request_scope == "scheduled":
+            kst = timezone(timedelta(hours=9))
+            now_kst = now.astimezone(kst)
+            subject = f"[인사변동] Daily update ({now_kst.strftime('%y/%m/%d')}, {now_kst.hour}시)"
+        else:
+            subject = f"[인사변동] Daily update ({now.strftime('%y/%m/%d')})"
+        if items:
+            body, sent_exec_keys, sent_org_keys = _build_html_from_summary(items, subject, sent_dedup)
+            if not sent_exec_keys and not sent_org_keys:
+                body = (
+                    "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>"
+                    "<p>업데이트된 내용 없음</p>"
+                    "</body></html>"
+                )
+        else:
+            body = (
+                "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>"
+                "<p>업데이트된 내용 없음</p>"
+                "</body></html>"
+            )
+            sent_exec_keys = []
+            sent_org_keys = []
         to = os.environ.get("GMAIL_TO", "juan.jung@navercorp.com").strip()
     else:
         # 레거시: email_content.json (to, subject, body, contentType)
+        items = []
         with open(json_path, "r", encoding="utf-8") as f:
             payload = json.load(f)
         to = payload.get("to", "").strip() or os.environ.get("GMAIL_TO", "juan.jung@navercorp.com")
@@ -527,7 +549,8 @@ def send_gmail_from_json(
         print("오류: subject 또는 body가 비어 있습니다.")
         return 1
 
-    if _should_skip_send(body):
+    is_no_update_body = "업데이트된 내용 없음" in body and len(body) < 600
+    if not is_no_update_body and _should_skip_send(body):
         print("동일 내용이 24시간 이내 이미 발송됨. 발송 스킵. (FORCE_SEND=1 로 재발송 가능)")
         return 0
 

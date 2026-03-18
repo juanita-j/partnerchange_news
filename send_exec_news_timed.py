@@ -188,7 +188,9 @@ def get_since_datetime(now: datetime, since_today_midnight: bool = False) -> dat
 
 
 def get_today_start_kst(now: datetime) -> datetime:
-    """당일 00:00:00 Asia/Seoul (KST)."""
+    """당일 00:00:00 Asia/Seoul (KST). timezone 유지."""
+    if getattr(now, "tzinfo", None) is None:
+        now = now.replace(tzinfo=KST)
     return now.replace(hour=0, minute=0, second=0, microsecond=0)
 
 
@@ -548,57 +550,72 @@ def _merge_one_company(company: str, company_articles: list[dict]) -> tuple[str,
     return one_line, best_link, concise, extra
 
 
-def collect_articles_since(client_id: str, client_secret: str, since_dt: datetime) -> list[dict]:
+def collect_articles_since(client_id: str, client_secret: str, since_dt: datetime) -> tuple[list[dict], dict]:
+    """since_dt 이상(이후) pubDate 기사 수집. 페이징으로 100건 이상도 수집. 반환: (articles, stats)."""
     seen_links = set()
     articles = []
+    display_per_page = 100
+    stats = {"raw_count": 0, "after_date_filter": 0, "after_relevance_filter": 0}
 
     for keyword in KEYWORDS:
         if len(articles) >= MAX_ARTICLES:
             break
-        try:
-            data = fetch_news(client_id, client_secret, keyword, display=30)
-            for item in data.get("items", []):
-                link = item.get("link") or item.get("originallink") or ""
-                if not link or link in seen_links:
-                    continue
-                pub_dt = parse_pubdate(item.get("pubDate", ""))
-                if pub_dt is None or pub_dt <= since_dt:
-                    continue
-                now = now_kst()
-                if pub_dt < now - timedelta(days=30):
-                    continue
-                link_lower = link.lower()
-                # 블로그 절대 활용하지 않음 (수집 제외)
-                if "blog." in link_lower or "cafe." in link_lower or "kin." in link_lower:
-                    continue
-                title_clean = strip_html(item.get("title", ""))
-                desc_clean = strip_html(item.get("description", ""))
-                # 요청1: 연예·정치·스포츠 이적 등 임원인사가 아닌 기사 제목 제외
-                if _is_title_noise(title_clean):
-                    continue
-                # 제목: (임원인사 키워드 1개 이상 OR 조직개편 키워드 1개 이상) + 파트너사 1개 이상
-                has_exec = _keyword_in_text_strict(title_clean, EXEC_KEYWORDS)
-                has_org = _keyword_in_text_strict(title_clean, ORG_RESTRUCTURING_KEYWORDS)
-                if not has_exec and not has_org:
-                    continue
-                # 요청2: '다음'이 일반어(다음 시즌/경기) 또는 스포츠 맥락이면 제외(제목-내용 불일치 방지)
-                if not _partner_match_for_exec_news(title_clean):
-                    continue
-                seen_links.add(link)
-                articles.append({
-                    "title": title_clean,
-                    "link": link,
-                    "description": desc_clean,
-                    "pubDate": item.get("pubDate", ""),
-                })
+        start = 1
+        while True:
+            try:
+                data = fetch_news(client_id, client_secret, keyword, display=display_per_page, start=start)
+                items = data.get("items") or []
+                if not items:
+                    break
+                stats["raw_count"] += len(items)
+                for item in items:
+                    link = item.get("link") or item.get("originallink") or ""
+                    if not link or link in seen_links:
+                        continue
+                    pub_dt = parse_pubdate(item.get("pubDate", ""))
+                    if pub_dt is None:
+                        continue
+                    # 당일 00:00 포함: pub_dt >= since_dt 포함 (즉 pub_dt < since_dt 이면 제외)
+                    if pub_dt < since_dt:
+                        continue
+                    stats["after_date_filter"] += 1
+                    now = now_kst()
+                    if pub_dt < now - timedelta(days=30):
+                        continue
+                    link_lower = link.lower()
+                    if "blog." in link_lower or "cafe." in link_lower or "kin." in link_lower:
+                        continue
+                    title_clean = strip_html(item.get("title", ""))
+                    desc_clean = strip_html(item.get("description", ""))
+                    if _is_title_noise(title_clean):
+                        continue
+                    has_exec = _keyword_in_text_strict(title_clean, EXEC_KEYWORDS)
+                    has_org = _keyword_in_text_strict(title_clean, ORG_RESTRUCTURING_KEYWORDS)
+                    if not has_exec and not has_org:
+                        continue
+                    if not _partner_match_for_exec_news(title_clean):
+                        continue
+                    stats["after_relevance_filter"] += 1
+                    seen_links.add(link)
+                    articles.append({
+                        "title": title_clean,
+                        "link": link,
+                        "description": desc_clean,
+                        "pubDate": item.get("pubDate", ""),
+                    })
+                    if len(articles) >= MAX_ARTICLES:
+                        break
                 if len(articles) >= MAX_ARTICLES:
                     break
-        except Exception as e:
-            print(f"키워드 '{keyword}' 검색 오류: {e}")
-            continue
+                if len(items) < display_per_page:
+                    break
+                start += display_per_page
+            except Exception as e:
+                print(f"키워드 '{keyword}' start={start} 검색 오류: {e}")
+                break
 
-    # pubDate 기준 최신순 유지 (API가 date sort라 대체로 이미 정렬됨)
-    return articles[:MAX_ARTICLES]
+    stats["final_included_count"] = len(articles)
+    return articles[:MAX_ARTICLES], stats
 
 
 def build_subject(now: datetime) -> str:
@@ -656,31 +673,40 @@ def main() -> int:
     now = now_kst()
     request_scope_raw = os.environ.get("REQUEST_SCOPE", "").strip().lower()
     request_scope = "today" if request_scope_raw == "today" else "scheduled"
+    event_name = os.environ.get("GITHUB_EVENT_NAME", "").strip() or "(로컬)"
 
     today_start = get_today_start_kst(now)
     if request_scope == "today":
         since = today_start
         last_sent_at_str = "(무시됨, today 모드)"
-        mode_reason = "workflow_dispatch uses today's 00:00 in Asia/Seoul"
+        mode_reason = "workflow_dispatch uses today's 00:00 to now in Asia/Seoul"
     else:
         since = get_since_datetime(now, since_today_midnight=False)
         last_sent_at_str = since.isoformat()
         mode_reason = "scheduled uses last run slot in Asia/Seoul"
 
+    print(f"github.event_name={event_name}")
     print(f"REQUEST_SCOPE={request_scope}")
-    print(f"now={now.isoformat()}")
+    print(f"now (Asia/Seoul)={now.isoformat()}")
     print(f"today_start={today_start.isoformat()}")
     print(f"last_sent_at={last_sent_at_str}")
     print(f"effective_since_dt={since.isoformat()}")
     print(f"mode_reason={mode_reason}")
 
-    articles = collect_articles_since(client_id, client_secret, since)
+    articles, collect_stats = collect_articles_since(client_id, client_secret, since)
     fetch_bodies_for_articles(articles)
 
+    print(f"raw article count={collect_stats.get('raw_count', 0)}")
+    print(f"after date filter count={collect_stats.get('after_date_filter', 0)}")
+    print(f"after relevance filter count={collect_stats.get('after_relevance_filter', 0)}")
+    print(f"final included count={collect_stats.get('final_included_count', len(articles))}")
+
+    until_dt = now.isoformat()
     payload = {
         "request_scope": request_scope,
         "collected_at": now.isoformat(),
         "since_dt": since.isoformat(),
+        "until_dt": until_dt,
         "mode_reason": mode_reason,
         "articles": [
             {
