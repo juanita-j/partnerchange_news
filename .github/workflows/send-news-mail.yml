@@ -53,8 +53,13 @@ jobs:
       - name: Restore sent_dedup_store (이전 메일 중복 제거용)
         uses: actions/cache@v4
         with:
-          path: sent_dedup_store.json
+          path: .cache_dedup
           key: sent-dedup-store-v1
+
+      - name: Apply restored sent_dedup_store
+        run: |
+          mkdir -p .cache_dedup
+          [ -f .cache_dedup/sent_dedup_store.json ] && cp .cache_dedup/sent_dedup_store.json . || true
 
       - name: Collect news (Naver API)
         run: |
@@ -81,6 +86,11 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
           GMAIL_TO: ${{ secrets.GMAIL_TO }}
+
+      - name: Save sent_dedup_store for next run
+        run: |
+          mkdir -p .cache_dedup
+          [ -f sent_dedup_store.json ] && cp sent_dedup_store.json .cache_dedup/ || true
 
       - name: Set archive cache key (KST year-month)
         run: echo "YM=$(TZ=Asia/Seoul date +%Y-%m)" >> $GITHUB_ENV

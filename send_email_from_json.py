@@ -39,13 +39,22 @@ def _is_valid_article_url(s: str) -> bool:
 
 
 def _normalize_display(s: str) -> str:
-    """본문 표기: (완료) → 공백+완료, (예정) → 공백+예정, '이름', → '이름' (콤마 제거)."""
+    """본문 표기: (완료) → 공백+완료, (예정) → 공백+예정, '이름', → '이름', 연속 중복 직함 하나로, 문장 끝 (주총 승인 후) 제거."""
     if not s:
         return s
     s = (s or "").replace("(완료)", " 완료").replace("(예정)", " 예정")
-    # '이름' 뒤 콤마 제거: ', ' 또는 ',\s*' → ' '
+    # '이름' 뒤 콤마 제거
     s = re.sub(r"',\s*", "' ", s)
-    return s
+    # 문장 끝 괄호 "(주총 승인 후)" 제거 (시기는 문장 앞에만 표시)
+    s = re.sub(r"\s*\(\s*주총\s*승인\s*후\s*\)\s*$", "", s, flags=re.IGNORECASE).strip()
+    # 연속으로 같은 단어가 두 번 나오면 하나만 (예: "사내이사 사내이사" → "사내이사")
+    words = s.split()
+    out = []
+    for w in words:
+        if out and out[-1] == w:
+            continue
+        out.append(w)
+    return " ".join(out)
 
 
 def _pubdate_to_mmdd(pub_date_str: str) -> str:
@@ -244,8 +253,11 @@ def _action_line(it: dict) -> str:
     else:
         part = action_type
 
+    # 시기(주총 승인 후 등)는 문장 끝 괄호 제거 후 문장 앞에 '시기, ' 형태로
     if timing:
-        part = f"{part} ({timing})"
+        # 문장 끝에 이미 '(주총 승인 후)' 등이 있으면 제거 (중복 방지)
+        part = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", part).strip()
+        part = f"{timing}, {part}"
     if person:
         return f"{person} {part}"
     return part
@@ -372,19 +384,35 @@ def _build_html_from_summary(
                 lines.append(f"          <li>{_normalize_display(oc)}</li>")
             lines.append("        </ul>")
             lines.append("      </li>")
+            if rep_reason:
+                lines.append("      <li>진행 이유")
+                lines.append("        <ul>")
+                lines.append(f"          <li>{rep_reason}</li>")
+                lines.append("        </ul>")
+                lines.append("      </li>")
             lines.append("    </ul>")
         elif exec_lines_out:
             lines.append("    <ul>")
             for line in exec_lines_out:
                 lines.append(f"      <li>{_normalize_display(line)}</li>")
+            if rep_reason:
+                lines.append("      <li>진행 이유")
+                lines.append("        <ul>")
+                lines.append(f"          <li>{rep_reason}</li>")
+                lines.append("        </ul>")
+                lines.append("      </li>")
             lines.append("    </ul>")
         elif org_changes_list:
             lines.append("    <ul>")
             for oc in org_changes_list:
                 lines.append(f"      <li>{_normalize_display(oc)}</li>")
+            if rep_reason:
+                lines.append("      <li>진행 이유")
+                lines.append("        <ul>")
+                lines.append(f"          <li>{rep_reason}</li>")
+                lines.append("        </ul>")
+                lines.append("      </li>")
             lines.append("    </ul>")
-        if rep_reason:
-            lines.append("    <p><strong>진행 이유:</strong> " + rep_reason + "</p>")
         lines.append("  </li>")
     lines.append("</ul></body></html>")
     return "\n".join(lines), sent_exec_this, sent_org_this
@@ -517,5 +545,45 @@ def send_gmail_from_json(
     return 0
 
 
+def record_sent_from_json(json_path: Path) -> int:
+    """JSON(예: email_samsung_hyundai.json)에 담긴 sent_exec_keys, sent_org_keys를 sent_dedup_store에 반영.
+    WORKS 메일 발송 후 호출하면, 다음 자동 발송 시 해당 항목이 제외됨.
+    """
+    if not json_path.exists():
+        print(f"파일 없음: {json_path}")
+        return 1
+    try:
+        with open(json_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"JSON 읽기 실패: {e}")
+        return 1
+    exec_keys = data.get("sent_exec_keys")
+    org_keys = data.get("sent_org_keys")
+    if isinstance(exec_keys, list):
+        exec_keys = [tuple(x) for x in exec_keys if isinstance(x, (list, tuple)) and len(x) >= 3]
+    else:
+        exec_keys = []
+    if isinstance(org_keys, list):
+        org_keys = [tuple(x) for x in org_keys if isinstance(x, (list, tuple)) and len(x) >= 2]
+    else:
+        org_keys = []
+    if not exec_keys and not org_keys:
+        print("기록할 sent_exec_keys/sent_org_keys 없음.")
+        return 0
+    try:
+        _save_sent_dedup_store(exec_keys, org_keys)
+        print(f"sent_dedup_store 반영: 임원 {len(exec_keys)}건, 조직 {len(org_keys)}건")
+    except Exception as e:
+        print(f"저장 실패: {e}")
+        return 1
+    return 0
+
+
 if __name__ == "__main__":
+    if len(sys.argv) >= 3 and sys.argv[1] == "--record-sent-from":
+        path = Path(sys.argv[2])
+        if not path.is_absolute():
+            path = OUTPUT_DIR / path
+        sys.exit(record_sent_from_json(path))
     sys.exit(send_gmail_from_json())

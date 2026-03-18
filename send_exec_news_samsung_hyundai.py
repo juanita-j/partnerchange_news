@@ -306,7 +306,46 @@ def build_subject() -> str:
     return f"{now.month}월 {now.day}일 임원인사·조직개편 뉴스 요약 (지정 회사)"
 
 
+def _build_from_news_summary() -> bool:
+    """news_summary.json 이 있으면 그 내용으로 email_samsung_hyundai.json 생성. 성공 시 True."""
+    try:
+        from send_email_from_json import (
+            _build_html_from_summary,
+            _filter_items_since_last_send,
+            _load_sent_dedup_store,
+        )
+    except ImportError:
+        return False
+    news_summary_path = OUTPUT_DIR / "news_summary.json"
+    if not news_summary_path.exists():
+        return False
+    with open(news_summary_path, "r", encoding="utf-8") as f:
+        payload = json.load(f)
+    items = payload.get("items") or []
+    items = _filter_items_since_last_send(items)
+    if not items:
+        return False
+    now = datetime.now(KST)
+    subject = f"{now.month}월 {now.day}일 임원인사·조직개편 뉴스 요약 (지정 회사)"
+    sent_dedup = _load_sent_dedup_store()
+    body_html, sent_exec_keys, sent_org_keys = _build_html_from_summary(items, subject, sent_dedup)
+    out = {"to": MAIL_TO, "subject": subject, "body": body_html, "contentType": "html"}
+    # 발송 후 중복 제거 저장소에 반영할 수 있도록 포함된 키 저장 (WORKS 메일 발송 후 record-sent-from 시 사용)
+    out["sent_exec_keys"] = [list(t) for t in sent_exec_keys]
+    out["sent_org_keys"] = [list(t) for t in sent_org_keys]
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    with open(EMAIL_JSON, "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=2)
+    print(f"[news_summary 기반] 제목: {subject}, 항목: {len(items)}건 → {EMAIL_JSON}")
+    return True
+
+
 def main():
+    # 1) news_summary.json 이 있으면 요약 본문(진행 이유·인물별·직전 발송 이후 등)으로 생성
+    if _build_from_news_summary():
+        return 0
+
+    # 2) 없으면 기존처럼 Naver API로 수집 후 단순 포맷으로 생성
     client_id = os.environ.get("NAVER_CLIENT_ID", "").strip()
     client_secret = os.environ.get("NAVER_CLIENT_SECRET", "").strip()
     if not client_id or not client_secret:
