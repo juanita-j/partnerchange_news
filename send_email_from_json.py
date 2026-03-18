@@ -195,15 +195,14 @@ def _reason_to_noun_form(s: str) -> str:
     if not s or not s.strip():
         return s
     s = _to_briefing_style(s.strip())
-    # ~을 위해 / ~를 위해 → ~을 위함 / ~를 위함
     s = re.sub(r"을 위해\b", "을 위함", s)
     s = re.sub(r"를 위해\b", "를 위함", s)
-    # ~을/를 위한 조치다 → ~을/를 위한 조치
     s = re.sub(r"(을 위한 조치)다\s*\.?\s*$", r"\1", s)
     s = re.sub(r"(를 위한 조치)다\s*\.?\s*$", r"\1", s)
     s = re.sub(r"(을 위한 조치)이다\s*\.?\s*$", r"\1", s)
     s = re.sub(r"(를 위한 조치)이다\s*\.?\s*$", r"\1", s)
-    # ~이다 → ~임, ~하다 → ~함, 그 외 ~다 → ~음
+    s = re.sub(r"(조치)다\s*\.?\s*$", r"\1", s)
+    s = re.sub(r"(것)다\s*\.?\s*$", r"\1", s)
     s = re.sub(r"이다\s*\.?\s*$", "임", s)
     s = re.sub(r"하다\s*\.?\s*$", "함", s)
     s = re.sub(r"다\s*\.?\s*$", "음", s)
@@ -244,11 +243,15 @@ def _bullets_from_item(it: dict) -> list[str]:
 
 
 def _action_line(it: dict) -> str:
-    """'이름' 변동 내용 (이름 뒤 콤마 없음). 재선임/연임 시 직함 한 번만. 이전 직함이 있으면 '직함의 변동 내용' 형태."""
+    """'이름' 변동 내용 (이름 뒤 콤마 없음). 재선임/연임 시 직함 한 번만. 직함 없으면 '없음' 쓰지 말고 직함 생략. 이전 직함 있으면 '직함의 변동 내용' 형태."""
     person = _format_person_name(it.get("대상 인물") or "")
     action_type = (it.get("인사 유형") or "").strip()
     prev = (it.get("기존 직책") or "").strip()
+    if prev == "없음":
+        prev = ""
     new = (it.get("신규 직책") or "").strip()
+    if new == "없음":
+        new = ""
     timing = (it.get("인사 시기") or "").strip()
 
     # 재선임/연임: 기존·신규 직함이 같을 수 있으므로 action_type 앞의 직함 중복 제거 (예: 회장 사내이사 재선임 → 사내이사 재선임)
@@ -276,7 +279,7 @@ def _action_line(it: dict) -> str:
     # 시기(주총 승인 후 등)는 문장 끝 괄호 제거 후 문장 맨 앞에 '시기, ' 형태로. 주총 승인 후일 때는 끝에 '예정' 붙임.
     if timing:
         part = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", part).strip()
-    line = f"{person} {part}" if person else part
+    line = f"{person}의 {part}" if (person and not prev) else (f"{person} {part}" if person else part)
     if timing:
         line = f"{timing}, {line}"
         if "주총" in timing and "승인" in timing:
@@ -333,7 +336,8 @@ def _build_html_from_summary(
                 rep_reason = (it.get("진행 이유") or "").strip()
 
         exec_items = []
-        org_changes_set = set()
+        org_changes_list = []
+        org_changes_seen = set()
         exec_lines_out = []
         for it in group:
             cf = it.get("category_flags") or {}
@@ -343,9 +347,10 @@ def _build_html_from_summary(
                 exec_items.append(it)
             if is_org:
                 for oc in it.get("org_changes") or []:
-                    if oc and str(oc).strip():
-                        org_changes_set.add(str(oc).strip())
-        org_changes_list = sorted(org_changes_set)
+                    s = str(oc).strip() if oc else ""
+                    if s and s not in org_changes_seen:
+                        org_changes_seen.add(s)
+                        org_changes_list.append(s)
 
         has_exec = bool(exec_items)
         has_org = bool(org_changes_list)

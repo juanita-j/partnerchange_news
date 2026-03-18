@@ -26,7 +26,6 @@ KST = timezone(timedelta(hours=9))
 OUTPUT_DIR = Path(__file__).resolve().parent
 ARCHIVE_DIR = OUTPUT_DIR / ".monthly_archives"
 
-# Daily 메일과 동일한 표기 로직 적용 (주총 승인 후 문두, (예정)·직함 중복 제거 등)
 try:
     from send_email_from_json import (
         _action_line as _daily_action_line,
@@ -100,13 +99,16 @@ def _format_person(s: str) -> str:
 
 
 def _archive_entry_to_daily_item(entry: dict) -> dict:
-    """월간 archive 항목을 daily 메일 _action_line 입력 형식으로 변환."""
+    """월간 archive 항목을 daily 메일 _action_line 입력 형식으로 변환. 직함 '없음'은 빈 문자열로."""
+    def _role(v):
+        s = (entry.get(v) or "").strip()
+        return "" if s == "없음" else s
     return {
         "회사명": (entry.get("company") or "").strip(),
         "대상 인물": (entry.get("person") or "").strip(),
         "인사 유형": (entry.get("action_type") or "").strip(),
-        "기존 직책": (entry.get("previous_role") or "").strip(),
-        "신규 직책": (entry.get("new_role") or "").strip(),
+        "기존 직책": _role("previous_role"),
+        "신규 직책": _role("new_role"),
         "인사 시기": (entry.get("personnel_timing") or "").strip(),
         "pubDate": (entry.get("pub_date") or "").strip(),
         "기사 URL": (entry.get("article_url") or "").strip(),
@@ -120,11 +122,14 @@ def _action_line_for_entry(entry: dict) -> str:
     if _daily_action_line is not None:
         daily_item = _archive_entry_to_daily_item(entry)
         return _daily_action_line(daily_item)
-    # fallback: 기존 monthly 전용 로직 (필드명 person, action_type 등)
     person = _format_person(entry.get("person") or "")
     action_type = (entry.get("action_type") or "").strip()
     prev = (entry.get("previous_role") or "").strip()
+    if prev == "없음":
+        prev = ""
     new = (entry.get("new_role") or "").strip()
+    if new == "없음":
+        new = ""
     timing = (entry.get("personnel_timing") or "").strip()
     if prev and ("재선임" in action_type or "연임" in action_type) and action_type.startswith(prev):
         action_type = action_type[len(prev):].strip()
@@ -140,7 +145,7 @@ def _action_line_for_entry(entry: dict) -> str:
         part = action_type
     if timing:
         part = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", part).strip()
-    line = f"{person} {part}" if person else part
+    line = f"{person}의 {part}" if (person and not prev) else (f"{person} {part}" if person else part)
     if timing:
         line = f"{timing}, {line}"
         if "주총" in timing and "승인" in timing:
@@ -149,7 +154,6 @@ def _action_line_for_entry(entry: dict) -> str:
 
 
 def _normalize_display_fallback(s: str) -> str:
-    """daily _normalize_display 미사용 시 fallback."""
     if not s:
         return s
     s = (s or "").replace("(완료)", " 완료").replace("(예정)", " 예정")
@@ -182,7 +186,6 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
         c = (e.get("company") or "").strip() or "(회사명 없음)"
         by_company[c].append(e)
 
-    # 회사명 "A, B" 형태는 기업별로 분리해 각각 블록으로 표시
     company_blocks = []
     for company in sorted(by_company.keys(), key=lambda x: (x.startswith("("), x)):
         group = by_company[company]
@@ -205,7 +208,6 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
         "<ol>",
     ]
     for i, (company, group) in enumerate(company_blocks, 1):
-        # 임원인사: (normalized_line, mmdd, url) 리스트, 표기 텍스트 기준 dedupe
         exec_seen = set()
         exec_rows = []
         for e in group:
@@ -225,7 +227,6 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
         if _action_part_for_grouping is not None:
             exec_rows.sort(key=lambda r: (_action_part_for_grouping(r[0]), r[0]))
 
-        # 조직개편: (문구, mmdd, url) 리스트, 문구 기준 dedupe
         org_seen = set()
         org_rows = []
         for e in group:
@@ -246,10 +247,8 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
 
         if not exec_rows and not org_rows:
             continue
-        # 첫 줄: 번호 + 볼드 기업명 유지
         lines.append(f"  <li><strong>{company}</strong>")
         lines.append("    <ul>")
-        # 임원인사/조직개편 = 상위 불렛, 항목들 = 하위 불렛 (라벨 볼드 없음)
         if exec_rows:
             lines.append("    <li>임원인사")
             lines.append("      <ul>")

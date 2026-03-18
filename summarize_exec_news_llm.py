@@ -70,19 +70,21 @@ SYSTEM_PROMPT = """당신은 한국 기업의 **임원인사**와 **주요 조�
 [진행 여부·시기 구분] 반드시 구분해서 요약하세요.
 - **임원인사**: '내정'(예정)·'선임'/'임명'(확정)·'주총 안건'/'승인 대기'(통과 여부가 안건)를 구분. personnel_type에 단계를 넣고(예: 사내이사 신규 선임 안건, 부회장 내정, 대표이사 선임). **personnel_timing "주총 승인 후" 사용 조건**: **아직 주총이 열리지 않았거나, 안건으로 상정·승인 대기 단계**일 때만 "주총 승인 후"를 넣는다. **이미 주총이 열렸고 의안이 가결·선임이 확정된 경우**(예: "이날 주총에서 O가 선임됐다", "주총를 열고 선임안을 가결했다", "제57기 정기 주주총회에서 가결했다")에는 personnel_timing에 "주총 승인 후"를 넣지 말 것(이미 승인 완료이므로). 그 외 실행 시기(2026년 3월부터 등)가 언급되면 personnel_timing에만 넣고, 문장 끝에 괄호로 "(주총 승인 후)" 적지 말 것.
 - **조직개편**: '예정'과 '완료'를 구분. 완료는 괄호 없이 띄어쓰기 한 칸 + '완료': 예) "글로벌사업부 통합 완료". 예정은 "(예정)" 표기: "AI전략본부 신설(예정)". 시기 언급 시: "DX부문 재편(예정, 2분기)".
-- **단행 시기 반영**: 기사에 "지난해 말", "올해 3월", "2025년 4분기", "OO시기에 임원인사/조직개편을 단행했다" 등 **단행된 시기**가 명시되어 있으면 반드시 요약에 포함한다. 임원인사는 personnel_timing에, 조직개편은 org_changes·bullet_points 문장 앞에(예: "지난 해, 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설") 넣는다.
+- **단행 시기 반영**: 기사에 "지난해 말", "올해 3월", "2025년 4분기", "OO시기에 임원인사/조직개편을 단행했다" 등 **단행된 시기**가 명시되어 있으면 반드시 요약에 포함한다. 임원인사는 personnel_timing에, 조직개편은 org_changes·bullet_points 문장 **맨 앞에** 넣는다.
+- **조직개편 진행 시기 필수**: 기사에 조직개편이 **언제** 이뤄졌는지("지난해 말", "올해 3월", "지난 해", "2025년 4분기" 등) 나오면 **빼먹지 말고** org_changes·bullet_points 각 문장 **맨 앞에** 반드시 쓴다. 예: 기사에 "지난해 말 고객가치혁신실 산하에 CX 조직을 신설했다" → org_changes에 **"지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설"** 처럼 시기(지난해 말)를 포함한다.
 
 [org_changes] 조직개편 해당 시 배열로 채움. 구체적 동작 단어: 신설, 통합, 폐지, 재편 등. 완료는 문장 끝에 띄어쓰기 한 칸 + '완료'(괄호 없음). 예정은 '(예정)'. 예: "AI전략본부 신설(예정)", "글로벌사업부 통합 완료". '개편·변동·변화'는 쓰지 말 것.
-- **단행 시기**: 기사에 단행 시기가 있으면 org_changes 문장 앞에 넣는다. 예: "지난 해, 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설".
+- **단행 시기(필수)**: 기사에 "지난해 말", "올해 3월" 등 조직개편 **진행 시기**가 있으면 org_changes 각 항목 **맨 앞에 반드시** 쓴다. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설".
 - **연관 조직명**: 신설·개편된 조직이 **어느 부서 산하/소속**인지 기사에 나오면 반드시 포함한다. 예: "고객가치혁신실 산하에 CX(Customer Experience) 조직 신설" (상위 조직 '고객가치혁신실' 포함).
+- **조직 담당 업무**: 기사에 신설·개편된 조직이 **어떤 업무를 담당하는지**("▲… ▲… 등 업무 담당", "~역할을 한다" 등) 나오면, 해당 조직 신설 항목 **바로 다음**에 org_changes 요소로 한 줄 요약해 추가한다. 예: 첫 요소 "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설", 둘째 요소 "CX조직은 ▲다양한 채널에서 고객 직접 대면을 통한 니즈 수집 및 분석 ▲서비스 등 개선점 제안 ▲중장기 고객가치 향상 방안 등 업무 담당 예정".
 - **부서명 알파벳 약어**: 기사 본문에 부서(본부·사업부 등)의 알파벳 약어에 대한 설명이 있으면, 요약·org_changes·bullet_points에 쓸 때 **약어 옆에 괄호로 풀어 쓴다**. 예: 기사에 "ES(Eco Solution) 사업본부", "냉난방공조(HVAC) 사업"이 나오면 → "LG전자 ES(Eco Solution) 사업부", "HVAC(냉난방공조) 사업"처럼 표기. 본문에 풀이가 없으면 괄호 추가하지 않음.
 - **'OO 중심으로 사업구조 재편'**: 기사에 "OO 중심으로 사업구조 재편", "사업구조를 재편하기로" 등이 나오면 요약에 **반드시** 다음 두 가지를 포함한다. (1) **어떤 사업 중심으로 재편하는지**: 예) "AI(인공지능) 중심으로 사업구조 재편 예정". (2) **재편과 함께 진행하는 사업·계획이 있으면**: 협업 파트너, 구축·제공할 사업 내용 등을 bullet_points 또는 org_changes에 한 줄로. 예) "AI 스타트업 리플렉션과 협업해 국내 최대 250MW급 AI 데이터센터 구축, 한국 기업·정부에 AI 클라우드 서비스 및 맞춤형 AI 모델·시스템 제공 예정".
 
-[previous_role·new_role·personnel_type] 기존 직책(previous_role)은 현재/이전 직위 또는 소속(예: CFO, 사외이사, 현대모비스 FTCI 담당(전무), 주한미국상공회의소 회장, BNY 뉴욕멜론은행 한국 대표). 신규 직책(new_role)은 취임·선임되는 직위·담당(예: 감사위원회 위원장 담당 전망). 인사 유형(personnel_type)은 변동 내용(예: 사내이사 재선임, 신규 사내이사 선임, 사외이사 재선임). personnel_type에 직함이 이미 들어가면 previous_role에는 이전 직함/소속만 넣어 중복 없이. 연임 포기처럼 직책이 하나면 previous_role만 채우고 personnel_type은 '연임 포기'만.
+[previous_role·new_role·personnel_type] 기존 직책(previous_role)은 현재/이전 직위 또는 소속(예: CFO, 사외이사, 현대모비스 FTCI 담당(전무)). 신규 직책(new_role)은 취임·선임되는 직위·담당(예: 감사위원회 위원장 담당 전망). **기사에 직함이 없으면 previous_role·new_role은 빈 문자열로 두고 '없음'이라고 쓰지 말 것.** 인사 유형(personnel_type)은 변동 내용(예: 사내이사 재선임, 신규 사내이사 선임). personnel_type에 직함이 이미 들어가면 previous_role에는 이전 직함/소속만 넣어 중복 없이. 연임 포기처럼 직책이 하나면 previous_role만 채우고 personnel_type은 '연임 포기'만.
 
 [bullet_points] 각 item은 **한 명의 인물(또는 한 조직개편)** 만 담음. 브리핑 스타일, 해당 인물/항목 관련 1~3개. 명사형 또는 "~함"체. **진행 단계(내정/선임/안건 등)와 실행 시기(언급 시) 포함.** 인물명은 작은따옴표(')로 감쌈. 한 기사에 여러 명이면 items를 인물별로 나눈 뒤 각 item의 bullet_points는 그 인물만.
 - 임원인사 예: '정의선' 회장의 사내이사 재선임, '성낙섭' FTCI 담당(전무)의 신규 사내이사 선임, '박현주' BNY 뉴욕멜론은행 한국 대표의 사외이사 신규 선임·감사위원회 위원장 담당 전망.
-- 조직개편 예: AI전략본부 신설(예정), 글로벌사업부 통합 완료. **시기+연관 조직 포함**: "지난 해, 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) OO(어떤 사업) 중심 재편 한 줄, (2) 함께 진행하는 사업(협업·구축·제공 내용 등) 한 줄. 예: "AI(인공지능) 중심으로 사업구조 재편 예정" / "AI 스타트업 리플렉션과 협업해 250MW급 AI 데이터센터 구축, AI 클라우드·맞춤형 AI 모델·시스템 제공 예정".
+- 조직개편 예: AI전략본부 신설(예정), 글로벌사업부 통합 완료. **시기 필수+연관 조직**: 기사에 시기("지난해 말" 등)가 나오면 빼먹지 말고 맨 앞에 쓴다. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **담당 업무**: 기사에 해당 조직의 업무·역할("▲… ▲… 등 업무 담당" 등)이 나오면 bullet_points에 **다음 줄**로 요약해 넣는다. 예: "CX조직은 ▲다양한 채널에서 고객 직접 대면을 통한 니즈 수집 및 분석 ▲서비스 등 개선점 제안 ▲중장기 고객가치 향상 방안 등 업무 담당 예정". **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) OO(어떤 사업) 중심 재편 한 줄, (2) 함께 진행하는 사업(협업·구축·제공 내용 등) 한 줄.
 
 [reason_for_change] **임원인사 또는 조직개편 단행 이유**를 기사에서 찾아 각 item(기업)별로 한 문장으로 작성.
 - **추출 패턴**: "임원을 배치했다. 이는 ~~ 위한 조치다.", "~하기 위한 조치", "~를(을) 위해 ~했다" 등에서 **"~~" 또는 "~" 부분**이 단행 이유. "이를 통해 ~", "~목적", "~배경으로" 뒤에 오는 내용도 이유로 활용.
@@ -103,7 +105,7 @@ USER_PROMPT_TEMPLATE = """아래 뉴스가 **임원인사** 또는 **주요 조�
 요약: {description}
 본문(일부): {body}
 
-[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **기사에 이름 나온 인물은 한 명도 빠짐없이 인물별 item으로.** **이미 주총에서 가결·선임 확정된 내용에는 personnel_timing에 "주총 승인 후" 넣지 말 것.** **단행 시기**: 기사에 "지난해 말", "올해 3월" 등 단행 시기가 있으면 personnel_timing 또는 org_changes 문장 앞에 반드시 포함. **연관 조직명**: "OO 산하에", "OO 소속" 등 상위·연관 조직이 있으면 요약에 포함. **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) 어떤 사업(OO) 중심인지, (2) 함께 진행하는 사업(협업·구축·제공 등)을 bullet_points/org_changes에 각각 포함. **부서명**: 알파벳 약어는 기사에 풀이 있으면 괄호 표기. **reason_for_change**: "이는 ~ 위한 조치다" 등에서 ~ 부분 추출. 없으면 빈 문자열.
+[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **기사에 이름 나온 인물은 한 명도 빠짐없이 인물별 item으로.** **이미 주총에서 가결·선임 확정된 내용에는 personnel_timing에 "주총 승인 후" 넣지 말 것.** **조직개편 시기 필수**: 기사에 "지난해 말", "올해 3월" 등 조직개편 진행 시기가 나오면 org_changes 각 문장 **맨 앞에 반드시** 포함. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **조직 담당 업무**: 기사에 해당 조직이 담당하는 업무(▲… 등)가 나오면 org_changes/bullet_points에 그다음 줄로 요약 포함. **단행 시기**: 임원인사는 personnel_timing에. **연관 조직명**: "OO 산하에", "OO 소속" 등 상위·연관 조직이 있으면 요약에 포함. **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) 어떤 사업(OO) 중심인지, (2) 함께 진행하는 사업(협업·구축·제공 등)을 bullet_points/org_changes에 각각 포함. **부서명**: 알파벳 약어는 기사에 풀이 있으면 괄호 표기. **reason_for_change**: "이는 ~ 위한 조치다" 등에서 ~ 부분 추출. 없으면 빈 문자열.
 
 출력 형식 (이 키만 사용, JSON만 출력):
 {schema}"""
@@ -118,6 +120,12 @@ def _get_openai_client():
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY 환경 변수가 없습니다.")
     return OpenAI(api_key=api_key)
+
+
+def _role_or_empty(val) -> str:
+    """직함 값이 '없음'이면 빈 문자열, 아니면 strip한 값."""
+    v = (val or "").strip()
+    return "" if v == "없음" else v
 
 
 def _build_article_text(article: dict) -> str:
@@ -150,8 +158,8 @@ def _one_item_to_summary(item: dict, url: str) -> dict:
         "회사명": company,
         "인사 유형": action_type,
         "대상 인물": person,
-        "기존 직책": (item.get("previous_role") or "").strip(),
-        "신규 직책": (item.get("new_role") or "").strip(),
+        "기존 직책": _role_or_empty(item.get("previous_role")),
+        "신규 직책": _role_or_empty(item.get("new_role")),
         "2문장 요약": (item.get("summary_2sent") or "").strip(),
         "중요 포인트": item.get("key_points") if isinstance(item.get("key_points"), list) else [],
         "bullet_points": bullet_points,
@@ -245,8 +253,8 @@ def _parse_llm_response(text: str, url: str) -> tuple[list[dict], dict]:
             "회사명": company,
             "인사 유형": action_type,
             "대상 인물": person,
-            "기존 직책": (data.get("previous_role") or "").strip(),
-            "신규 직책": (data.get("new_role") or "").strip(),
+            "기존 직책": _role_or_empty(data.get("previous_role")),
+            "신규 직책": _role_or_empty(data.get("new_role")),
             "2문장 요약": (data.get("summary_2sent") or "").strip(),
             "중요 포인트": data.get("key_points") if isinstance(data.get("key_points"), list) else [],
             "bullet_points": bullet_points,
