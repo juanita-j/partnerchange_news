@@ -253,14 +253,13 @@ def _action_line(it: dict) -> str:
     else:
         part = action_type
 
-    # 시기(주총 승인 후 등)는 문장 끝 괄호 제거 후 문장 앞에 '시기, ' 형태로
+    # 시기(주총 승인 후 등)는 문장 끝 괄호 제거 후 문장 맨 앞에 '시기, ' 형태로 (예: 주총 승인 후, '홍길동' 사내이사 선임)
     if timing:
-        # 문장 끝에 이미 '(주총 승인 후)' 등이 있으면 제거 (중복 방지)
         part = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", part).strip()
-        part = f"{timing}, {part}"
-    if person:
-        return f"{person} {part}"
-    return part
+    line = f"{person} {part}" if person else part
+    if timing:
+        line = f"{timing}, {line}"
+    return line
 
 
 def _build_html_from_summary(
@@ -479,7 +478,8 @@ def send_gmail_from_json(
         if not items:
             print("직전 발송 이후 기사 0건. 메일 발송 스킵.")
             return 0
-        subject = f"인사변동 업데이트 ({datetime.now().strftime('%y/%m/%d')})"
+        now = datetime.now()
+        subject = f"[파트너십] Daily 인사변동 업데이트 ({now.strftime('%y/%m/%d')}, {now.hour}시)"
         sent_dedup = _load_sent_dedup_store()
         body, sent_exec_keys, sent_org_keys = _build_html_from_summary(items, subject, sent_dedup)
         if not sent_exec_keys and not sent_org_keys:

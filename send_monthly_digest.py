@@ -220,7 +220,7 @@ def run() -> int:
 
     if not archive_path.exists():
         print(f"archive 없음: {archive_path}. 0건 메일 발송.")
-        subject = f"{month:02d}월 인사변동 및 조직개편 브리핑"
+        subject = f"[파트너십] Monthly 인사변동 업데이트 ({year % 100}/{month:02d})"
         body_html = f"<!DOCTYPE html><html><head><meta charset='utf-8'></head><body><h2>{subject}</h2><p>{month:02d}월 인사변동 및 조직개편 없음</p></body></html>"
         _send_gmail(subject, body_html)
         print("메일 발송: 0건 브리핑 발송함.")
@@ -237,13 +237,13 @@ def run() -> int:
     print(f"기업 수: {len(companies)}")
 
     if not entries:
-        subject = f"{month:02d}월 인사변동 및 조직개편 브리핑"
+        subject = f"[파트너십] Monthly 인사변동 업데이트 ({year % 100}/{month:02d})"
         body_html = f"<!DOCTYPE html><html><head><meta charset='utf-8'></head><body><h2>{subject}</h2><p>{month:02d}월 인사변동 및 조직개편 없음</p></body></html>"
         _send_gmail(subject, body_html)
         print("메일 발송: 0건 브리핑 발송함.")
         return 0
 
-    subject = f"{month:02d}월 인사변동 및 조직개편 브리핑"
+    subject = f"[파트너십] Monthly 인사변동 업데이트 ({year % 100}/{month:02d})"
     body_html = _build_digest_html(entries, month)
     _send_gmail(subject, body_html)
     print("메일 발송: 완료.")
