@@ -190,6 +190,26 @@ def _to_briefing_style(s: str) -> str:
     return s
 
 
+def _reason_to_noun_form(s: str) -> str:
+    """진행 이유 문장을 명사형으로 끝내기 (~다 → ~함/~임/~음, 조치다 → 조치, ~를/을 위해 → ~를/을 위함)."""
+    if not s or not s.strip():
+        return s
+    s = _to_briefing_style(s.strip())
+    # ~을 위해 / ~를 위해 → ~을 위함 / ~를 위함
+    s = re.sub(r"을 위해\b", "을 위함", s)
+    s = re.sub(r"를 위해\b", "를 위함", s)
+    # ~을/를 위한 조치다 → ~을/를 위한 조치
+    s = re.sub(r"(을 위한 조치)다\s*\.?\s*$", r"\1", s)
+    s = re.sub(r"(를 위한 조치)다\s*\.?\s*$", r"\1", s)
+    s = re.sub(r"(을 위한 조치)이다\s*\.?\s*$", r"\1", s)
+    s = re.sub(r"(를 위한 조치)이다\s*\.?\s*$", r"\1", s)
+    # ~이다 → ~임, ~하다 → ~함, 그 외 ~다 → ~음
+    s = re.sub(r"이다\s*\.?\s*$", "임", s)
+    s = re.sub(r"하다\s*\.?\s*$", "함", s)
+    s = re.sub(r"다\s*\.?\s*$", "음", s)
+    return s.strip()
+
+
 def _bullets_from_item(it: dict) -> list[str]:
     """bullet_points 있으면 사용(2~5개), 없으면 2문장 요약·중요 포인트로 브리핑 스타일 불렛 생성."""
     bullets = it.get("bullet_points")
@@ -253,13 +273,24 @@ def _action_line(it: dict) -> str:
     else:
         part = action_type
 
-    # 시기(주총 승인 후 등)는 문장 끝 괄호 제거 후 문장 맨 앞에 '시기, ' 형태로 (예: 주총 승인 후, '홍길동' 사내이사 선임)
+    # 시기(주총 승인 후 등)는 문장 끝 괄호 제거 후 문장 맨 앞에 '시기, ' 형태로. 주총 승인 후일 때는 끝에 '예정' 붙임.
     if timing:
         part = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", part).strip()
     line = f"{person} {part}" if person else part
     if timing:
         line = f"{timing}, {line}"
+        if "주총" in timing and "승인" in timing:
+            line = line + " 예정"
     return line
+
+
+def _action_part_for_grouping(line: str) -> str:
+    """임원인사 한 줄에서 '이름'·시기 접두어를 제거한 표현(사장 선임 등) 추출. 같은 표현끼리 묶기 위함."""
+    s = (line or "").strip()
+    s = re.sub(r"^주총\s*승인\s*후\s*,\s*", "", s, flags=re.IGNORECASE)
+    s = re.sub(r"^'[^']*'\s*", "", s)
+    s = re.sub(r"^\"[^\"]*\"\s*", "", s)
+    return s.strip() or line
 
 
 def _build_html_from_summary(
@@ -322,8 +353,9 @@ def _build_html_from_summary(
             has_exec = True
             exec_items = group
 
-        # 이전 메일과 중복 제거: 임원인사
+        # 이전 메일과 중복 제거: 임원인사. 같은 표현(사장 선임 등)끼리 묶어서 정렬
         seen_exec = set()
+        exec_pairs = []
         for it in exec_items:
             line = _action_line(it)
             if not line:
@@ -336,7 +368,10 @@ def _build_html_from_summary(
             if line in seen_exec:
                 continue
             seen_exec.add(line)
-            exec_lines_out.append(line)
+            exec_pairs.append((line, c))
+        exec_pairs.sort(key=lambda p: (_action_part_for_grouping(p[0]), p[0]))
+        exec_lines_out = [p[0] for p in exec_pairs]
+        for _, c in exec_pairs:
             sent_exec_this.append(c)
 
         # 이전 메일과 중복 제거: 조직개편
@@ -386,7 +421,7 @@ def _build_html_from_summary(
             if rep_reason:
                 lines.append("      <li>진행 이유")
                 lines.append("        <ul>")
-                lines.append(f"          <li>{rep_reason}</li>")
+                lines.append(f"          <li>{_reason_to_noun_form(rep_reason)}</li>")
                 lines.append("        </ul>")
                 lines.append("      </li>")
             lines.append("    </ul>")
@@ -397,7 +432,7 @@ def _build_html_from_summary(
             if rep_reason:
                 lines.append("      <li>진행 이유")
                 lines.append("        <ul>")
-                lines.append(f"          <li>{rep_reason}</li>")
+                lines.append(f"          <li>{_reason_to_noun_form(rep_reason)}</li>")
                 lines.append("        </ul>")
                 lines.append("      </li>")
             lines.append("    </ul>")
@@ -408,7 +443,7 @@ def _build_html_from_summary(
             if rep_reason:
                 lines.append("      <li>진행 이유")
                 lines.append("        <ul>")
-                lines.append(f"          <li>{rep_reason}</li>")
+                lines.append(f"          <li>{_reason_to_noun_form(rep_reason)}</li>")
                 lines.append("        </ul>")
                 lines.append("      </li>")
             lines.append("    </ul>")

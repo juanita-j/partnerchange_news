@@ -5,6 +5,7 @@
 - .monthly_archives/monthly_archive_YYYY_MM.json 읽기
 - 중복 제거(회사+인물+인사유형) 후 기업별 그룹핑
 - 매월 마지막 주 금요일(Asia/Seoul)에만 발송하거나, 로컬/환경변수로 강제 실행
+- 각 회사별 임원인사/조직개편 불렛, 내용 끝에 (mm/dd) 기사 링크. Daily 메일과 동일한 표기 로직 적용.
 
 로컬 테스트: python send_monthly_digest.py
 환경변수: TARGET_YEAR=2026 TARGET_MONTH=3 (선택), FORCE_SEND_MONTHLY=1 (마지막 금요일 무시하고 발송)
@@ -24,6 +25,18 @@ from email.mime.multipart import MIMEMultipart
 KST = timezone(timedelta(hours=9))
 OUTPUT_DIR = Path(__file__).resolve().parent
 ARCHIVE_DIR = OUTPUT_DIR / ".monthly_archives"
+
+# Daily 메일과 동일한 표기 로직 적용 (주총 승인 후 문두, (예정)·직함 중복 제거 등)
+try:
+    from send_email_from_json import (
+        _action_line as _daily_action_line,
+        _action_part_for_grouping,
+        _normalize_display,
+        _pubdate_to_mmdd,
+        _is_valid_article_url,
+    )
+except ImportError:
+    _daily_action_line = _action_part_for_grouping = _normalize_display = _pubdate_to_mmdd = _is_valid_article_url = None
 
 
 def _now_kst() -> datetime:
@@ -86,41 +99,84 @@ def _format_person(s: str) -> str:
     return f"'{s}'"
 
 
-def _action_line(entry: dict) -> str:
-    """'이름', 변동 내용. 직위 중복 없이, 이전 직함이 있으면 '직함의 변동 내용' 형태로."""
+def _archive_entry_to_daily_item(entry: dict) -> dict:
+    """월간 archive 항목을 daily 메일 _action_line 입력 형식으로 변환."""
+    return {
+        "회사명": (entry.get("company") or "").strip(),
+        "대상 인물": (entry.get("person") or "").strip(),
+        "인사 유형": (entry.get("action_type") or "").strip(),
+        "기존 직책": (entry.get("previous_role") or "").strip(),
+        "신규 직책": (entry.get("new_role") or "").strip(),
+        "인사 시기": (entry.get("personnel_timing") or "").strip(),
+        "pubDate": (entry.get("pub_date") or "").strip(),
+        "기사 URL": (entry.get("article_url") or "").strip(),
+        "category_flags": entry.get("category_flags") or {},
+        "org_changes": entry.get("org_changes") or [],
+    }
+
+
+def _action_line_for_entry(entry: dict) -> str:
+    """archive 항목 한 건에 대해 daily와 동일한 표기 라인 생성 (주총 승인 후 문두 등)."""
+    if _daily_action_line is not None:
+        daily_item = _archive_entry_to_daily_item(entry)
+        return _daily_action_line(daily_item)
+    # fallback: 기존 monthly 전용 로직 (필드명 person, action_type 등)
     person = _format_person(entry.get("person") or "")
     action_type = (entry.get("action_type") or "").strip()
     prev = (entry.get("previous_role") or "").strip()
     new = (entry.get("new_role") or "").strip()
     timing = (entry.get("personnel_timing") or "").strip()
-
+    if prev and ("재선임" in action_type or "연임" in action_type) and action_type.startswith(prev):
+        action_type = action_type[len(prev):].strip()
     if prev and new:
+        part = f"{prev}의 {new} {action_type}" if action_type else f"{prev} → {new}"
         if new and (new in action_type or action_type.startswith(new)):
             part = f"{prev}의 {action_type}"
-        else:
-            part = f"{prev}의 {new} {action_type}" if action_type else f"{prev} → {new}"
     elif prev:
-        if prev in action_type or action_type.startswith(prev):
-            part = action_type
-        else:
-            part = f"{prev} {action_type}"
+        part = f"{prev} {action_type}" if not (prev in action_type or action_type.startswith(prev)) else action_type
     elif new:
-        if new in action_type or action_type.startswith(new):
-            part = action_type
-        else:
-            part = f"{new} {action_type}" if action_type else new
+        part = f"{new} {action_type}" if action_type else new
     else:
         part = action_type
-
     if timing:
-        part = f"{part} ({timing})"
-    if person:
-        return f"{person}, {part}"
-    return part
+        part = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", part).strip()
+    line = f"{person} {part}" if person else part
+    if timing:
+        line = f"{timing}, {line}"
+        if "주총" in timing and "승인" in timing:
+            line = line + " 예정"
+    return line
+
+
+def _normalize_display_fallback(s: str) -> str:
+    """daily _normalize_display 미사용 시 fallback."""
+    if not s:
+        return s
+    s = (s or "").replace("(완료)", " 완료").replace("(예정)", " 예정")
+    s = re.sub(r"',\s*", "' ", s)
+    s = re.sub(r"\s*\(\s*주총\s*승인\s*후\s*\)\s*$", "", s, flags=re.IGNORECASE).strip()
+    words = s.split()
+    out = []
+    for w in words:
+        if out and out[-1] == w:
+            continue
+        out.append(w)
+    return " ".join(out)
+
+
+def _mmdd_fallback(pub_date_str: str) -> str:
+    if not pub_date_str or not str(pub_date_str).strip():
+        return ""
+    try:
+        from email.utils import parsedate_to_datetime
+        dt = parsedate_to_datetime(str(pub_date_str).strip())
+        return dt.strftime("%m/%d")
+    except Exception:
+        return ""
 
 
 def _build_digest_html(entries: list[dict], month: int) -> str:
-    """기업별 그룹핑 후 [임원인사]/[조직개편] 섹션으로 HTML 본문 생성. 조직개편은 (회사, 문구) 기준 dedupe."""
+    """기업별 그룹핑 후 첫 줄은 번호+볼드 기업명, 이어서 불렛으로 임원인사/조직개편. 각 줄 끝 (mm/dd) 기사. 중복 내용 제거."""
     by_company: dict[str, list[dict]] = defaultdict(list)
     for e in entries:
         c = (e.get("company") or "").strip() or "(회사명 없음)"
@@ -128,6 +184,9 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
 
     companies_sorted = sorted(by_company.keys(), key=lambda x: (x.startswith("("), x))
     mm = f"{month:02d}"
+    norm_display = _normalize_display if _normalize_display is not None else _normalize_display_fallback
+    pub_to_mmdd = _pubdate_to_mmdd if _pubdate_to_mmdd is not None else _mmdd_fallback
+    is_valid_url = _is_valid_article_url if _is_valid_article_url is not None else lambda u: u and (u.startswith("http://") or u.startswith("https://"))
 
     lines = [
         "<!DOCTYPE html><html><head><meta charset='utf-8'></head><body>",
@@ -137,52 +196,71 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
     ]
     for i, company in enumerate(companies_sorted, 1):
         group = by_company[company]
-        rep_link = ""
-        exec_lines_seen = set()
-        org_changes_seen = set()
-        exec_lines = []
-        org_lines = []
+        # 임원인사: (normalized_line, mmdd, url) 리스트, 표기 텍스트 기준 dedupe
+        exec_seen = set()
+        exec_rows = []
         for e in group:
-            url = (e.get("article_url") or "").strip()
-            if url:
-                rep_link = url
             cf = e.get("category_flags") or {}
-            is_exec = cf.get("exec_personnel", True)
-            is_org = cf.get("org_restructuring", False)
-            if is_exec:
-                line = _action_line(e)
-                if line and line not in exec_lines_seen:
-                    exec_lines_seen.add(line)
-                    exec_lines.append(line)
-            if is_org:
-                for oc in e.get("org_changes") or []:
-                    oc = (oc or "").strip()
-                    if oc and oc not in org_changes_seen:
-                        org_changes_seen.add(oc)
-                        org_lines.append(oc)
+            if not cf.get("exec_personnel", True):
+                continue
+            line = _action_line_for_entry(e)
+            if not line:
+                continue
+            normalized = norm_display(line)
+            if normalized in exec_seen:
+                continue
+            exec_seen.add(normalized)
+            mmdd = pub_to_mmdd(e.get("pub_date") or "")
+            url = (e.get("article_url") or "").strip()
+            exec_rows.append((normalized, mmdd, url))
+        if _action_part_for_grouping is not None:
+            exec_rows.sort(key=lambda r: (_action_part_for_grouping(r[0]), r[0]))
+
+        # 조직개편: (문구, mmdd, url) 리스트, 문구 기준 dedupe
+        org_seen = set()
+        org_rows = []
+        for e in group:
+            cf = e.get("category_flags") or {}
+            if not cf.get("org_restructuring", False):
+                continue
+            mmdd = pub_to_mmdd(e.get("pub_date") or "")
+            url = (e.get("article_url") or "").strip()
+            for oc in e.get("org_changes") or []:
+                oc = (oc or "").strip()
+                if not oc:
+                    continue
+                oc_norm = norm_display(oc)
+                if oc_norm in org_seen:
+                    continue
+                org_seen.add(oc_norm)
+                org_rows.append((oc_norm, mmdd, url))
+
+        if not exec_rows and not org_rows:
+            continue
+        # 첫 줄: 번호 + 볼드 기업명 유지
         lines.append(f"  <li><strong>{company}</strong>")
         lines.append("    <ul>")
-        if exec_lines and org_lines:
-            lines.append("    <li>임원인사")
-            lines.append("    <ul>")
-            for line in exec_lines:
-                lines.append(f"      <li>{line}</li>")
-            lines.append("    </ul>")
+        # 임원인사/조직개편 = 상위 불렛, 항목들 = 하위 불렛
+        if exec_rows:
+            lines.append("    <li><strong>임원인사</strong>")
+            lines.append("      <ul>")
+            for text, date_part, link in exec_rows:
+                suffix = f" ({date_part})" if date_part else ""
+                if link and is_valid_url(link):
+                    suffix += f" <a href=\"{link}\">기사</a>"
+                lines.append(f"        <li>{text}{suffix}</li>")
+            lines.append("      </ul>")
             lines.append("    </li>")
-            lines.append("    <li>조직개편")
-            lines.append("    <ul>")
-            for oc in sorted(org_lines):
-                lines.append(f"      <li>{oc}</li>")
-            lines.append("    </ul>")
+        if org_rows:
+            lines.append("    <li><strong>조직개편</strong>")
+            lines.append("      <ul>")
+            for text, date_part, link in org_rows:
+                suffix = f" ({date_part})" if date_part else ""
+                if link and is_valid_url(link):
+                    suffix += f" <a href=\"{link}\">기사</a>"
+                lines.append(f"        <li>{text}{suffix}</li>")
+            lines.append("      </ul>")
             lines.append("    </li>")
-        elif exec_lines:
-            for line in exec_lines:
-                lines.append(f"    <li>{line}</li>")
-        elif org_lines:
-            for oc in sorted(org_lines):
-                lines.append(f"    <li>{oc}</li>")
-        if rep_link:
-            lines.append(f'    <li><a href="{rep_link}">기사 보기</a></li>')
         lines.append("    </ul>")
         lines.append("  </li>")
     lines.append("</ol></body></html>")
