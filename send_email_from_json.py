@@ -319,6 +319,46 @@ def _action_part_for_grouping(line: str) -> str:
     return s.strip() or line
 
 
+def _merge_same_person_agenda_and_action(exec_pairs: list[tuple[str, tuple]]) -> list[tuple[str, tuple]]:
+    """동일 인물에 대해 '안건' 한 줄과 '재선임/선임' 한 줄이 있으면 하나로 합친다. 합친 형식: 주주총회에서 '(이름)' (직함)의 (인사유형) 안건이 도출됨."""
+    from collections import defaultdict
+    by_person: dict[tuple, list[tuple[str, tuple]]] = defaultdict(list)
+    for line, c in exec_pairs:
+        company, person_norm, action_type = c
+        by_person[(company, person_norm)].append((line, c))
+
+    out = []
+    for (company, person_norm), pairs in by_person.items():
+        if len(pairs) != 2:
+            out.extend(pairs)
+            continue
+        line1, c1 = pairs[0]
+        line2, c2 = pairs[1]
+        has_agenda_1 = "안건" in (line1 or "")
+        has_agenda_2 = "안건" in (line2 or "")
+        has_action_1 = "재선임" in (line1 or "") or "선임" in (line1 or "") or "연임" in (line1 or "")
+        has_action_2 = "재선임" in (line2 or "") or "선임" in (line2 or "") or "연임" in (line2 or "")
+        if not (has_agenda_1 != has_agenda_2 and has_action_1 != has_action_2):
+            out.extend(pairs)
+            continue
+        agenda_line = line1 if has_agenda_1 else line2
+        action_line = line2 if has_agenda_1 else line1
+        # 직함: "'이름' 대표이사의" → 대표이사
+        role_match = re.search(r"'[^']+'\s+([^의]+)의\s+.*안건", agenda_line or "")
+        role = (role_match.group(1).strip() if role_match else "").strip()
+        # 인사유형: "의 사내이사 재선임" 또는 "사내이사 재선임"
+        action_match = re.search(r"(사내이사|사외이사|감사위원|이사)\s*(재선임|선임|연임)", action_line or "")
+        action_part = (action_match.group(0).strip() if action_match else "").strip()
+        if not role or not action_part:
+            out.extend(pairs)
+            continue
+        person_quoted = f"'{person_norm}'"
+        merged_line = f"주주총회에서 {person_quoted} {role}의 {action_part} 안건이 도출됨"
+        merged_c = (company, person_norm, f"{action_part} 안건")
+        out.append((merged_line, merged_c))
+    return out
+
+
 def _build_html_from_summary(
     items: list[dict],
     subject: str,
@@ -396,6 +436,7 @@ def _build_html_from_summary(
                 continue
             seen_exec.add(line)
             exec_pairs.append((line, c))
+        exec_pairs = _merge_same_person_agenda_and_action(exec_pairs)
         exec_pairs.sort(key=lambda p: (_action_part_for_grouping(p[0]), p[0]))
         exec_lines_out = [p[0] for p in exec_pairs]
         for _, c in exec_pairs:

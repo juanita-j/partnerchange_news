@@ -106,6 +106,18 @@ def contains_company(text: str) -> bool:
     return bool(text and any(c in text for c in COMPANY_FILTER))
 
 
+def _is_lotte_chemical_equipment_low_relevance(title: str, description: str) -> bool:
+    """롯데케미칼·NCC·설비·석유화학산단 통합/해체/구조재편 기사는 파트너사 롯데와 연관도가 낮으므로 True → 제외."""
+    if not title and not description:
+        return False
+    text = f" {title or ''} {description or ''} "
+    if "롯데" not in text:
+        return False
+    lotte_chemical_indicators = ("케미칼", "NCC", "여천", "석유화학", "설비")
+    reorg_indicators = ("통합", "해체", "구조재편", "구조 재편")
+    return any(k in text for k in lotte_chemical_indicators) and any(k in text for k in reorg_indicators)
+
+
 def get_company_name(title: str, desc: str) -> str:
     """기사에서 매칭된 회사명 중 표기 우선순위에 따라 하나 반환 (명사형 표기용)."""
     combined = (title or "") + " " + (desc or "")
@@ -262,6 +274,8 @@ def collect_and_filter(client_id: str, client_secret: str, cutoff: datetime) -> 
                 title = strip_html(item.get("title", ""))
                 desc = strip_html(item.get("description", ""))
                 if not contains_company(title) and not contains_company(desc):
+                    continue
+                if _is_lotte_chemical_equipment_low_relevance(title, desc):
                     continue
                 seen_links.add(link)
                 articles.append({"title": title, "link": link, "description": desc, "pubDate": item.get("pubDate", "")})

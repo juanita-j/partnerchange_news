@@ -153,6 +153,20 @@ def _partner_match_for_exec_news(title: str) -> bool:
     return True
 
 
+def _is_lotte_chemical_equipment_low_relevance(title: str, description: str) -> bool:
+    """롯데케미칼·NCC·설비·석유화학산단 통합/해체/구조재편 기사는 파트너사 롯데와 연관도가 낮으므로 True → 수집 제외."""
+    if not title and not description:
+        return False
+    text = f" {title or ''} {description or ''} "
+    if "롯데" not in text:
+        return False
+    lotte_chemical_indicators = ("케미칼", "NCC", "여천", "석유화학", "설비")
+    reorg_indicators = ("통합", "해체", "구조재편", "구조 재편")
+    has_chem = any(k in text for k in lotte_chemical_indicators)
+    has_reorg = any(k in text for k in reorg_indicators)
+    return bool(has_chem and has_reorg)
+
+
 MAX_ARTICLES = 50
 NEWS_API_URL = "https://openapi.naver.com/v1/search/news.json"
 OUTPUT_DIR = Path(__file__).resolve().parent
@@ -604,6 +618,8 @@ def collect_articles_since(client_id: str, client_secret: str, since_dt: datetim
                     if not has_exec and not has_org:
                         continue
                     if not _partner_match_for_exec_news(title_clean):
+                        continue
+                    if _is_lotte_chemical_equipment_low_relevance(title_clean, desc_clean):
                         continue
                     stats["after_relevance_filter"] += 1
                     seen_links.add(link)
