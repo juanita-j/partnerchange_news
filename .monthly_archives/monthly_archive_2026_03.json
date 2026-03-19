@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-19T16:05:51.461291+09:00",
+  "updated_at": "2026-03-19T16:57:43.615134+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -1102,6 +1102,143 @@
       "important_point": "전기차 중심으로 사업 구조 재편",
       "bullet_points": [
         "전동화·수소 중심으로 사업 구조 재편, 에너지와 금융 서비스로 사업 영역 확장"
+      ],
+      "article_url": "https://www.getnews.co.kr/news/articleView.html?idxno=865080",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 15:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "전동화·수소 중심으로 사업 구조 재편",
+        "전동화 차량 충전사업과 금융상품 중개업, 수소사업 등을 사업 목적에 추가"
+      ]
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "재선임",
+      "previous_role": "",
+      "new_role": "사내이사",
+      "important_point": "이재원, 황승욱 각각 2년 임기 재선임 안건",
+      "bullet_points": [
+        "'이재원' 사내이사 재선임 안건 추진(올해 3월까지)",
+        "'황승욱' 사내이사 재선임 안건 추진(올해 3월까지)"
+      ],
+      "article_url": "https://www.thebell.co.kr/free/Content/Article/view.asp?key=202302270100024160001046&svccode=00",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 15:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "올해 3월까지"
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "황승욱",
+      "action_type": "재선임",
+      "previous_role": "",
+      "new_role": "사내이사",
+      "important_point": "이재원, 황승욱 각각 2년 임기 재선임 안건",
+      "bullet_points": [
+        "'황승욱' 사내이사 재선임 안건 추진(올해 3월까지)"
+      ],
+      "article_url": "https://www.thebell.co.kr/free/Content/Article/view.asp?key=202302270100024160001046&svccode=00",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 15:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "올해 3월까지"
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "안건",
+      "previous_role": "대표이사",
+      "new_role": "대표이사",
+      "important_point": "이재원 대표 연임 안건 상정",
+      "bullet_points": [
+        "'이재원' 대표이사 중임 안건 상정"
+      ],
+      "article_url": "https://url.kr/9pghjn",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 16:01:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "황승욱",
+      "action_type": "안건",
+      "previous_role": "사내이사",
+      "new_role": "사내이사",
+      "important_point": "황승욱 사내이사 중임 안건 상정",
+      "bullet_points": [
+        "'황승욱' 사내이사 중임 안건 상정"
+      ],
+      "article_url": "https://url.kr/9pghjn",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 16:01:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-19",
+      "company": "여천NCC",
+      "origin_company": "",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "여천NCC 4년 연속 적자",
+      "bullet_points": [
+        "여천NCC 2공장 폐쇄(예정)",
+        "여천NCC 1공장과 롯데케미칼 여수 공장 통합(예정)"
+      ],
+      "article_url": "http://www.4th.kr/news/articleView.html?idxno=2109283",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 16:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "여천NCC 2공장 폐쇄(예정)",
+        "여천NCC 1공장과 롯데케미칼 여수 공장 통합(예정)"
+      ]
+    },
+    {
+      "date": "2026-03-19",
+      "company": "현대차",
+      "origin_company": "",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "전동화·수소 중심으로 사업 구조 재편",
+      "bullet_points": [
+        "전동화·수소 중심으로 사업 구조 재편",
+        "전동화 차량 충전사업과 금융상품 중개업, 수소사업 등을 사업 목적에 추가"
       ],
       "article_url": "https://www.getnews.co.kr/news/articleView.html?idxno=865080",
       "article_title": "",
