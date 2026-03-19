@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-18T20:01:51.930846+09:00",
+  "updated_at": "2026-03-19T13:33:55.954574+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -841,6 +841,48 @@
       },
       "org_changes": [
         "AI 중심으로 전 사업 포트폴리오 재편"
+      ]
+    },
+    {
+      "date": "2026-03-19",
+      "company": "KT",
+      "person": "박윤영",
+      "action_type": "대표이사 내정",
+      "previous_role": "KT 기업부문장 사장",
+      "new_role": "대표이사",
+      "important_point": "박윤영 대표 후보자 내정",
+      "bullet_points": [
+        "KT는 박윤영 전 KT 기업부문장 사장을 차기 대표이사로 내정함"
+      ],
+      "article_url": "https://www.e-science.co.kr/news/articleView.html?idxno=128228",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 13:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-19",
+      "company": "SK에코",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "AI데이터센터 사업팀으로 개편",
+      "bullet_points": [
+        "지난해 기존 조직을 AI데이터센터 사업팀으로 개편"
+      ],
+      "article_url": "https://www.asiatime.co.kr/article/20260319500183",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 13:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "지난해 기존 조직을 AI데이터센터 사업팀으로 개편"
       ]
     }
   ]
