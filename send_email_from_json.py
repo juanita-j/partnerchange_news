@@ -191,12 +191,21 @@ def _to_briefing_style(s: str) -> str:
 
 
 def _reason_to_noun_form(s: str) -> str:
-    """진행 이유 문장을 명사형으로 끝내기 (~다 → ~함/~임/~음, 조치다 → 조치, ~를/을 위해 → ~를/을 위함)."""
+    """진행 이유 문장을 명사형으로 끝내기. 서술형 어미(~된다·~한다) 제거, ~를/을 위해→위함, 조치다→조치."""
     if not s or not s.strip():
         return s
     s = _to_briefing_style(s.strip())
     s = re.sub(r"을 위해\b", "을 위함", s)
     s = re.sub(r"를 위해\b", "를 위함", s)
+    # 서술형 어미 제거 → 명사형 (예: 평가된다→평가, 재편한다→재편)
+    s = re.sub(r"된다\s*\.?\s*$", "", s)
+    s = re.sub(r"한다\s*\.?\s*$", "", s)
+    s = re.sub(r"됐다\s*\.?\s*$", "", s)
+    s = re.sub(r"였다\s*\.?\s*$", "", s)
+    s = re.sub(r"었다\s*\.?\s*$", "", s)
+    # "~에 따라 재선임함/재선임됨" → "~에 따른 재선임"
+    s = re.sub(r"에 따라\s+재선임(함|됨)\s*\.?\s*$", "에 따른 재선임", s)
+    s = re.sub(r"한 데 기여함\s*\.?\s*$", "한 데 기여", s)
     s = re.sub(r"(을 위한 조치)다\s*\.?\s*$", r"\1", s)
     s = re.sub(r"(를 위한 조치)다\s*\.?\s*$", r"\1", s)
     s = re.sub(r"(을 위한 조치)이다\s*\.?\s*$", r"\1", s)
@@ -243,7 +252,7 @@ def _bullets_from_item(it: dict) -> list[str]:
 
 
 def _action_line(it: dict) -> str:
-    """'이름' 변동 내용 (이름 뒤 콤마 없음). 재선임/연임 시 직함 한 번만. 직함 없으면 '없음' 쓰지 말고 직함 생략. 이전 직함 있으면 '직함의 변동 내용' 형태."""
+    """'이름' 변동 내용. 타사 출신 선임 시 'A 출신 B 사장이 C 대표로 선임' 형식. 재선임/연임 시 직함 한 번만."""
     person = _format_person_name(it.get("대상 인물") or "")
     action_type = (it.get("인사 유형") or "").strip()
     prev = (it.get("기존 직책") or "").strip()
@@ -253,8 +262,23 @@ def _action_line(it: dict) -> str:
     if new == "없음":
         new = ""
     timing = (it.get("인사 시기") or "").strip()
+    company = (it.get("회사명") or "").strip()
+    origin_company = (it.get("출신 회사") or "").strip()
 
-    # 재선임/연임: 기존·신규 직함이 같을 수 있으므로 action_type 앞의 직함 중복 제거 (예: 회장 사내이사 재선임 → 사내이사 재선임)
+    # 타사 출신이 C회사에 선임된 경우: "A 출신 B 사장이 C 대표로 선임"
+    if origin_company and company and person and ("선임" in action_type or "영입" in action_type or "임명" in action_type):
+        prev_role_part = f" {prev}" if prev else ""
+        subject_josa = "이" if prev_role_part else "가"  # B 사장이 / B가
+        new_role_part = (new or action_type).replace("선임", "").replace("영입", "").strip() or "선임"
+        line = f"{origin_company} 출신 {person}{prev_role_part}{subject_josa} {company} {new_role_part}로 선임"
+        if timing:
+            line = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", line).strip()
+            line = f"{timing}, {line}"
+            if "주총" in timing and "승인" in timing:
+                line = line + " 예정"
+        return line
+
+    # 재선임/연임: 기존·신규 직함이 같을 수 있으므로 action_type 앞의 직함 중복 제거
     if prev and ("재선임" in action_type or "연임" in action_type) and action_type.startswith(prev):
         action_type = action_type[len(prev):].strip()
 
@@ -276,7 +300,6 @@ def _action_line(it: dict) -> str:
     else:
         part = action_type
 
-    # 시기(주총 승인 후 등)는 문장 끝 괄호 제거 후 문장 맨 앞에 '시기, ' 형태로. 주총 승인 후일 때는 끝에 '예정' 붙임.
     if timing:
         part = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", part).strip()
     line = f"{person}의 {part}" if (person and not prev) else (f"{person} {part}" if person else part)

@@ -1,6 +1,9 @@
 # 1시간마다 발송 (KST 09:05~19:05, 11회) — 직전 1시간 구간 기사만 포함
 # 푸시 즉시 적용: 당일 남은 회차부터 스케줄 실행 (다음날부터 아님)
 # 필수 Secrets: GMAIL_APP_PASSWORD, NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, OPENAI_API_KEY
+#
+# 파이프라인: send_exec_news_timed → news_raw → summarize_exec_news_llm → news_summary → send_email_from_json → archive_monthly_items
+# 제목/요약 규칙: 인사 발생 회사(C) 기준 제목 "C, 임원인사 진행", 타사 출신 선임 시 "A 출신 B 사장이 C 대표로 선임" 형식 (company=선임된 회사, previous_company=출신 회사)
 
 name: Send News Mail
 
@@ -73,13 +76,13 @@ jobs:
           GITHUB_EVENT_NAME: ${{ github.event_name }}
           REQUEST_SCOPE: ${{ github.event_name == 'workflow_dispatch' && 'today' || 'scheduled' }}
 
-      - name: Summarize with LLM
+      - name: Summarize with LLM (company=선임된 회사, previous_company=출신 회사 반영)
         run: python summarize_exec_news_llm.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           # OPENAI_MODEL: gpt-4o-mini  # 기본값
 
-      - name: Send mail (Gmail)
+      - name: Send mail (Gmail, 제목/요약 한 줄에 출신 회사·선임 회사 반영)
         run: python send_email_from_json.py
         env:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}

@@ -105,6 +105,7 @@ def _archive_entry_to_daily_item(entry: dict) -> dict:
         return "" if s == "없음" else s
     return {
         "회사명": (entry.get("company") or "").strip(),
+        "출신 회사": (entry.get("origin_company") or "").strip(),
         "대상 인물": (entry.get("person") or "").strip(),
         "인사 유형": (entry.get("action_type") or "").strip(),
         "기존 직책": _role("previous_role"),

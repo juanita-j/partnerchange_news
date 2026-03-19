@@ -497,6 +497,16 @@ def _group_by_company(articles: list[dict]) -> dict[str, list[dict]]:
     return groups
 
 
+def _pick_article_url_from_item(item: dict) -> str:
+    """API 응답에서 기사 URL 선택. 네이버 뉴스 URL(n.news.naver.com 등)이 있으면 우선 사용해 원본 사이트 삭제 시에도 접근 가능하게 함."""
+    link = (item.get("link") or "").strip()
+    originallink = (item.get("originallink") or "").strip()
+    for u in (link, originallink):
+        if u and ("n.news.naver.com" in u or "news.naver.com" in u):
+            return u
+    return link or originallink
+
+
 def _pick_best_link(articles: list[dict]) -> tuple[str, list[dict]]:
     """동일 뉴스 복수 출처 시 정보가 가장 많은(description 가장 긴) 기사 링크 선택. 반환: (link, 동일 뉴스로 묶인 기사 목록)."""
     if not articles:
@@ -569,7 +579,7 @@ def collect_articles_since(client_id: str, client_secret: str, since_dt: datetim
                     break
                 stats["raw_count"] += len(items)
                 for item in items:
-                    link = item.get("link") or item.get("originallink") or ""
+                    link = _pick_article_url_from_item(item)
                     if not link or link in seen_links:
                         continue
                     pub_dt = parse_pubdate(item.get("pubDate", ""))

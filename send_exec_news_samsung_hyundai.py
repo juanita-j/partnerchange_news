@@ -84,6 +84,16 @@ def _is_valid_article_url(s: str) -> bool:
     return True
 
 
+def _pick_article_url_from_item(item: dict) -> str:
+    """API 응답에서 기사 URL 선택. 네이버 뉴스 URL(n.news.naver.com 등)이 있으면 우선 사용해 원본 사이트 삭제 시에도 접근 가능하게 함."""
+    link = (item.get("link") or "").strip()
+    originallink = (item.get("originallink") or "").strip()
+    for u in (link, originallink):
+        if u and ("n.news.naver.com" in u or "news.naver.com" in u):
+            return u
+    return link or originallink
+
+
 def fetch_news(client_id: str, client_secret: str, query: str, display: int = 30, start: int = 1):
     headers = {"X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret}
     params = {"query": query, "display": min(display, 100), "start": start, "sort": "date"}
@@ -237,7 +247,7 @@ def collect_and_filter(client_id: str, client_secret: str, cutoff: datetime) -> 
         try:
             data = fetch_news(client_id, client_secret, keyword, display=20)
             for item in data.get("items", []):
-                link = item.get("link") or item.get("originallink") or ""
+                link = _pick_article_url_from_item(item)
                 if not link or link in seen_links:
                     continue
                 link_lower = link.lower()

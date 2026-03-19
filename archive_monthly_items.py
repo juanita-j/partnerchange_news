@@ -27,6 +27,7 @@ def _now_kst() -> datetime:
 def _item_to_archive_entry(it: dict, date_iso: str) -> dict:
     """news_summary item → 월간 archive 항목 형식."""
     company = (it.get("회사명") or "").strip()
+    origin_company = (it.get("출신 회사") or "").strip()
     person_raw = (it.get("대상 인물") or "").strip()
     person = re.sub(r"^['\"]|['\"]$", "", person_raw)
     action_type = (it.get("인사 유형") or "").strip()
@@ -51,6 +52,7 @@ def _item_to_archive_entry(it: dict, date_iso: str) -> dict:
     out = {
         "date": date_iso,
         "company": company,
+        "origin_company": origin_company,
         "person": person,
         "action_type": action_type,
         "previous_role": previous_role,

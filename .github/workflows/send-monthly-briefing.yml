@@ -2,6 +2,7 @@
 # cron: 매주 금요일 00:00 UTC = KST 09:00. 스크립트 내부에서 "해당 월 마지막 금요일" 여부 검사 후 발송
 # 수동 실행 시 inputs으로 target_year, target_month 지정 가능 → 해당 월 daily 누적분 전체 사용
 # 필수 Secrets: GMAIL_APP_PASSWORD, GMAIL_SENDER, GMAIL_TO
+# .monthly_archives/ 사용. 아카이브에 origin_company(출신 회사) 포함 시 "A 출신 B가 C 대표로 선임" 형식으로 표기
 
 name: Send Monthly Briefing
 
