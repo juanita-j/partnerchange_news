@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-19T19:01:46.169010+09:00",
+  "updated_at": "2026-03-19T19:52:33.375031+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -1449,6 +1449,157 @@
       "org_changes": [
         "신사업 발굴 TF 신설"
       ]
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "안건",
+      "previous_role": "대표이사",
+      "new_role": "대표이사",
+      "important_point": "주총에서 이재원 대표이사 중임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 중임 안건이 도출됨"
+      ],
+      "article_url": "https://www.hanseconomy.com/news/articleView.html?idxno=123456",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 19:00:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "황승욱",
+      "action_type": "안건",
+      "previous_role": "사내이사",
+      "new_role": "사내이사",
+      "important_point": "주총에서 이재원 대표이사 중임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '황승욱' 사내이사의 중임 안건이 도출됨"
+      ],
+      "article_url": "https://www.hanseconomy.com/news/articleView.html?idxno=123456",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 19:00:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "사내이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "대표이사",
+      "important_point": "주총에서 이재원 대표이사 재선임 안건 처리 예정",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/018/0006238971?sid=101",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 18:58:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "황승욱",
+      "action_type": "사내이사 재선임",
+      "previous_role": "부대표",
+      "new_role": "사내이사",
+      "important_point": "황승욱 부대표 사내이사 재선임 안건 포함",
+      "bullet_points": [
+        "주주총회에서 '황승욱' 거래소 부문 부대표의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/018/0006238971?sid=101",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 18:58:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "정연대",
+      "action_type": "신임 감사위원 선임",
+      "previous_role": "",
+      "new_role": "신임 감사위원",
+      "important_point": "정연대 신임 감사위원 선임 안건 포함",
+      "bullet_points": [
+        "주주총회에서 '정연대' 세무사의 신임 감사위원 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/018/0006238971?sid=101",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 18:58:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-19",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "연임",
+      "previous_role": "대표이사",
+      "new_role": "대표이사",
+      "important_point": "이재원 대표이사 연임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 연임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/417/0001134999?sid=101",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 18:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-19",
+      "company": "카카오엔터테인먼트",
+      "origin_company": "카카오뱅크",
+      "person": "고정희",
+      "action_type": "내정",
+      "previous_role": "AI그룹장",
+      "new_role": "공동대표",
+      "important_point": "신임 공동대표 내정",
+      "bullet_points": [
+        "'고정희' 전 카카오뱅크 AI그룹장이 카카오엔터테인먼트 신임 공동대표로 내정됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/014/0005494425?sid=105",
+      "article_title": "",
+      "pub_date": "Thu, 19 Mar 2026 18:45:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
     }
   ]
 }
