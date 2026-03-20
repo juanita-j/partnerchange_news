@@ -1,5 +1,6 @@
 .env
 .env.*
+!.env.example
 naver_news_키워드통합.json
 __pycache__/
 *.pyc

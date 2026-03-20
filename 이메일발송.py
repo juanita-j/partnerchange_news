@@ -18,7 +18,7 @@ except ImportError:
     pass
 
 # 기본 발송 정보 (필요 시 수정 또는 환경 변수로 덮어쓰기)
-SENDER = os.environ.get("GMAIL_SENDER", "wjdwndks99@gmail.com")
+SENDER = os.environ.get("GMAIL_SENDER", "naverpartnership@gmail.com")
 TO = os.environ.get("GMAIL_TO", "juan.jung@navercorp.com")
 SUBJECT = os.environ.get("GMAIL_SUBJECT", "테스트")
 BODY = os.environ.get("GMAIL_BODY", "테스트")

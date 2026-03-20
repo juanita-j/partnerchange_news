@@ -53,7 +53,7 @@ except ImportError:
         pass
 
 KST = timezone(timedelta(hours=9))
-MAIL_FROM = "wjdwndks99@gmail.com"
+MAIL_FROM = "naverpartnership@gmail.com"
 MAIL_TO = "juan.jung@navercorp.com"
 
 # 검색·필터: (임원인사 키워드 1개 이상 OR 조직개편 키워드 1개 이상) + 파트너사 1개 이상

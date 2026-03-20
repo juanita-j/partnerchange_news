@@ -342,7 +342,7 @@ def _send_gmail(subject: str, body_html: str) -> None:
     if not password:
         print("오류: GMAIL_APP_PASSWORD 환경 변수가 없습니다.")
         raise SystemExit(1)
-    sender = (os.environ.get("GMAIL_SENDER") or "wjdwndks99@gmail.com").strip()
+    sender = (os.environ.get("GMAIL_SENDER") or "naverpartnership@gmail.com").strip()
     to = (os.environ.get("GMAIL_TO") or "juan.jung@navercorp.com").strip()
 
     msg = MIMEMultipart("alternative")

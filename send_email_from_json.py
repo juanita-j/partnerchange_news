@@ -618,7 +618,7 @@ def send_gmail_from_json(
         print("동일 내용이 24시간 이내 이미 발송됨. 발송 스킵. (FORCE_SEND=1 로 재발송 가능)")
         return 0
 
-    sender = (sender or os.environ.get("GMAIL_SENDER", "wjdwndks99@gmail.com")).strip()
+    sender = (sender or os.environ.get("GMAIL_SENDER", "naverpartnership@gmail.com")).strip()
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"] = sender
