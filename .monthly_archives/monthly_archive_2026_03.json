@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-20T14:25:55.087400+09:00",
+  "updated_at": "2026-03-20T15:08:37.905233+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -3087,6 +3087,174 @@
       "org_changes": [
         "ESS 중심 사업 재편(예정)"
       ]
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스홀딩스",
+      "origin_company": "",
+      "person": "김형준",
+      "action_type": "선임",
+      "previous_role": "부사장",
+      "new_role": "사내이사",
+      "important_point": "주주총회에서 6개 안건 의결",
+      "bullet_points": [
+        "'김형준' 부사장의 사내이사 선임"
+      ],
+      "article_url": "http://mbnmoney.mbn.co.kr/news/view?news_no=MM1005792950",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "차명훈",
+      "action_type": "선임",
+      "previous_role": "공동대표",
+      "new_role": "단독대표",
+      "important_point": "단독대표 체제로 전환",
+      "bullet_points": [
+        "'차명훈' 단독대표 선임"
+      ],
+      "article_url": "https://www.econovill.com/news/articleView.html?idxno=734086",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "선임",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "사내이사",
+      "important_point": "이사회 재편",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임"
+      ],
+      "article_url": "https://it.chosun.com/news/articleView.html?idxno=2023092158953",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:36:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "선임",
+      "previous_role": "롯데마트·슈퍼 대표",
+      "new_role": "사내이사",
+      "important_point": "이사회 재편",
+      "bullet_points": [
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임"
+      ],
+      "article_url": "https://it.chosun.com/news/articleView.html?idxno=2023092158953",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:36:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "임재철",
+      "action_type": "선임",
+      "previous_role": "롯데쇼핑 재무본부장",
+      "new_role": "사내이사",
+      "important_point": "이사회 재편",
+      "bullet_points": [
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://it.chosun.com/news/articleView.html?idxno=2023092158953",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:36:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스홀딩스",
+      "origin_company": "삼성바이오에피스",
+      "person": "김형준",
+      "action_type": "사내이사 선임",
+      "previous_role": "경영지원실장",
+      "new_role": "",
+      "important_point": "제1기 정기주주총회 개최",
+      "bullet_points": [
+        "'김형준' 경영지원실장의 사내이사 선임"
+      ],
+      "article_url": "http://talk.tf.co.kr/bbs/report/write",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "우미영",
+      "action_type": "안건",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "주주총회에서 이사 선임 안건 도출",
+      "bullet_points": [
+        "주주총회에서 '우미영' 감사위원회 위원 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433520",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "박세훈",
+      "action_type": "안건",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "주주총회에서 이사 선임 안건 도출",
+      "bullet_points": [
+        "주주총회에서 '박세훈' 감사위원회 위원 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433520",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
     }
   ]
 }
