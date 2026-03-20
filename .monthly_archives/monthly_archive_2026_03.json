@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-20T18:58:56.063314+09:00",
+  "updated_at": "2026-03-20T19:47:34.669667+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -3940,6 +3940,75 @@
       "article_url": "http://www.biztribune.co.kr/news/articleView.html?idxno=350913",
       "article_title": "",
       "pub_date": "Fri, 20 Mar 2026 17:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "선임",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "사내이사",
+      "important_point": "사내이사 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임",
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://url.kr/b71afn",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 19:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "선임",
+      "previous_role": "롯데마트·슈퍼 대표",
+      "new_role": "사내이사",
+      "important_point": "사내이사 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임",
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://url.kr/b71afn",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 19:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "임재철",
+      "action_type": "선임",
+      "previous_role": "롯데쇼핑 재무본부장",
+      "new_role": "사내이사",
+      "important_point": "사내이사 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임",
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://url.kr/b71afn",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 19:34:00 +0900",
       "category_flags": {
         "exec_personnel": true,
         "org_restructuring": false
