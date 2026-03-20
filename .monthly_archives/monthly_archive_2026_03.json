@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-20T13:26:19.715706+09:00",
+  "updated_at": "2026-03-20T14:02:39.390635+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -2710,6 +2710,251 @@
       },
       "org_changes": [
         "이사회 전면 재편 완료"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "선임",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "사내이사",
+      "important_point": "정현석, 롯데백화점 대표에서 사내이사 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트/슈퍼 대표의 사내이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/031/0001015281?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:48:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "선임",
+      "previous_role": "롯데마트/슈퍼 대표",
+      "new_role": "사내이사",
+      "important_point": "정현석, 롯데백화점 대표에서 사내이사 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트/슈퍼 대표의 사내이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/031/0001015281?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:48:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "사내이사 선임",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "사내이사",
+      "important_point": "사업부 중심 책임 경영 체제 강화",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임",
+        "'임재철' 재무본부장의 사내이사 선임",
+        "'우미영' 사외이사 선임",
+        "'박세훈' 사외이사 선임"
+      ],
+      "article_url": "http://www.sisafocus.co.kr/news/articleView.html?idxno=357467",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:44:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "임재철",
+      "action_type": "사내이사 선임",
+      "previous_role": "재무본부장",
+      "new_role": "",
+      "important_point": "사내이사 선임 완료",
+      "bullet_points": [
+        "'임재철' 재무본부장 사내이사 선임",
+        "'우미영' IT·AI 전문가 사외이사 선임",
+        "'박세훈' 마케팅 전문가 사외이사 선임"
+      ],
+      "article_url": "http://www.opinionnews.co.kr/news/articleView.html?idxno=135308",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "우미영",
+      "action_type": "사외이사 선임",
+      "previous_role": "IT·AI 전문가",
+      "new_role": "",
+      "important_point": "사외이사 선임 완료",
+      "bullet_points": [
+        "'우미영' IT·AI 전문가 사외이사 선임",
+        "'박세훈' 마케팅 전문가 사외이사 선임"
+      ],
+      "article_url": "http://www.opinionnews.co.kr/news/articleView.html?idxno=135308",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "박세훈",
+      "action_type": "사외이사 선임",
+      "previous_role": "마케팅 전문가",
+      "new_role": "",
+      "important_point": "사외이사 선임 완료",
+      "bullet_points": [
+        "'박세훈' 마케팅 전문가 사외이사 선임"
+      ],
+      "article_url": "http://www.opinionnews.co.kr/news/articleView.html?idxno=135308",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "안건",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "중징계에도 불구하고 연임 강행",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 사내이사 연임 안건이 도출됨",
+        "주주총회에서 '황승욱' 부대표의 사내이사 연임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "정연대",
+      "action_type": "안건",
+      "previous_role": "감사",
+      "new_role": "",
+      "important_point": "신규 감사 선임 안건",
+      "bullet_points": [
+        "주주총회에서 '정연대' 세무사의 감사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "차명훈",
+      "action_type": "선임",
+      "previous_role": "공동대표",
+      "new_role": "단독대표",
+      "important_point": "단독대표 선임",
+      "bullet_points": [
+        "'차명훈' 단독대표 선임"
+      ],
+      "article_url": "http://www.lawissue.co.kr/view.php?ud=202603201222228102204ead0791_12",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 12:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "우미영",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "사외이사",
+      "important_point": "사내이사 3명, 외부 전문가 2명 선임",
+      "bullet_points": [
+        "'우미영'이 사외이사로 선임"
+      ],
+      "article_url": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202603201211388180985",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 12:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "이사회 전면 재편 완료"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "company": "LG에너지솔루션",
+      "origin_company": "",
+      "person": "김동명",
+      "action_type": "",
+      "previous_role": "사장",
+      "new_role": "",
+      "important_point": "ESS와 신사업 비중 확대",
+      "bullet_points": [
+        "'김동명' 사장이 ESS 중심 사업 재편을 선언"
+      ],
+      "article_url": "http://www.whitepaper.co.kr/news/articleView.html?idxno=259807",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:58:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "ESS 중심 사업 재편(예정)"
       ]
     }
   ]
