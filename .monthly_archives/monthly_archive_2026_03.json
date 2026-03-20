@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-20T15:08:37.905233+09:00",
+  "updated_at": "2026-03-20T16:07:53.110215+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -3250,6 +3250,291 @@
       "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433520",
       "article_title": "",
       "pub_date": "Fri, 20 Mar 2026 14:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "선임",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "사내이사",
+      "important_point": "주주총회에서 6개 안건 통과",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트/슈퍼 대표의 사내이사 선임",
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://www.m-i.kr/news/articleView.html?idxno=1356086",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 15:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "선임",
+      "previous_role": "롯데마트/슈퍼 대표",
+      "new_role": "사내이사",
+      "important_point": "주주총회에서 6개 안건 통과",
+      "bullet_points": [
+        "'차우철' 롯데마트/슈퍼 대표의 사내이사 선임"
+      ],
+      "article_url": "https://www.m-i.kr/news/articleView.html?idxno=1356086",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 15:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "임재철",
+      "action_type": "선임",
+      "previous_role": "롯데쇼핑 재무본부장",
+      "new_role": "사내이사",
+      "important_point": "주주총회에서 6개 안건 통과",
+      "bullet_points": [
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://www.m-i.kr/news/articleView.html?idxno=1356086",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 15:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "사내이사 선임",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "",
+      "important_point": "주주총회에서 6개 안건 모두 원안대로 가결",
+      "bullet_points": [
+        "주주총회에서 '정현석' 롯데백화점 대표의 사내이사 선임 안건이 도출됨",
+        "주주총회에서 '차우철' 롯데마트·슈퍼 대표의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/119/0003071395?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 15:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "사내이사 선임",
+      "previous_role": "롯데마트·슈퍼 대표",
+      "new_role": "",
+      "important_point": "주주총회에서 6개 안건 모두 원안대로 가결",
+      "bullet_points": [
+        "주주총회에서 '정현석' 롯데백화점 대표의 사내이사 선임 안건이 도출됨",
+        "주주총회에서 '차우철' 롯데마트·슈퍼 대표의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/119/0003071395?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 15:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "안건",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "주주총회에서 사내이사 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/449/0000338909?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 15:19:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "임재철",
+      "action_type": "사내이사 선임",
+      "previous_role": "롯데쇼핑 재무본부장",
+      "new_role": "",
+      "important_point": "사내이사 선임",
+      "bullet_points": [
+        "주주총회에서 '정현석' 롯데백화점 대표의 사내이사 선임 안건이 도출됨",
+        "주주총회에서 '차우철' 롯데마트·슈퍼 대표의 사내이사 선임 안건이 도출됨",
+        "주주총회에서 '임재철' 롯데쇼핑 재무본부장의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.pointdaily.co.kr/news/articleView.html?idxno=297218",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 15:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스홀딩스",
+      "origin_company": "",
+      "person": "김형준",
+      "action_type": "선임",
+      "previous_role": "부사장",
+      "new_role": "사내이사",
+      "important_point": "주주총회에서 6개 안건 의결",
+      "bullet_points": [
+        "'김형준' 부사장의 사내이사 선임"
+      ],
+      "article_url": "http://mbnmoney.mbn.co.kr/news/view?news_no=MM1005792950",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "차명훈",
+      "action_type": "선임",
+      "previous_role": "공동대표",
+      "new_role": "단독대표",
+      "important_point": "차명훈 단독대표로 경영 체제 전환",
+      "bullet_points": [
+        "'차명훈' 단독대표 선임",
+        "'김천석' 최고운영책임자 영입",
+        "'김영민' 최고기술책임자 승진 발령"
+      ],
+      "article_url": "https://www.econovill.com/news/articleView.html?idxno=734086",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "마케팅 조직 그룹 단위로 확대 완료"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스홀딩스",
+      "origin_company": "",
+      "person": "김형준",
+      "action_type": "사내이사 선임",
+      "previous_role": "경영지원실장",
+      "new_role": "",
+      "important_point": "제1기 정기주주총회 개최",
+      "bullet_points": [
+        "'김형준' 경영지원실장의 사내이사 선임"
+      ],
+      "article_url": "http://talk.tf.co.kr/bbs/report/write",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "우미영",
+      "action_type": "안건",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "",
+      "bullet_points": [
+        "주주총회에서 '우미영' 감사위원회위원 선임 안건이 도출됨",
+        "주주총회에서 '박세훈' 사외이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433520",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "안건",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "",
+      "bullet_points": [
+        "주주총회에서 '정현석' 이사 선임 안건이 도출됨",
+        "주주총회에서 '차우철' 이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433520",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "진영",
+      "action_type": "사외이사 선임",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "진영, IT·경영 전문가로 사외이사 선임",
+      "bullet_points": [
+        "주주총회에서 '진영' IT·경영 전문가의 사외이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/050/0000103789?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:09:00 +0900",
       "category_flags": {
         "exec_personnel": true,
         "org_restructuring": false
