@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-19T19:52:33.375031+09:00",
+  "updated_at": "2026-03-20T10:56:17.616507+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -1595,6 +1595,181 @@
       "article_url": "https://n.news.naver.com/mnews/article/014/0005494425?sid=105",
       "article_title": "",
       "pub_date": "Thu, 19 Mar 2026 18:45:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "대표",
+      "new_role": "대표",
+      "important_point": "주주총회에서 경영진 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "황승욱",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "부대표",
+      "new_role": "부대표",
+      "important_point": "주주총회에서 경영진 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '황승욱' 부대표의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스",
+      "origin_company": "삼성바이오",
+      "person": "김형준",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "삼성바이오 경영지원실장",
+      "new_role": "사내이사",
+      "important_point": "사내이사 신규 선임",
+      "bullet_points": [
+        "'김형준' 사내이사 신규 선임"
+      ],
+      "article_url": "http://www.wikileaks-kr.org/news/articleView.html?idxno=185060",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스홀딩스",
+      "origin_company": "",
+      "person": "김형준",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "부사장",
+      "new_role": "사내이사",
+      "important_point": "정기 주주총회 개최",
+      "bullet_points": [
+        "주주총회에서 '김형준' 부사장의 사내이사 신규 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.pointdaily.co.kr/news/articleView.html?idxno=297135",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:12:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "차명훈",
+      "action_type": "선임",
+      "previous_role": "공동대표",
+      "new_role": "단독대표",
+      "important_point": "단독대표 체제로 전환",
+      "bullet_points": [
+        "'차명훈' 단독대표 선임"
+      ],
+      "article_url": "http://www.newsdream.kr/news/articleView.html?idxno=109876",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데지주",
+      "origin_company": "우리은행",
+      "person": "조병규",
+      "action_type": "사외이사 신규 선임",
+      "previous_role": "우리은행장",
+      "new_role": "사외이사 및 감사위원 후보",
+      "important_point": "조병규, 우리은행장 출신",
+      "bullet_points": [
+        "주주총회에서 '조병규' 전 우리은행장의 사외이사 및 감사위원 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.hankookilbo.com/News/Read/A2023012001000010520?did=NA",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 09:00:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 대기"
+    },
+    {
+      "date": "2026-03-20",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "김천석",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "COO",
+      "important_point": "단독 대표 체제로 전환",
+      "bullet_points": [
+        "'김천석' COO 영입",
+        "'김영민' CTO 승진 임명"
+      ],
+      "article_url": "https://www.asiaa.co.kr/news/articleView.html?idxno=243940",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 09:12:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "마케팅 조직 그룹 단위로 확대",
+        "기술 조직 수장 김영민 CTO로 승진 임명"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "없음",
+      "action_type": "단독대표 체제로 전환",
+      "previous_role": "공동대표",
+      "new_role": "단독대표",
+      "important_point": "단독대표 체제로 전환",
+      "bullet_points": [
+        "'코인원'이 단독대표 체제로 전환함"
+      ],
+      "article_url": "http://coinreaders.com/225056",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:26:00 +0900",
       "category_flags": {
         "exec_personnel": true,
         "org_restructuring": false
