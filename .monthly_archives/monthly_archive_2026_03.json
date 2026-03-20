@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-20T14:02:39.390635+09:00",
+  "updated_at": "2026-03-20T14:25:55.087400+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -2945,6 +2945,137 @@
       "important_point": "ESS와 신사업 비중 확대",
       "bullet_points": [
         "'김동명' 사장이 ESS 중심 사업 재편을 선언"
+      ],
+      "article_url": "http://www.whitepaper.co.kr/news/articleView.html?idxno=259807",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:58:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "ESS 중심 사업 재편(예정)"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "사내이사",
+      "important_point": "정기 주주총회에서 신규 이사진 선임",
+      "bullet_points": [
+        "'정현석' 사내이사 선임",
+        "'차우철' 사내이사 선임",
+        "'임재철' 사내이사 선임"
+      ],
+      "article_url": "http://www.newsprime.co.kr/news/article.html?no=727687",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "사내이사",
+      "important_point": "정기 주주총회에서 신규 이사진 선임",
+      "bullet_points": [
+        "'차우철' 사내이사 선임"
+      ],
+      "article_url": "http://www.newsprime.co.kr/news/article.html?no=727687",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "임재철",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "사내이사",
+      "important_point": "정기 주주총회에서 신규 이사진 선임",
+      "bullet_points": [
+        "'임재철' 사내이사 선임"
+      ],
+      "article_url": "http://www.newsprime.co.kr/news/article.html?no=727687",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 14:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "안건",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "중징계에도 불구하고 연임 강행",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 사내이사 재선임 안건이 도출됨",
+        "주주총회에서 '황승욱' 부대표의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "정연대",
+      "action_type": "안건",
+      "previous_role": "감사",
+      "new_role": "",
+      "important_point": "신규 감사 선임 안건",
+      "bullet_points": [
+        "주주총회에서 '정연대' 세무사의 감사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 13:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "LG에너지솔루션",
+      "origin_company": "",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "ESS와 신사업 비중을 현재 약 20%에서 40% 중반까지 확대할 계획",
+      "bullet_points": [
+        "'김동명' 사장이 ESS 중심 사업 재편을 선언(예정)"
       ],
       "article_url": "http://www.whitepaper.co.kr/news/articleView.html?idxno=259807",
       "article_title": "",
