@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-20T10:56:17.616507+09:00",
+  "updated_at": "2026-03-20T11:57:51.235804+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -1761,6 +1761,480 @@
       "origin_company": "",
       "person": "없음",
       "action_type": "단독대표 체제로 전환",
+      "previous_role": "공동대표",
+      "new_role": "단독대표",
+      "important_point": "단독대표 체제로 전환",
+      "bullet_points": [
+        "'코인원'이 단독대표 체제로 전환함"
+      ],
+      "article_url": "http://coinreaders.com/225056",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "",
+      "new_role": "CEO",
+      "important_point": "주총에서 이사 및 감사위원회 위원 선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '류재철' CEO의 사내이사 신규 선임 안건이 도출됨",
+        "주주총회에서 '서승우' 사외이사의 재선임 안건이 도출됨"
+      ],
+      "article_url": "http://www.globalepic.co.kr/view.php?ud=20260320111133179148439a4874_29",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-20",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "차명훈",
+      "action_type": "선임",
+      "previous_role": "공동대표",
+      "new_role": "단독대표",
+      "important_point": "단독 경영 체제로 전환",
+      "bullet_points": [
+        "'차명훈' 단독대표 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/243/0000094819?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:41:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "선임",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "사내이사",
+      "important_point": "제56기 주총에서 이사 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임",
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/117/0004045590?sid=103",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "선임",
+      "previous_role": "롯데마트·슈퍼 대표",
+      "new_role": "사내이사",
+      "important_point": "제56기 주총에서 이사 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임",
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/117/0004045590?sid=103",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "임재철",
+      "action_type": "선임",
+      "previous_role": "롯데쇼핑 재무본부장",
+      "new_role": "사내이사",
+      "important_point": "제56기 주총에서 이사 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임",
+        "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/117/0004045590?sid=103",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스홀딩스",
+      "origin_company": "",
+      "person": "김형준",
+      "action_type": "사내이사 선임",
+      "previous_role": "부사장",
+      "new_role": "사내이사",
+      "important_point": "주주총회에서 의안 승인",
+      "bullet_points": [
+        "'김형준' 부사장이 사내이사로 신규 선임"
+      ],
+      "article_url": "https://weekly.hankooki.com/news/articleView.html?idxno=7155756",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:36:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "안건",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "롯데백화점 대표",
+      "important_point": "주주총회에서 이사 선임 안건 가결",
+      "bullet_points": [
+        "주주총회에서 '정현석' 롯데백화점 대표의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.sentv.co.kr/article/view/sentv202603200082",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "기아",
+      "origin_company": "",
+      "person": "김승준",
+      "action_type": "재선임",
+      "previous_role": "재경본부장(전무)",
+      "new_role": "사내이사",
+      "important_point": "주총에서 이사 선임 안건 의결",
+      "bullet_points": [
+        "'김승준' 재경본부장의 사내이사 재선임",
+        "'전찬혁' 사외이사의 재선임"
+      ],
+      "article_url": "https://www.newspim.com/news/view/20260320000579",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "기아",
+      "origin_company": "",
+      "person": "전찬혁",
+      "action_type": "재선임",
+      "previous_role": "사외이사",
+      "new_role": "사외이사",
+      "important_point": "주총에서 이사 선임 안건 의결",
+      "bullet_points": [
+        "'전찬혁' 사외이사의 재선임"
+      ],
+      "article_url": "https://www.newspim.com/news/view/20260320000579",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스홀딩스",
+      "origin_company": "삼성바이오에피스",
+      "person": "김형준",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "경영지원실장",
+      "new_role": "사내이사",
+      "important_point": "사내이사 신규 선임",
+      "bullet_points": [
+        "'김형준' 부사장의 사내이사 신규 선임"
+      ],
+      "article_url": "http://www.whitepaper.co.kr/news/articleView.html?idxno=259802",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "사내이사 선임",
+      "previous_role": "롯데백화점 대표",
+      "new_role": "사내이사",
+      "important_point": "정현석, 롯데백화점 대표에서 사내이사로 선임",
+      "bullet_points": [
+        "'정현석' 롯데백화점 대표의 사내이사 선임",
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임"
+      ],
+      "article_url": "https://www.thereport.co.kr/news/articleView.html?idxno=85577",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "사내이사 선임",
+      "previous_role": "롯데마트·슈퍼 대표",
+      "new_role": "사내이사",
+      "important_point": "차우철, 롯데마트·슈퍼 대표에서 사내이사로 선임",
+      "bullet_points": [
+        "'차우철' 롯데마트·슈퍼 대표의 사내이사 선임"
+      ],
+      "article_url": "https://www.thereport.co.kr/news/articleView.html?idxno=85577",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "우미영",
+      "action_type": "사외이사 선임",
+      "previous_role": "",
+      "new_role": "사외이사",
+      "important_point": "우미영, 사외이사로 선임",
+      "bullet_points": [
+        "'우미영'의 사외이사 선임"
+      ],
+      "article_url": "https://www.thereport.co.kr/news/articleView.html?idxno=85577",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "박세훈",
+      "action_type": "사외이사 선임",
+      "previous_role": "",
+      "new_role": "사외이사",
+      "important_point": "박세훈, 사외이사로 선임",
+      "bullet_points": [
+        "'박세훈'의 사외이사 선임"
+      ],
+      "article_url": "https://www.thereport.co.kr/news/articleView.html?idxno=85577",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "임재철",
+      "action_type": "사내이사 선임",
+      "previous_role": "재무본부장",
+      "new_role": "사내이사",
+      "important_point": "임재철 사내이사 선임",
+      "bullet_points": [
+        "'임재철' 재무본부장의 사내이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/421/0008837980?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:16:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스홀딩스",
+      "origin_company": "",
+      "person": "김형준",
+      "action_type": "선임",
+      "previous_role": "부사장",
+      "new_role": "사내이사",
+      "important_point": "사내이사 신규 선임",
+      "bullet_points": [
+        "'김형준' 부사장의 사내이사 선임"
+      ],
+      "article_url": "https://www.biospectator.com/view/news_view.php?varAtcId=28159",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:54:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "대표",
+      "new_role": "대표",
+      "important_point": "주주총회에서 경영진 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "황승욱",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "부대표",
+      "new_role": "부대표",
+      "important_point": "주주총회에서 경영진 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '황승욱' 부대표의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "삼성에피스",
+      "origin_company": "삼성바이오",
+      "person": "김형준",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "삼성바이오 경영지원실장",
+      "new_role": "사내이사",
+      "important_point": "김형준 부사장 사내이사 신규 선임",
+      "bullet_points": [
+        "'김형준' 부사장의 사내이사 신규 선임"
+      ],
+      "article_url": "http://www.wikileaks-kr.org/news/articleView.html?idxno=185060",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 10:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "재선임",
+      "previous_role": "대표이사",
+      "new_role": "대표이사",
+      "important_point": "대표이사 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/119/0003071307?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-20",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "황승욱",
+      "action_type": "재선임",
+      "previous_role": "사내이사",
+      "new_role": "사내이사",
+      "important_point": "사내이사 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '황승욱' 사내이사의 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/119/0003071307?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 20 Mar 2026 11:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-20",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "없음",
+      "action_type": "선임",
       "previous_role": "공동대표",
       "new_role": "단독대표",
       "important_point": "단독대표 체제로 전환",
