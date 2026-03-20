@@ -33,9 +33,12 @@ try:
         _normalize_display,
         _pubdate_to_mmdd,
         _is_valid_article_url,
+        _merge_same_person_agenda_and_action,
+        _dedupe_similar_exec_pairs,
     )
 except ImportError:
     _daily_action_line = _action_part_for_grouping = _normalize_display = _pubdate_to_mmdd = _is_valid_article_url = None
+    _merge_same_person_agenda_and_action = _dedupe_similar_exec_pairs = None
 
 
 def _now_kst() -> datetime:
@@ -210,7 +213,7 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
     ]
     for i, (company, group) in enumerate(company_blocks, 1):
         exec_seen = set()
-        exec_rows = []
+        exec_pairs_m: list[tuple[str, tuple]] = []
         for e in group:
             cf = e.get("category_flags") or {}
             if not cf.get("exec_personnel", True):
@@ -222,11 +225,38 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
             if normalized in exec_seen:
                 continue
             exec_seen.add(normalized)
+            person_norm = (e.get("person") or "").strip()
+            action_type = (e.get("action_type") or "").strip()
+            c = (company, person_norm, action_type)
             mmdd = pub_to_mmdd(e.get("pub_date") or "")
             url = (e.get("article_url") or "").strip()
-            exec_rows.append((normalized, mmdd, url))
+            exec_pairs_m.append((normalized, (c, mmdd, url)))
+
+        # 일간 메일과 동일한 머지·dedupe 적용
+        if _merge_same_person_agenda_and_action is not None:
+            # 함수 시그니처: list[tuple[str, tuple]] 에서 tuple 은 (company, person_norm, action_type)
+            # exec_pairs_m 은 (line, (c, mmdd, url)) 형태이므로 c 만 꺼내서 적용
+            flat = [(line, meta[0]) for line, meta in exec_pairs_m]
+            meta_map = {line: meta for line, meta in exec_pairs_m}
+            flat = _merge_same_person_agenda_and_action(flat)
+            if _dedupe_similar_exec_pairs is not None:
+                flat = _dedupe_similar_exec_pairs(flat)
+            # 머지 결과에서 meta 복원 (새로 생긴 line 은 원본 중 첫 번째 것 사용)
+            merged_pairs_m = []
+            for line, c_tuple in flat:
+                meta = meta_map.get(line)
+                if meta is None:
+                    # 머지로 생긴 새 라인 → 가장 최근 날짜 meta 사용
+                    meta = next(
+                        (m for l, m in exec_pairs_m if c_tuple and m[0] == c_tuple),
+                        exec_pairs_m[0][1] if exec_pairs_m else (c_tuple, "", ""),
+                    )
+                merged_pairs_m.append((line, meta))
+            exec_pairs_m = merged_pairs_m
+
         if _action_part_for_grouping is not None:
-            exec_rows.sort(key=lambda r: (_action_part_for_grouping(r[0]), r[0]))
+            exec_pairs_m.sort(key=lambda r: (_action_part_for_grouping(r[0]), r[0]))
+        exec_rows = [(line, meta[1], meta[2]) for line, meta in exec_pairs_m]
 
         org_seen = set()
         org_rows = []
