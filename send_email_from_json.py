@@ -251,9 +251,18 @@ def _bullets_from_item(it: dict) -> list[str]:
     return out[:10] if out else ["요약 없음"]
 
 
+def _is_unknown_person(name: str) -> bool:
+    """인물명이 없거나 '없음'·'(없음)'·빈값이면 True."""
+    s = (name or "").strip().strip("'\"()").strip()
+    return not s or s in ("없음", "미상", "불명", "알 수 없음")
+
+
 def _action_line(it: dict) -> str:
-    """'이름' 변동 내용. 타사 출신 선임 시 'A 출신 B 사장이 C 대표로 선임' 형식. 재선임/연임 시 직함 한 번만."""
-    person = _format_person_name(it.get("대상 인물") or "")
+    """'이름' 변동 내용. 인물명이 없으면 빈 문자열 → 불렛에서 제외됨."""
+    raw_person = (it.get("대상 인물") or "").strip()
+    if _is_unknown_person(raw_person):
+        return ""
+    person = _format_person_name(raw_person)
     action_type = (it.get("인사 유형") or "").strip()
     prev = (it.get("기존 직책") or "").strip()
     if prev == "없음":
@@ -279,8 +288,13 @@ def _action_line(it: dict) -> str:
         return line
 
     # 재선임/연임: 기존·신규 직함이 같을 수 있으므로 action_type 앞의 직함 중복 제거
-    if prev and ("재선임" in action_type or "연임" in action_type) and action_type.startswith(prev):
+    is_reappointment = "재선임" in action_type or "연임" in action_type
+    if prev and is_reappointment and action_type.startswith(prev):
         action_type = action_type[len(prev):].strip()
+
+    # 재선임/연임은 이전 직책만 표기 (신규 직책 제외)
+    if is_reappointment:
+        new = ""
 
     if prev and new:
         if new and (new in action_type or action_type.startswith(new)):
@@ -356,6 +370,107 @@ def _merge_same_person_agenda_and_action(exec_pairs: list[tuple[str, tuple]]) ->
         merged_line = f"주주총회에서 {person_quoted} {role}의 {action_part} 안건이 도출됨"
         merged_c = (company, person_norm, f"{action_part} 안건")
         out.append((merged_line, merged_c))
+    return out
+
+
+def _first_quoted_name_and_rest(s: str) -> tuple[str | None, str]:
+    """첫 번째 '…' 안의 이름과, 그 닫는 따옴표 뒤 나머지 문장."""
+    m = re.search(r"'([^']*)'", s or "")
+    if not m:
+        return None, (s or "").strip()
+    name = (m.group(1) or "").strip()
+    rest = (s[m.end() :] or "").strip()
+    return name, rest
+
+
+def _core_action_key(s: str) -> str:
+    """불렛 문자열에서 핵심 행위 키(재선임/선임/연임/사임 등) 추출. 비교용."""
+    for kw in ("재선임", "연임", "사임", "선임"):
+        if kw in (s or ""):
+            return kw
+    return ""
+
+
+def _try_merge_exec_pair_lines(
+    pair_a: tuple[str, tuple],
+    pair_b: tuple[str, tuple],
+) -> tuple[str, tuple] | None:
+    """같은 내용으로 보이는 두 불렛을 하나로 합칠 수 있으면 (합친 줄, c) 반환, 아니면 None.
+
+    병합 기준:
+    1) 한쪽 이름이 '없음', 따옴표 뒤 문장 동일 → 실명 줄 유지
+    2) 동일 인물·동일 문장 → 중복 제거
+    3) 동일 인물, 직함/문장 포함 관계 → 긴(구체적) 줄 유지
+    4) 동일 인물·동일 핵심 행위(재선임/선임 등) → 주총 안건 형식 또는 더 긴(구체적) 줄 유지
+    """
+    line_a, c_a = pair_a
+    line_b, c_b = pair_b
+    na, ra = _first_quoted_name_and_rest(line_a)
+    nb, rb = _first_quoted_name_and_rest(line_b)
+    if na is None or nb is None:
+        return None
+
+    def norm_rest(r: str) -> str:
+        return re.sub(r"\s+", " ", (r or "").strip())
+
+    ra_n, rb_n = norm_rest(ra), norm_rest(rb)
+
+    # 1) 한쪽 이름이 '없음', 따옴표 뒤 문장 동일 → 실명 줄 유지
+    if na in ("없음",) and nb not in ("없음",) and ra_n == rb_n:
+        return (line_b, c_b)
+    if nb in ("없음",) and na not in ("없음",) and ra_n == rb_n:
+        return (line_a, c_a)
+
+    # 이름이 다르면 이후 규칙 적용 안 함
+    if na != nb or not na or na == "없음":
+        return None
+
+    # 2) 동일 인물·동일 문장 → 중복 제거
+    if ra_n == rb_n:
+        return (line_a, c_a)
+
+    # 3) 동일 인물, 직함/문장 포함 관계 → 긴(구체적) 줄 유지
+    if ra_n.endswith(rb_n) or rb_n.endswith(ra_n):
+        return (line_a, c_a) if len(ra_n) >= len(rb_n) else (line_b, c_b)
+    if rb_n in ra_n and len(ra_n) > len(rb_n):
+        return (line_a, c_a)
+    if ra_n in rb_n and len(rb_n) > len(ra_n):
+        return (line_b, c_b)
+
+    # 4) 동일 인물·동일 핵심 행위(재선임/선임/연임 등) → 주총 안건 형식 우선, 없으면 더 긴 줄 유지
+    core_a = _core_action_key(line_a)
+    core_b = _core_action_key(line_b)
+    if core_a and core_b and core_a == core_b:
+        is_agenda_a = "주총" in (line_a or "") or "안건" in (line_a or "")
+        is_agenda_b = "주총" in (line_b or "") or "안건" in (line_b or "")
+        if is_agenda_a and not is_agenda_b:
+            return (line_a, c_a)
+        if is_agenda_b and not is_agenda_a:
+            return (line_b, c_b)
+        # 둘 다 주총 안건 형식이거나 둘 다 아닌 경우 → 더 긴(구체적) 줄 유지
+        return (line_a, c_a) if len(line_a) >= len(line_b) else (line_b, c_b)
+
+    return None
+
+
+def _dedupe_similar_exec_pairs(pairs: list[tuple[str, tuple]]) -> list[tuple[str, tuple]]:
+    """'없음' vs 실명 동일 문장, 또는 동일 인물의 짧은·긴 직함 표기 등을 한 줄로 합침."""
+    if len(pairs) < 2:
+        return pairs
+    out = list(pairs)
+    changed = True
+    while changed:
+        changed = False
+        for i in range(len(out)):
+            for j in range(i + 1, len(out)):
+                merged = _try_merge_exec_pair_lines(out[i], out[j])
+                if merged is not None:
+                    out[i] = merged
+                    out.pop(j)
+                    changed = True
+                    break
+            if changed:
+                break
     return out
 
 
@@ -437,6 +552,7 @@ def _build_html_from_summary(
             seen_exec.add(line)
             exec_pairs.append((line, c))
         exec_pairs = _merge_same_person_agenda_and_action(exec_pairs)
+        exec_pairs = _dedupe_similar_exec_pairs(exec_pairs)
         exec_pairs.sort(key=lambda p: (_action_part_for_grouping(p[0]), p[0]))
         exec_lines_out = [p[0] for p in exec_pairs]
         for _, c in exec_pairs:
