@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 1시간마다(9~19시 KST, 11회) 또는 수시 발송: 파트너사·임원인사·조직개편 뉴스 수집 후 메일 본문 생성.
-- 정기(schedule): 직전 발송 슬롯 이후 기사만 수집. 수동(workflow_dispatch): REQUEST_SCOPE=today → 당일 00:00 KST~현재 전체 수집(sent_log/state 무시).
+- 정기(schedule): 직전 발송 슬롯 이후 기사만 수집(첫 회차 9시→전날 19시). 수동(workflow_dispatch): REQUEST_SCOPE=today → 전날 19:00 KST~현재 수집(sent_log/state 무시).
 - 로컬 today 모드 테스트: PowerShell에서 `$env:REQUEST_SCOPE="today"; python send_exec_news_timed.py`
 - 트래킹: 기사 제목에 임원인사 키워드 1개 이상 + 파트너사 키워드 1개 이상 포함된 기사만, 최근 한 달 이내 뉴스만(블로그·논문 제외)
 ※ 본문(전문) 분석은 원문 수집이 필요하며, 현재는 API 제목·요약만 사용합니다.
@@ -181,21 +181,26 @@ def now_kst() -> datetime:
     return datetime.now(KST)
 
 
+def _prev_day_19(now: datetime) -> datetime:
+    """전날 19:00 KST."""
+    return (now - timedelta(days=1)).replace(hour=19, minute=0, second=0, microsecond=0)
+
+
 def get_since_datetime(now: datetime, since_today_midnight: bool = False) -> datetime:
     """직전 발송 슬롯 시각 반환. KST 기준.
-    since_today_midnight=True: 당일 00:00 KST
-    False(정기): 9시→전날19시, 10시→당일9시, …, 19시→당일18시
+    since_today_midnight=True: 그날 첫 발송이면 전날 19시부터, 이후면 당일 00:00 KST
+    False(정기): 9시(첫 회차)→전날19시, 10시→당일9시, …, 19시→당일18시
     """
     if since_today_midnight:
-        return now.replace(hour=0, minute=0, second=0, microsecond=0)
+        return _prev_day_19(now)
     h = now.hour
     if h == 9:
-        since = (now - timedelta(days=1)).replace(hour=19, minute=0, second=0, microsecond=0)
+        since = _prev_day_19(now)
     elif 10 <= h <= 19:
         since = now.replace(hour=h - 1, minute=0, second=0, microsecond=0)
     else:
         if h < 9:
-            since = (now - timedelta(days=1)).replace(hour=19, minute=0, second=0, microsecond=0)
+            since = _prev_day_19(now)
         else:
             since = now.replace(hour=18, minute=0, second=0, microsecond=0)
     return since
@@ -703,9 +708,9 @@ def main() -> int:
 
     today_start = get_today_start_kst(now)
     if request_scope == "today":
-        since = today_start
-        last_sent_at_str = "(무시됨, today 모드)"
-        mode_reason = "workflow_dispatch uses today's 00:00 to now in Asia/Seoul"
+        since = _prev_day_19(now)
+        last_sent_at_str = "(전날 19:00부터, today 모드)"
+        mode_reason = "workflow_dispatch/today uses previous day 19:00 KST to now"
     else:
         since = get_since_datetime(now, since_today_midnight=False)
         last_sent_at_str = since.isoformat()
