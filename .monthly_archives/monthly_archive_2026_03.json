@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-21T14:15:27.850910+09:00",
+  "updated_at": "2026-03-21T14:57:25.836352+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -4122,6 +4122,48 @@
       },
       "org_changes": [],
       "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-21",
+      "company": "GS",
+      "origin_company": "",
+      "person": "홍순기",
+      "action_type": "안건",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "이사회 정원 축소 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '홍순기' 대표이사의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "http://www.lawleader.co.kr/news/articleView.html?idxno=18772",
+      "article_title": "",
+      "pub_date": "Sat, 21 Mar 2026 13:58:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-21",
+      "company": "기아",
+      "origin_company": "",
+      "person": "송호성",
+      "action_type": "안건",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "지배구조 개편 추진",
+      "bullet_points": [
+        "주주총회에서 '송호성' 대표이사의 이사 선임 안건이 도출됨"
+      ],
+      "article_url": "http://www.hansbiz.co.kr/news/articleView.html?idxno=826145",
+      "article_title": "",
+      "pub_date": "Sat, 21 Mar 2026 13:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
     }
   ]
 }
