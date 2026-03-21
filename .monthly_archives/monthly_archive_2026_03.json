@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-20T19:47:34.669667+09:00",
+  "updated_at": "2026-03-21T11:43:41.641039+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -4009,6 +4009,49 @@
       "article_url": "https://url.kr/b71afn",
       "article_title": "",
       "pub_date": "Fri, 20 Mar 2026 19:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-21",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "정현석",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "대표이사",
+      "important_point": "",
+      "bullet_points": [
+        "주주총회에서 '정현석'의 대표이사 선임이 승인됐다.",
+        "주주총회에서 '차우철'의 대표이사 선임이 승인됐다."
+      ],
+      "article_url": "http://www.metroseoul.co.kr/article/20260321500048",
+      "article_title": "",
+      "pub_date": "Sat, 21 Mar 2026 11:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-21",
+      "company": "롯데쇼핑",
+      "origin_company": "",
+      "person": "차우철",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "대표이사",
+      "important_point": "",
+      "bullet_points": [
+        "주주총회에서 '차우철'의 대표이사 선임이 승인됐다."
+      ],
+      "article_url": "http://www.metroseoul.co.kr/article/20260321500048",
+      "article_title": "",
+      "pub_date": "Sat, 21 Mar 2026 11:26:00 +0900",
       "category_flags": {
         "exec_personnel": true,
         "org_restructuring": false
