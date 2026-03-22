@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-22T15:59:05.916259+09:00",
+  "updated_at": "2026-03-22T16:45:23.431757+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -4233,6 +4233,48 @@
       },
       "org_changes": [],
       "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-22",
+      "company": "네이버",
+      "origin_company": "",
+      "person": "김희철",
+      "action_type": "안건",
+      "previous_role": "최고재무책임자(CFO)",
+      "new_role": "",
+      "important_point": "주주총회에서 CFO의 사내이사 선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '김희철' 최고재무책임자(CFO)의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.ajunews.com/view/20260322145211821",
+      "article_title": "",
+      "pub_date": "Sun, 22 Mar 2026 15:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-22",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "정신아",
+      "action_type": "재선임",
+      "previous_role": "대표",
+      "new_role": "",
+      "important_point": "주주총회에서 대표 재선임 여부가 최대 관심사",
+      "bullet_points": [
+        "주주총회에서 '정신아' 대표의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.ajunews.com/view/20260322145211821",
+      "article_title": "",
+      "pub_date": "Sun, 22 Mar 2026 15:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
     }
   ]
 }
