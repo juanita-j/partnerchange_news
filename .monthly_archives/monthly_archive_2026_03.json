@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-22T13:31:38.109492+09:00",
+  "updated_at": "2026-03-22T15:59:05.916259+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -4189,6 +4189,50 @@
         "지난해 3월 정비·홍보·종합통제 등 주요 부서의 업무 공간을 합치는 '코로케이션(Co-location)' 진행",
         "KE Way 신설 완료"
       ]
+    },
+    {
+      "date": "2026-03-22",
+      "company": "네이버",
+      "origin_company": "",
+      "person": "김희철",
+      "action_type": "사내이사 선임",
+      "previous_role": "CFO",
+      "new_role": "",
+      "important_point": "주주총회에서 CFO의 사내이사 선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '김희철' 최고재무책임자(CFO)의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.ajunews.com/view/20260322145211821",
+      "article_title": "",
+      "pub_date": "Sun, 22 Mar 2026 15:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-22",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "정신아",
+      "action_type": "사내이사 재선임",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "주주총회에서 정신아 대표의 사내이사 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '정신아' 대표의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.ajunews.com/view/20260322145211821",
+      "article_title": "",
+      "pub_date": "Sun, 22 Mar 2026 15:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
     }
   ]
 }
