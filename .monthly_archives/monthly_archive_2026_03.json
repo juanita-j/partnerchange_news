@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-21T14:57:25.836352+09:00",
+  "updated_at": "2026-03-22T13:31:38.109492+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -4164,6 +4164,31 @@
         "org_restructuring": false
       },
       "org_changes": []
+    },
+    {
+      "date": "2026-03-22",
+      "company": "대한항공",
+      "origin_company": "",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "조직문화 융합을 통한 통합 대한항공의 체질 개선",
+      "bullet_points": [
+        "지난해 3월 정비·홍보·종합통제 등 주요 부서의 업무 공간을 합치는 '코로케이션(Co-location)' 진행",
+        "KE Way 신설 완료"
+      ],
+      "article_url": "https://example.com/news",
+      "article_title": "",
+      "pub_date": "Sun, 22 Mar 2026 12:48:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "지난해 3월 정비·홍보·종합통제 등 주요 부서의 업무 공간을 합치는 '코로케이션(Co-location)' 진행",
+        "KE Way 신설 완료"
+      ]
     }
   ]
 }
