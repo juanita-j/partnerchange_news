@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-22T17:45:07.180444+09:00",
+  "updated_at": "2026-03-22T18:46:09.349045+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -4333,6 +4333,27 @@
       "article_url": "https://n.news.naver.com/mnews/article/029/0003017299?sid=101",
       "article_title": "",
       "pub_date": "Sun, 22 Mar 2026 16:54:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-22",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "안건",
+      "previous_role": "CEO",
+      "new_role": "",
+      "important_point": "사내이사 선임 안건",
+      "bullet_points": [
+        "주주총회에서 '류재철' CEO의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "http://www.ftoday.co.kr/news/articleView.html?idxno=356734",
+      "article_title": "",
+      "pub_date": "Sun, 22 Mar 2026 17:20:00 +0900",
       "category_flags": {
         "exec_personnel": true,
         "org_restructuring": false
