@@ -129,7 +129,9 @@ def _normalize_person_for_dedup(name: str) -> str:
 
 
 def _load_sent_dedup_store() -> dict:
-    """이미 발송한 (회사,인물,인사유형) / (회사,조직개편) 집합 반환. 키: exec_set, org_set (set of tuple)."""
+    """이미 발송한 (회사, 인물) / (회사, 조직개편) 집합 반환.
+    exec 키는 (company, person_norm) 2-tuple — 같은 사람은 인사유형 무관하게 재발송 안 함.
+    """
     out = {"exec": set(), "org": set()}
     if not SENT_DEDUP_STORE_JSON.exists():
         return out
@@ -137,8 +139,9 @@ def _load_sent_dedup_store() -> dict:
         with open(SENT_DEDUP_STORE_JSON, "r", encoding="utf-8") as f:
             data = json.load(f)
         for t in data.get("exec") or []:
-            if isinstance(t, list) and len(t) >= 3:
-                out["exec"].add((str(t[0]).strip(), str(t[1]).strip(), str(t[2]).strip()))
+            if isinstance(t, list) and len(t) >= 2:
+                # 구버전 3-tuple 도 2-tuple 로 읽어 호환
+                out["exec"].add((str(t[0]).strip(), str(t[1]).strip()))
         for t in data.get("org") or []:
             if isinstance(t, list) and len(t) >= 2:
                 out["org"].add((str(t[0]).strip(), str(t[1]).strip()))
@@ -151,8 +154,8 @@ def _save_sent_dedup_store(exec_keys: list, org_keys: list) -> None:
     """새로 발송한 키들을 기존 저장소에 추가해 저장."""
     existing = _load_sent_dedup_store()
     for t in exec_keys:
-        if isinstance(t, (list, tuple)) and len(t) >= 3:
-            existing["exec"].add((str(t[0]).strip(), str(t[1]).strip(), str(t[2]).strip()))
+        if isinstance(t, (list, tuple)) and len(t) >= 2:
+            existing["exec"].add((str(t[0]).strip(), str(t[1]).strip()))
     for t in org_keys:
         if isinstance(t, (list, tuple)) and len(t) >= 2:
             existing["org"].add((str(t[0]).strip(), str(t[1]).strip()))
@@ -544,8 +547,8 @@ def _build_html_from_summary(
                 continue
             person_norm = _normalize_person_for_dedup(it.get("대상 인물") or "")
             action_type = (it.get("인사 유형") or "").strip()
-            c = (company, person_norm, action_type)
-            if sent_dedup and c in sent_exec:
+            c = (company, person_norm)
+            if sent_dedup and person_norm and c in sent_exec:
                 continue
             if line in seen_exec:
                 continue
@@ -791,7 +794,7 @@ def record_sent_from_json(json_path: Path) -> int:
     exec_keys = data.get("sent_exec_keys")
     org_keys = data.get("sent_org_keys")
     if isinstance(exec_keys, list):
-        exec_keys = [tuple(x) for x in exec_keys if isinstance(x, (list, tuple)) and len(x) >= 3]
+        exec_keys = [tuple(x) for x in exec_keys if isinstance(x, (list, tuple)) and len(x) >= 2]
     else:
         exec_keys = []
     if isinstance(org_keys, list):
