@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-22T18:46:09.349045+09:00",
+  "updated_at": "2026-03-23T12:02:22.525959+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -4359,6 +4359,179 @@
         "org_restructuring": false
       },
       "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "선임",
+      "previous_role": "H&A사업본부장",
+      "new_role": "사내이사",
+      "important_point": "류재철 사장, CEO로 부임",
+      "bullet_points": [
+        "'류재철' H&A사업본부장의 사내이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/092/0002415601?sid=105",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 11:00:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "선임",
+      "previous_role": "사외이사",
+      "new_role": "이사회 의장",
+      "important_point": "이사회 독립성 제고",
+      "bullet_points": [
+        "'강수진' 사외이사의 이사회 의장 선임",
+        "'류재철' CEO의 단독 대표이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/421/0008842826?sid=101",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 11:50:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "CEO",
+      "new_role": "",
+      "important_point": "사내이사 신규 선임",
+      "bullet_points": [
+        "주주총회에서 '류재철' CEO의 사내이사 신규 선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 11:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "사내이사 선임",
+      "previous_role": "대표",
+      "new_role": "",
+      "important_point": "사내이사 선임",
+      "bullet_points": [
+        "'류재철' 사장이 사내이사로 선임"
+      ],
+      "article_url": "https://www.autodaily.co.kr/news/articleView.html?idxno=542579",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 11:24:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "로봇 사업 본격화의 원년으로 삼겠다는 목표",
+      "bullet_points": [],
+      "article_url": "https://n.news.naver.com/mnews/article/031/0001015710?sid=101",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 10:55:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "로봇 사업 중심으로 사업 구조 재편(예정)",
+        "AI 데이터센터 수요 증가에 대응해 액체냉각 등 차세대 냉각 기술 강화(예정)",
+        "스마트팩토리 사업 확대(예정)"
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "company": "대한항공",
+      "origin_company": "",
+      "person": "조원태",
+      "action_type": "재선임",
+      "previous_role": "회장",
+      "new_role": "",
+      "important_point": "국민연금의 반대에도 불구하고 경영진 교체 가능성은 낮음",
+      "bullet_points": [
+        "주주총회에서 '조원태' 회장의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://sateconomy.co.kr/news/view/1065575282876629",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 10:16:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "대한항공",
+      "origin_company": "",
+      "person": "우기홍",
+      "action_type": "재선임",
+      "previous_role": "부회장",
+      "new_role": "",
+      "important_point": "국민연금의 반대에도 불구하고 경영진 교체 가능성은 낮음",
+      "bullet_points": [
+        "주주총회에서 '우기홍' 부회장의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://sateconomy.co.kr/news/view/1065575282876629",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 10:16:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "카카오엔터테인먼트",
+      "origin_company": "카카오뱅크",
+      "person": "고정희",
+      "action_type": "선임",
+      "previous_role": "AI그룹장",
+      "new_role": "공동대표",
+      "important_point": "고정희 공동대표 영입",
+      "bullet_points": [
+        "'고정희' 전 카카오뱅크 AI그룹장의 카카오엔터테인먼트 공동대표 선임(2023년 10월 25일)"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/016/0002617900?sid=105",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 11:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "2023년 10월 25일"
     }
   ]
 }
