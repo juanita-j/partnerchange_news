@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-23T15:23:04.979461+09:00",
+  "updated_at": "2026-03-23T20:13:15.943149+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -5268,6 +5268,302 @@
         "로봇 사업 중심으로 사업 구조 전환 본격화(예정)",
         "AI 중심으로 사업구조 재편(예정)"
       ]
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG",
+      "origin_company": "",
+      "person": "구광모",
+      "action_type": "안건·승인대기",
+      "previous_role": "이사회 의장",
+      "new_role": "",
+      "important_point": "구광모 회장 이사회 의장직 사퇴",
+      "bullet_points": [
+        "주주총회에서 '구광모' 이사회 의장직 사퇴 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/050/0000103912?sid=101",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 19:50:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "사내이사",
+      "important_point": "사내이사 선임",
+      "bullet_points": [
+        "'류재철' 사장이 사내이사로 선임",
+        "'강수진' 이사가 사외이사 출신 의장으로 선임"
+      ],
+      "article_url": "https://www.g-enews.com/view.php?ud=202603231221103990ea14faf6f5_1",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 18:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "사외이사 의장",
+      "important_point": "사내이사 선임",
+      "bullet_points": [
+        "'강수진' 이사가 사외이사 출신 의장으로 선임"
+      ],
+      "article_url": "https://www.g-enews.com/view.php?ud=202603231221103990ea14faf6f5_1",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 18:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG",
+      "origin_company": "",
+      "person": "구광모",
+      "action_type": "안건",
+      "previous_role": "LG그룹 회장",
+      "new_role": "",
+      "important_point": "이사회 의장직 분리",
+      "bullet_points": [
+        "주주총회에서 '구광모' LG그룹 회장의 이사회 의장직 분리 안건이 도출됨"
+      ],
+      "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433767",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 17:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "안건·승인대기",
+      "previous_role": "",
+      "new_role": "이사회 의장",
+      "important_point": "사외이사 의장 체제로 전환",
+      "bullet_points": [
+        "주주총회에서 '강수진' 사외이사의 이사회 의장 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/009/0005654730?sid=101",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 17:05:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "선임",
+      "previous_role": "",
+      "new_role": "사외이사 의장",
+      "important_point": "사외이사 의장 체제 전환",
+      "bullet_points": [
+        "'강수진'이 LG의 사외이사 의장으로 선임"
+      ],
+      "article_url": "https://www.mediapen.com/news/view/1088627",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 16:54:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "사내이사 선임",
+      "previous_role": "H&A 사업본부장",
+      "new_role": "",
+      "important_point": "류재철 사장 사내이사 선임",
+      "bullet_points": [
+        "'류재철' H&A 사업본부장의 사내이사 선임"
+      ],
+      "article_url": "https://www.ezyeconomy.com/news/articleView.html?idxno=233778",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 16:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "안건",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "이사회 의장직을 사외이사로 전환",
+      "bullet_points": [
+        "주주총회에서 '강수진' 사외이사가 LG전자의 이사회 의장으로 선임되는 안건이 도출됨"
+      ],
+      "article_url": "https://www.seoultimes.news/news/article.html?no=2000094084",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 16:37:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "BBC",
+      "origin_company": "구글",
+      "person": "맷 브리틴",
+      "action_type": "선임",
+      "previous_role": "전 구글 유럽·중동·아프리카 사장",
+      "new_role": "사장",
+      "important_point": "BBC 신임 사장 선임",
+      "bullet_points": [
+        "'맷 브리틴' 전 구글 유럽·중동·아프리카 사장의 BBC 사장 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/020/0003706212?sid=104",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 16:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "안건",
+      "previous_role": "사외이사",
+      "new_role": "이사회 의장",
+      "important_point": "이사회 독립성 강화",
+      "bullet_points": [
+        "주주총회에서 '강수진' 사외이사의 이사회 의장 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/009/0005654639?sid=101",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 16:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "카카오페이",
+      "origin_company": "",
+      "person": "신원근",
+      "action_type": "재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "신원근 대표이사 재선임",
+      "bullet_points": [
+        "'신원근' 대표이사의 재선임 확정"
+      ],
+      "article_url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=644323",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 19:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "사내이사 재선임",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "이재원 대표 연임 추진",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://mdtoday.co.kr/news/view/20231031000000",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 16:36:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 안건"
+    },
+    {
+      "date": "2026-03-23",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "사내이사 연임 안건",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "사내이사 연임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 사내이사 연임 안건이 도출됨"
+      ],
+      "article_url": "https://www.sisajournal.com/news/articleView.html?idxno=450123",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 16:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "황승욱",
+      "action_type": "사내이사 연임 안건",
+      "previous_role": "거래소사업부문 부대표",
+      "new_role": "",
+      "important_point": "사내이사 연임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '황승욱' 거래소사업부문 부대표의 사내이사 연임 안건이 도출됨"
+      ],
+      "article_url": "https://www.sisajournal.com/news/articleView.html?idxno=450123",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 16:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
     }
   ]
 }
