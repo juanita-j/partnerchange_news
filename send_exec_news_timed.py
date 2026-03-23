@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 1시간마다(9~19시 KST, 11회) 또는 수시 발송: 파트너사·임원인사·조직개편 뉴스 수집 후 메일 본문 생성.
-- 정기(schedule): 직전 발송 슬롯 이후 기사만 수집(첫 회차 9시→전날 19시). 수동(workflow_dispatch): REQUEST_SCOPE=today → 전날 19:00 KST~현재 수집(sent_log/state 무시).
+- 정기(schedule): 평일 10/13/16/19시 발송. 직전 슬롯 이후 기사만 수집(첫 슬롯 10시→전날 19시). 수동(workflow_dispatch): REQUEST_SCOPE=today → 전날 19:00 KST~현재 수집.
 - 로컬 today 모드 테스트: PowerShell에서 `$env:REQUEST_SCOPE="today"; python send_exec_news_timed.py`
 - 트래킹: 기사 제목에 임원인사 키워드 1개 이상 + 파트너사 키워드 1개 이상 포함된 기사만, 최근 한 달 이내 뉴스만(블로그·논문 제외)
 ※ 본문(전문) 분석은 원문 수집이 필요하며, 현재는 API 제목·요약만 사용합니다.
@@ -188,22 +188,27 @@ def _prev_day_19(now: datetime) -> datetime:
 
 def get_since_datetime(now: datetime, since_today_midnight: bool = False) -> datetime:
     """직전 발송 슬롯 시각 반환. KST 기준.
-    since_today_midnight=True: 그날 첫 발송이면 전날 19시부터, 이후면 당일 00:00 KST
-    False(정기): 9시(첫 회차)→전날19시, 10시→당일9시, …, 19시→당일18시
+    발송 슬롯: 10시·13시·16시·19시 (평일).
+      10시(첫 슬롯) → 전날 19시
+      13시 → 당일 10시
+      16시 → 당일 13시
+      19시 → 당일 16시
+    since_today_midnight=True(workflow_dispatch): 전날 19시부터
     """
     if since_today_midnight:
         return _prev_day_19(now)
     h = now.hour
-    if h == 9:
-        since = _prev_day_19(now)
-    elif 10 <= h <= 19:
-        since = now.replace(hour=h - 1, minute=0, second=0, microsecond=0)
-    else:
-        if h < 9:
-            since = _prev_day_19(now)
-        else:
-            since = now.replace(hour=18, minute=0, second=0, microsecond=0)
-    return since
+    # 슬롯별 직전 슬롯 매핑: 10→전날19, 13→10, 16→13, 19→16
+    _SLOTS = [10, 13, 16, 19]
+    for i, slot in enumerate(_SLOTS):
+        if h < slot:
+            # 현재 시각이 첫 슬롯(10시) 이전이면 전날 19시
+            if i == 0:
+                return _prev_day_19(now)
+            # 이전 슬롯 시각 반환
+            return now.replace(hour=_SLOTS[i - 1], minute=0, second=0, microsecond=0)
+    # h >= 19: 마지막 슬롯(19시) 이후 → 당일 16시
+    return now.replace(hour=16, minute=0, second=0, microsecond=0)
 
 
 def get_today_start_kst(now: datetime) -> datetime:
