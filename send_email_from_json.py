@@ -354,7 +354,7 @@ def _merge_same_person_agenda_and_action(exec_pairs: list[tuple[str, tuple]]) ->
     from collections import defaultdict
     by_person: dict[tuple, list[tuple[str, tuple]]] = defaultdict(list)
     for line, c in exec_pairs:
-        company, person_norm, action_type = c
+        company, person_norm = c[0], c[1]
         by_person[(company, person_norm)].append((line, c))
 
     out = []
@@ -384,7 +384,7 @@ def _merge_same_person_agenda_and_action(exec_pairs: list[tuple[str, tuple]]) ->
             continue
         person_quoted = f"'{person_norm}'"
         merged_line = f"주주총회에서 {person_quoted} {role}의 {action_part} 안건이 도출됨"
-        merged_c = (company, person_norm, f"{action_part} 안건")
+        merged_c = (company, person_norm)
         out.append((merged_line, merged_c))
     return out
 
