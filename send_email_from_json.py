@@ -254,10 +254,23 @@ def _bullets_from_item(it: dict) -> list[str]:
     return out[:10] if out else ["요약 없음"]
 
 
+_ROLE_WORDS = {
+    "사외이사", "사내이사", "대표이사", "감사위원", "이사회", "의장", "대표", "회장", "부회장",
+    "사장", "부사장", "전무", "상무", "이사", "감사", "위원", "임원", "직원",
+}
+
+
 def _is_unknown_person(name: str) -> bool:
-    """인물명이 없거나 '없음'·'(없음)'·빈값이면 True."""
+    """인물명이 없거나 '없음'·직함 단어만 있으면 True.
+    예: '', '없음', '사외이사', '대표이사' → True
+    """
     s = (name or "").strip().strip("'\"()").strip()
-    return not s or s in ("없음", "미상", "불명", "알 수 없음")
+    if not s or s in ("없음", "미상", "불명", "알 수 없음"):
+        return True
+    # 직함 단어만으로 구성된 경우 (실명 없음)
+    if s in _ROLE_WORDS:
+        return True
+    return False
 
 
 def _action_line(it: dict) -> str:
