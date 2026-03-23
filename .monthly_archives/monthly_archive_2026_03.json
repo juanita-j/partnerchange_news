@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-23T14:21:09.109390+09:00",
+  "updated_at": "2026-03-23T14:54:28.136753+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -4881,6 +4881,222 @@
         "로봇 사업 본격화(예정)",
         "B2B 중심 고수익 영역으로 이동(예정)"
       ]
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "CEO",
+      "new_role": "사내이사",
+      "important_point": "사내이사 신규 선임",
+      "bullet_points": [
+        "'류재철' CEO의 사내이사 신규 선임",
+        "'강수진' 사외이사의 이사회 의장 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/144/0001105119?sid=105",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 13:44:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "서승우",
+      "action_type": "감사위원 재선임",
+      "previous_role": "서울대 전기정보공학부 교수",
+      "new_role": "",
+      "important_point": "감사위원 재선임",
+      "bullet_points": [
+        "'서승우' 서울대 전기정보공학부 교수의 감사위원 재선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/144/0001105119?sid=105",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 13:44:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "이사회 의장 선임",
+      "previous_role": "사외이사",
+      "new_role": "이사회 의장",
+      "important_point": "이사회 의장 선임",
+      "bullet_points": [
+        "'강수진' 사외이사의 이사회 의장 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/144/0001105119?sid=105",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 13:44:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "선임",
+      "previous_role": "사외이사",
+      "new_role": "이사회 의장",
+      "important_point": "첫 사외이사 출신 이사회 의장 선임",
+      "bullet_points": [
+        "'강수진' 사외이사의 이사회 의장 선임",
+        "'류재철' CEO의 단독 대표이사 선임"
+      ],
+      "article_url": "https://www.techworldnews.com/news/lg-electronics-appoints-new-chairman-and-ceo",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 14:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "류재철",
+      "action_type": "선임",
+      "previous_role": "CEO",
+      "new_role": "단독 대표이사",
+      "important_point": "첫 사외이사 출신 이사회 의장 선임",
+      "bullet_points": [
+        "'강수진' 사외이사의 이사회 의장 선임",
+        "'류재철' CEO의 단독 대표이사 선임"
+      ],
+      "article_url": "https://www.techworldnews.com/news/lg-electronics-appoints-new-chairman-and-ceo",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 14:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "고려아연",
+      "origin_company": "",
+      "person": "최윤범",
+      "action_type": "안건",
+      "previous_role": "회장",
+      "new_role": "",
+      "important_point": "국민연금 의결권 행사 미결정",
+      "bullet_points": [
+        "주주총회에서 '최윤범' 회장의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://example.com/article",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 14:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "한진칼",
+      "origin_company": "",
+      "person": "조원태",
+      "action_type": "안건",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "국민연금의 반대 의사",
+      "bullet_points": [
+        "주주총회에서 '조원태' 한진그룹 회장의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.newspim.com/news/view/20231023000112",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 14:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "대한항공",
+      "origin_company": "",
+      "person": "우기홍",
+      "action_type": "안건",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "국민연금의 반대 의사",
+      "bullet_points": [
+        "주주총회에서 '우기홍' 부회장의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.newspim.com/news/view/20231023000112",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 14:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-23",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "AI 기반 인프라 기업으로의 전환",
+      "bullet_points": [],
+      "article_url": "http://www.hansbiz.co.kr/news/articleView.html?idxno=826571",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 13:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "AI 기반 인프라 기업으로의 전환(예정)",
+        "로봇 사업 본격화(예정)",
+        "글로벌 사우스 전략(예정)"
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "company": "빗썸",
+      "origin_company": "",
+      "person": "이재원",
+      "action_type": "사내이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "이재원 대표이사 연임 추진",
+      "bullet_points": [
+        "주주총회에서 '이재원' 대표이사의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "http://talk.tf.co.kr/bbs/report/write",
+      "article_title": "",
+      "pub_date": "Mon, 23 Mar 2026 13:21:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
     }
   ]
 }
