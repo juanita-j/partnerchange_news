@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-24T17:05:28.525557+09:00",
+  "updated_at": "2026-03-24T20:10:15.867566+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -7085,6 +7085,616 @@
       "article_url": "https://www.dailybrief.co.kr/news/articleView.html?idxno=5393",
       "article_title": "",
       "pub_date": "Tue, 24 Mar 2026 16:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "코리아세븐",
+      "origin_company": "",
+      "person": "김대일",
+      "action_type": "대표이사 내정",
+      "previous_role": "",
+      "new_role": "신임 대표이사",
+      "important_point": "김대일 부사장 신임 대표이사 내정",
+      "bullet_points": [
+        "'김대일' 부사장의 신임 대표이사 내정(주총 승인 후)"
+      ],
+      "article_url": "https://www.insight.co.kr/news/547574",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-24",
+      "company": "GS건설",
+      "origin_company": "",
+      "person": "김태진",
+      "action_type": "사내이사 신규 선임 및 대표이사 선임",
+      "previous_role": "안전책임자",
+      "new_role": "",
+      "important_point": "김태진 사내이사 신규 선임",
+      "bullet_points": [
+        "'김태진' 안전책임자의 사내이사 신규 선임 및 대표이사 선임"
+      ],
+      "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433926",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 19:42:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "송광륜",
+      "action_type": "사내이사 선임",
+      "previous_role": "최고재무책임자(CFO)",
+      "new_role": "",
+      "important_point": "현신균 대표의 연임 확정",
+      "bullet_points": [
+        "'송광륜' 최고재무책임자(CFO)의 사내이사 선임",
+        "'현신균' 대표이사의 연임 확정"
+      ],
+      "article_url": "https://www.ppss.kr/news/articleView.html?idxno=289501",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 19:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "GS건설",
+      "origin_company": "",
+      "person": "김태진",
+      "action_type": "각자대표이사 선임",
+      "previous_role": "최고안전전략책임자(CSSO)",
+      "new_role": "",
+      "important_point": "각자대표이사 체제 유지",
+      "bullet_points": [
+        "'김태진' 최고안전전략책임자(CSSO)의 각자대표이사 선임"
+      ],
+      "article_url": "https://www.g-enews.com/view.php?ud=202603241847218463d7a510102_1",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 18:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "장용호",
+      "action_type": "대표이사 선임",
+      "previous_role": "SK이노베이션 총괄사장",
+      "new_role": "",
+      "important_point": "각자 대표 체제 구축",
+      "bullet_points": [
+        "'장용호' SK이노베이션 총괄사장의 대표이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/421/0008846634?sid=101",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 18:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG유플러스",
+      "origin_company": "",
+      "person": "남형두",
+      "action_type": "사외이사 의장 선임",
+      "previous_role": "연세대 법학전문대학원 교수",
+      "new_role": "",
+      "important_point": "첫 사외이사 의장 탄생",
+      "bullet_points": [
+        "'남형두' 연세대 법학전문대학원 교수의 LG유플러스 이사회 의장 선임"
+      ],
+      "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433917",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 18:36:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG유플러스",
+      "origin_company": "",
+      "person": "남형두",
+      "action_type": "이사회 의장 선임",
+      "previous_role": "사외이사",
+      "new_role": "이사회 의장",
+      "important_point": "남형두 사외이사 이사회 의장으로 선임",
+      "bullet_points": [
+        "'남형두' 사외이사의 이사회 의장 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/009/0005655505?sid=105",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 18:35:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "GS건설",
+      "origin_company": "",
+      "person": "김태진",
+      "action_type": "사내이사 선임",
+      "previous_role": "최고안전전략책임자(CSSO)",
+      "new_role": "각자대표이사",
+      "important_point": "각자대표이사 체제 유지",
+      "bullet_points": [
+        "'김태진' 최고안전전략책임자(CSSO)의 각자대표이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/001/0015979294?sid=101",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 18:27:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "장용호",
+      "action_type": "사내이사 선임",
+      "previous_role": "SK이노베이션 총괄사장",
+      "new_role": "",
+      "important_point": "정기주주총회에서 주요 안건 의결",
+      "bullet_points": [
+        "'장용호' 사내이사 선임",
+        "'김주연' 사외이사 재선임",
+        "'이복희' 사외이사 재선임"
+      ],
+      "article_url": "http://www.finomy.com/news/articleView.html?idxno=251994",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 18:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "현신균",
+      "action_type": "대표이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "현신균 대표이사 재선임",
+      "bullet_points": [
+        "'현신균' 대표이사의 재선임이 확정됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/422/0000847663?sid=101",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:59:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "김주연",
+      "action_type": "사외이사 선임",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "정기 주주총회에서 이사회 개편 진행",
+      "bullet_points": [
+        "'장용호' SK이노베이션 총괄사장의 사내이사 선임",
+        "'김주연'의 사외이사 선임",
+        "'이복희'의 사외이사 및 감사위원 재선임"
+      ],
+      "article_url": "https://www.youthdaily.co.kr/news/article.html?no=216096",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "이복희",
+      "action_type": "사외이사 및 감사위원 재선임",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "정기 주주총회에서 이사회 개편 진행",
+      "bullet_points": [
+        "'장용호' SK이노베이션 총괄사장의 사내이사 선임",
+        "'김주연'의 사외이사 선임",
+        "'이복희'의 사외이사 및 감사위원 재선임"
+      ],
+      "article_url": "https://www.youthdaily.co.kr/news/article.html?no=216096",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "롯데지주",
+      "origin_company": "",
+      "person": "신동빈",
+      "action_type": "사내이사 재선임",
+      "previous_role": "회장",
+      "new_role": "",
+      "important_point": "롯데지주 제59기 주총에서 인사 진행",
+      "bullet_points": [
+        "'신동빈' 회장의 사내이사 재선임",
+        "'고정욱' 대표이사의 사내이사 재선임",
+        "'노준형' 대표이사의 사내이사 재선임",
+        "'조병규'의 사외이사 신규 선임"
+      ],
+      "article_url": "https://www.webeconomy.co.kr/news/articleView.html?idxno=2116701",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "장용호",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "총괄사장",
+      "new_role": "",
+      "important_point": "SK이노베이션 제19차 주총에서 인사 진행",
+      "bullet_points": [
+        "'장용호' 총괄사장의 사내이사 신규 선임",
+        "'김주연'의 사외이사 재선임",
+        "'이복희'의 사외이사 재선임"
+      ],
+      "article_url": "https://www.webeconomy.co.kr/news/articleView.html?idxno=2116701",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "한화생명",
+      "origin_company": "",
+      "person": "유창민",
+      "action_type": "사내이사 선임",
+      "previous_role": "투자부문장",
+      "new_role": "",
+      "important_point": "정기주주총회에서 모든 안건 원안대로 가결",
+      "bullet_points": [
+        "'유창민' 투자부문장의 사내이사 선임",
+        "'박순철'과 '정순섭' 사외이사의 연임"
+      ],
+      "article_url": "http://www.popcornnews.net/news/articleView.html?idxno=116220",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:32:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "현신균",
+      "action_type": "사내이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "정기주주총회에서 재선임 확정",
+      "bullet_points": [
+        "'현신균' 대표이사의 사내이사 재선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/015/0005266332?sid=105",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:21:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "현신균",
+      "action_type": "대표이사 연임",
+      "previous_role": "LG CNS 사장",
+      "new_role": "",
+      "important_point": "현신균 사장의 연임",
+      "bullet_points": [
+        "'현신균' LG CNS 사장의 대표이사 연임",
+        "'송광륜' CFO의 사내이사 선임"
+      ],
+      "article_url": "https://www.shinailbo.co.kr/news/articleView.html?idxno=5004394",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "정환",
+      "action_type": "사외이사 재선임",
+      "previous_role": "고려대학교 통계학과 교수",
+      "new_role": "",
+      "important_point": "현신균 사장의 연임",
+      "bullet_points": [
+        "'정환' 고려대학교 통계학과 교수의 사외이사 재선임"
+      ],
+      "article_url": "https://www.shinailbo.co.kr/news/articleView.html?idxno=5004394",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "이성주",
+      "action_type": "사외이사 재선임",
+      "previous_role": "서울대학교 산업공학과 교수",
+      "new_role": "",
+      "important_point": "현신균 사장의 연임",
+      "bullet_points": [
+        "'이성주' 서울대학교 산업공학과 교수의 사외이사 재선임"
+      ],
+      "article_url": "https://www.shinailbo.co.kr/news/articleView.html?idxno=5004394",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG유플러스",
+      "origin_company": "",
+      "person": "남형두",
+      "action_type": "차기 이사회 의장 선임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "사외이사 의장 선임",
+      "bullet_points": [
+        "'남형두' 사외이사가 LG유플러스 차기 이사회 의장으로 선임"
+      ],
+      "article_url": "https://www.goodkyung.com/news/articleView.html?idxno=284888",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 17:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "크래프톤",
+      "origin_company": "",
+      "person": "김창한",
+      "action_type": "사내이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "김창한 대표이사 재선임",
+      "bullet_points": [
+        "'김창한' 대표이사의 사내이사 재선임",
+        "'장병규' 의장의 사내이사 재선임",
+        "'김민영' 넷플릭스 아시아태평양(APAC) 지역 콘텐츠 부문 부사장의 사외이사 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/014/0005496629?sid=105",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:42:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG전자",
+      "origin_company": "",
+      "person": "강수진",
+      "action_type": "사외이사 의장 선임",
+      "previous_role": "사외이사",
+      "new_role": "이사회 의장",
+      "important_point": "이사회 의장직을 사외이사에게 맡기는 체제로 전환",
+      "bullet_points": [
+        "'강수진' 사외이사가 LG전자의 이사회 의장으로 선임됨"
+      ],
+      "article_url": "https://www.dailybrief.co.kr/news/articleView.html?idxno=5393",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "LG U+",
+      "origin_company": "",
+      "person": "남형두",
+      "action_type": "이사회 의장 선임",
+      "previous_role": "사외이사",
+      "new_role": "이사회 의장",
+      "important_point": "이사회 의장 선임",
+      "bullet_points": [
+        "'남형두' 사외이사의 이사회 의장 선임"
+      ],
+      "article_url": "https://news.einfomax.co.kr/news/articleView.html?idxno=4405644",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:32:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "김주연",
+      "action_type": "사외이사 재선임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "장용호 총괄사장 사내이사 선임",
+      "bullet_points": [
+        "'장용호' 총괄사장의 사내이사 선임",
+        "'김주연'의 사외이사 재선임"
+      ],
+      "article_url": "http://www.e-platform.net/news/articleView.html?idxno=100898",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:32:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "HD현대중공업",
+      "origin_company": "",
+      "person": "이상균",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "이상균 대표이사 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '이상균' 대표이사의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "http://www.lawleader.co.kr/news/articleView.html?idxno=18792",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "넥슨",
+      "origin_company": "",
+      "person": "이정헌",
+      "action_type": "대표이사 재선임 안건",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "넥슨과 엔씨소프트의 전략 재편이 주요 안건으로 다뤄짐",
+      "bullet_points": [
+        "주주총회에서 '이정헌' 대표이사의 재선임 안건이 도출됨",
+        "주주총회에서 '엔씨소프트'의 사명 변경 안건이 도출됨"
+      ],
+      "article_url": "https://www.g-enews.com/view.php?ud=202603241504574692c5fa75ef86_1",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "캐주얼 게임 센터 신설(예정)",
+        "사명 변경(예정)"
+      ]
+    },
+    {
+      "date": "2026-03-24",
+      "company": "크래프톤",
+      "origin_company": "",
+      "person": "김창한",
+      "action_type": "대표이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "김창한 대표 재선임",
+      "bullet_points": [
+        "'김창한' 대표이사의 재선임"
+      ],
+      "article_url": "https://www.m-i.kr/news/articleView.html?idxno=1357454",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:04:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-24",
+      "company": "오픈AI",
+      "origin_company": "구글",
+      "person": "이상현",
+      "action_type": "선임",
+      "previous_role": "구글 디렉터",
+      "new_role": "아시아태평양 대외 정책 및 정부 협력 총괄",
+      "important_point": "이상현 박사, 구글 출신",
+      "bullet_points": [
+        "'이상현'의 아시아태평양 대외 정책 및 정부 협력 총괄 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/366/0001151166?sid=105",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 16:03:00 +0900",
       "category_flags": {
         "exec_personnel": true,
         "org_restructuring": false
