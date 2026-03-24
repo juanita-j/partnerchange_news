@@ -238,16 +238,9 @@ def _parse_llm_response(text: str, url: str) -> tuple[list[dict], dict]:
             "org_changes": [],
         }
 
-    raw_article_url = (data.get("article_url") or url or "").strip() or url
-    # LLM이 스키마 예시 문구 "기사 URL (items 전체 공통)"을 그대로 반환하면 실제 URL로 교체
-    _placeholder_in_url = "기사 URL" in raw_article_url or "items 전체 공통" in raw_article_url
-    if (
-        not (raw_article_url.startswith("http://") or raw_article_url.startswith("https://"))
-        or _placeholder_in_url
-    ):
-        article_url = url
-    else:
-        article_url = raw_article_url
+    # news_raw.json의 link(Naver News URL 우선)를 항상 사용 — LLM이 반환하는 article_url은
+    # 원본 언론사 URL이 될 수 있어 만료·삭제 시 열리지 않으므로 무시한다.
+    article_url = url
     items_raw = data.get("items")
     summaries = []
 
