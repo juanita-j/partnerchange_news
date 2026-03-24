@@ -575,6 +575,36 @@ def _dedupe_similar_exec_pairs(pairs: list[tuple[str, tuple]]) -> list[tuple[str
     return out
 
 
+def _collapse_same_person_keep_longest_exec_pairs(
+    pairs: list[tuple[str, tuple]],
+) -> list[tuple[str, tuple]]:
+    """같은 회사·같은 인물인 불렛이 여러 개면 가장 긴(정보가 많은) 한 줄만 남김.
+    c는 (company, person) 또는 레거시 (company, person, action_type) — 앞 두 요소로 동일 인물 판별.
+    """
+    if len(pairs) < 2:
+        return pairs
+    from collections import defaultdict
+
+    def _person_key(c: tuple) -> tuple[str, str]:
+        if isinstance(c, (list, tuple)) and len(c) >= 2:
+            return (str(c[0]).strip(), str(c[1]).strip())
+        return (str(c), "")
+
+    by_key: dict[tuple, list[tuple[str, tuple]]] = defaultdict(list)
+    for p in pairs:
+        by_key[_person_key(p[1])].append(p)
+
+    out: list[tuple[str, tuple]] = []
+    for _k, group in by_key.items():
+        if len(group) == 1:
+            out.append(group[0])
+            continue
+        # 동일 인물·동일 회사: 전체 줄 길이가 가장 긴 불렛 유지
+        best = max(group, key=lambda x: (len(x[0] or ""), x[0] or ""))
+        out.append(best)
+    return out
+
+
 def _build_html_from_summary(
     items: list[dict],
     subject: str,
@@ -654,6 +684,7 @@ def _build_html_from_summary(
             exec_pairs.append((line, c))
         exec_pairs = _merge_same_person_agenda_and_action(exec_pairs)
         exec_pairs = _dedupe_similar_exec_pairs(exec_pairs)
+        exec_pairs = _collapse_same_person_keep_longest_exec_pairs(exec_pairs)
         exec_pairs.sort(key=lambda p: (_action_part_for_grouping(p[0]), p[0]))
         exec_lines_out = [p[0] for p in exec_pairs]
         for _, c in exec_pairs:

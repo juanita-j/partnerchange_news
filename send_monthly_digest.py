@@ -35,10 +35,12 @@ try:
         _is_valid_article_url,
         _merge_same_person_agenda_and_action,
         _dedupe_similar_exec_pairs,
+        _collapse_same_person_keep_longest_exec_pairs,
     )
 except ImportError:
     _daily_action_line = _action_part_for_grouping = _normalize_display = _pubdate_to_mmdd = _is_valid_article_url = None
     _merge_same_person_agenda_and_action = _dedupe_similar_exec_pairs = None
+    _collapse_same_person_keep_longest_exec_pairs = None
 
 
 def _now_kst() -> datetime:
@@ -241,6 +243,8 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
             flat = _merge_same_person_agenda_and_action(flat)
             if _dedupe_similar_exec_pairs is not None:
                 flat = _dedupe_similar_exec_pairs(flat)
+            if _collapse_same_person_keep_longest_exec_pairs is not None:
+                flat = _collapse_same_person_keep_longest_exec_pairs(flat)
             # 머지 결과에서 meta 복원 (새로 생긴 line 은 원본 중 첫 번째 것 사용)
             merged_pairs_m = []
             for line, c_tuple in flat:
