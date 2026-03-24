@@ -510,6 +510,74 @@ def _first_quoted_name_and_rest(s: str) -> tuple[str | None, str]:
     return name, rest
 
 
+def _rest_after_name_strip_ui(rest: str) -> str:
+    """따옴표 뒤 나머지에서 선행 '의 ' 제거 (병합 비교용)."""
+    r = re.sub(r"\s+", " ", (rest or "").strip())
+    r = re.sub(r"^의\s+", "", r)
+    return r.strip()
+
+
+def _split_role_and_action_suffix(rest: str) -> tuple[str, str] | None:
+    """나머지 문장에서 (직함·직책 덩어리, 마지막 동작어) 분리. 동작어: 재선임|연임|선임."""
+    r = _rest_after_name_strip_ui(rest)
+    m = re.match(r"^(.+)\s+(재선임|연임|선임)\s*$", r)
+    if not m:
+        return None
+    return m.group(1).strip(), m.group(2)
+
+
+def _try_merge_same_person_reappoint_vs_plain_appoint(
+    line_a: str,
+    line_b: str,
+    c_a: tuple,
+    c_b: tuple,
+) -> tuple[str, tuple] | None:
+    """동일 인물·동일 직책 맥락인데 한 줄은 재선임/연임·다른 줄은 (재·연 없이) 선임만 → 하나로 합침.
+    기사가 재선임인데 선임으로만 적힌 중복 불렛 처리. 출력: '이름'의 (직책) 재선임|연임.
+    """
+    na, ra = _first_quoted_name_and_rest(line_a)
+    nb, rb = _first_quoted_name_and_rest(line_b)
+    if na is None or nb is None or na != nb or not na or na == "없음":
+        return None
+    pa = _split_role_and_action_suffix(ra)
+    pb = _split_role_and_action_suffix(rb)
+    if not pa or not pb:
+        return None
+    role_a, act_a = pa
+    role_b, act_b = pb
+    if role_a == role_b:
+        role = role_a
+    elif role_a in role_b:
+        role = role_b
+    elif role_b in role_a:
+        role = role_a
+    else:
+        return None
+    plain_a = act_a == "선임"
+    plain_b = act_b == "선임"
+    re_a = act_a == "재선임"
+    re_b = act_b == "재선임"
+    yeon_a = act_a == "연임"
+    yeon_b = act_b == "연임"
+    # 한쪽만 순수 선임, 다른 쪽은 재선임 또는 연임 (둘 다 재선임·둘 다 선임 등은 제외)
+    if re_a and re_b:
+        return None
+    if yeon_a and yeon_b:
+        return None
+    if plain_a and plain_b:
+        return None
+    if not ((plain_a and (re_b or yeon_b)) or (plain_b and (re_a or yeon_a))):
+        return None
+    if re_a or re_b:
+        final_act = "재선임"
+        c_pick = c_a if re_a else c_b
+    else:
+        final_act = "연임"
+        c_pick = c_a if yeon_a else c_b
+    merged = re.sub(r"\s+", " ", f"'{na}'의 {role} {final_act}").strip()
+    return (merged, c_pick)
+
+
 def _core_action_key(s: str) -> str:
     """불렛 문자열에서 핵심 행위 키(재선임/선임/연임/사임 등) 추출. 비교용."""
     for kw in ("재선임", "연임", "사임", "선임"):
@@ -527,6 +595,7 @@ def _try_merge_exec_pair_lines(
     병합 기준:
     1) 한쪽 이름이 '없음', 따옴표 뒤 문장 동일 → 실명 줄 유지
     2) 동일 인물·동일 문장 → 중복 제거
+    2b) 동일 인물·같은 직책, 재선임/연임 vs 순수 선임 중복 → '이름'의 직책 재선임(또는 연임) 한 줄
     3) 동일 인물, 직함/문장 포함 관계 → 긴(구체적) 줄 유지
     4) 동일 인물·동일 핵심 행위(재선임/선임 등) → 주총 안건 형식 또는 더 긴(구체적) 줄 유지
     """
@@ -555,6 +624,11 @@ def _try_merge_exec_pair_lines(
     # 2) 동일 인물·동일 문장 → 중복 제거
     if ra_n == rb_n:
         return (line_a, c_a)
+
+    # 2b) 동일 인물·같은 직책, 재선임/연임 vs 순수 '선임' 중복 → 재선임·연임 우선 ('이름'의 직책 재선임)
+    dup_merge = _try_merge_same_person_reappoint_vs_plain_appoint(line_a, line_b, c_a, c_b)
+    if dup_merge is not None:
+        return dup_merge
 
     # 3) 동일 인물, 직함/문장 포함 관계 → 긴(구체적) 줄 유지
     if ra_n.endswith(rb_n) or rb_n.endswith(ra_n):
