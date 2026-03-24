@@ -27,7 +27,7 @@ SUMMARY_SCHEMA = """
   "items": [
     {
       "company": "인사가 **발생한** 회사(선임·사임이 이뤄진 쪽). 반드시 한 기업만. **다른 회사(A) 출신이 C회사에 선임된 경우 company=C**(선임된 회사). 같은 회사 내 재선임·승진이면 그 회사.",
-      "previous_company": "선임·영입된 인물의 **이전 소속 회사**. 다른 회사 출신이 C에 선임된 경우만 채움(예: A 출신→A). 같은 회사 내 인사면 빈 문자열.",
+      "previous_company": "선임·영입된 인물의 **다른 법인·회사**에서 온 경우만 채움(예: A 출신이 C에 선임). **같은 회사**에서의 승진·선임·전보면 **반드시 빈 문자열**. 기사에 타사 출신이 없으면 빈 문자열. **절대 '없음'·'해당없음' 등으로 채우지 말 것** — 비어 있으면 빈 문자열.",
       "category_flags": { "exec_personnel": true|false, "org_restructuring": true|false },
       "personnel_type": "인사 유형 (내정/선임/재선임/임명/안건·승인대기/연임포기 등 단계 구분)",
       "personnel_timing": "실행 시기 (언급 시만. 예: 2026년 3월부터, 주총 승인 후)",
@@ -82,6 +82,8 @@ SYSTEM_PROMPT = """당신은 한국 기업의 **임원인사**와 **주요 조�
 - **부서명 알파벳 약어**: 기사 본문에 부서(본부·사업부 등)의 알파벳 약어에 대한 설명이 있으면, 요약·org_changes·bullet_points에 쓸 때 **약어 옆에 괄호로 풀어 쓴다**. 예: 기사에 "ES(Eco Solution) 사업본부", "냉난방공조(HVAC) 사업"이 나오면 → "LG전자 ES(Eco Solution) 사업부", "HVAC(냉난방공조) 사업"처럼 표기. 본문에 풀이가 없으면 괄호 추가하지 않음.
 - **'OO 중심으로 사업구조 재편'**: 기사에 "OO 중심으로 사업구조 재편", "사업구조를 재편하기로" 등이 나오면 요약에 **반드시** 다음 두 가지를 포함한다. (1) **어떤 사업 중심으로 재편하는지**: 예) "AI(인공지능) 중심으로 사업구조 재편 예정". (2) **재편과 함께 진행하는 사업·계획이 있으면**: 협업 파트너, 구축·제공할 사업 내용 등을 bullet_points 또는 org_changes에 한 줄로. 예) "AI 스타트업 리플렉션과 협업해 국내 최대 250MW급 AI 데이터센터 구축, 한국 기업·정부에 AI 클라우드 서비스 및 맞춤형 AI 모델·시스템 제공 예정".
 
+[동시 승진·선임] 기사에 **승진(또는 승격)함과 동시에 … 로 선임**·임명이 같이 나오면 personnel_type을 **한 문장**으로 쓴다. 형식: **'(기존직함)의 (승진 후 직함) 승진 및 (회사명) (선임된 역할·담당) 선임'** 또는 **'OO의 … 승진 및 … 선임'** 처럼 **'승진'과 '선임'을 '및'으로 연결**. 예: 이사가 상무로 승진함과 동시에 서비스 담당 파트너로 선임 → personnel_type 예: `이사의 상무 승진 및 카카오벤처스 서비스 담당 파트너 선임` (회사명·직함은 기사 그대로). **previous_company는 빈 문자열**(같은 회사 인사).
+
 [previous_role·new_role·personnel_type] 기존 직책(previous_role)은 현재/이전 직위 또는 소속(예: CFO, 사외이사, 현대모비스 FTCI 담당(전무)). 신규 직책(new_role)은 취임·선임되는 직위·담당(예: 감사위원회 위원장 담당 전망). **재선임·연임의 경우 new_role은 빈 문자열로 두고 previous_role만 채울 것** (동일 직위이므로 중복 불필요). **재선임·연임 시 직무 명시 필수**: 기사에 소속·신분(OO대 교수, CFO 등)과 이사회·위원회 역할(감사위원, 사내이사 등)이 함께 나오면 **반드시** bullet·personnel_type·previous_role 중 어디에든 **재선임·연임 대상 직위**가 보이게 할 것. 금지: "'OO'의 재선임"처럼 **직무 없이** 재선임·연임만. 좋은 예: previous_role='서울대 산업공학과 교수', personnel_type='감사위원 재선임' 또는 previous_role='서울대 산업공학과 교수의 감사위원', personnel_type='재선임'. 문장 구조가 '~가 감사위원으로 재선임됐다'이면 **감사위원**을 빼먹지 말 것. **기사에 직함이 없으면 previous_role·new_role은 빈 문자열로 두고 '없음'이라고 쓰지 말 것.** 인사 유형(personnel_type)은 변동 내용(예: 사내이사 재선임, 감사위원 재선임, 신규 사내이사 선임). personnel_type에 직함이 이미 들어가면 previous_role에는 이전 직함/소속만 넣어 중복 없이. 연임 포기처럼 직책이 하나면 previous_role만 채우고 personnel_type은 '연임 포기'만.
 
 [company·previous_company] **company**는 인사가 **발생한(선임·사임이 이뤄진)** 회사. A회사 B 사장이 C회사 대표로 선임된 경우 → company=**C**(선임된 회사). **previous_company**는 선임된 인물의 **이전 소속 회사**로, **다른 회사**일 때만 채움(위 예: A). 같은 회사 내 재선임·승진·이동이면 previous_company 빈 문자열. 제목은 "C, 임원인사 진행"이 되도록 company를 선임된 쪽으로 통일.
@@ -114,7 +116,7 @@ USER_PROMPT_TEMPLATE = """아래 뉴스가 **임원인사** 또는 **주요 조�
 요약: {description}
 본문(일부): {body}
 
-[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **롯데케미칼·NCC·설비·석유화학산단 통합/해체/구조재편** 기사는 연관도 낮음 → is_exec_news: false, reason: "롯데케미칼 및 설비 관련된 기사는 연관도가 낮음". **주총 안건 상정/등록만** 나온 경우 bullet: "주주총회에서 '(이름)'이/가 (직책)으로 (선임·재선임 등) 되는 안건이 도출됨". **한 기사에 여러 명 임원인사(선임·사임·교체)가 나오면 선임·사임·교체된 모든 인물을 각각 item으로 넣고, 한 명이라도 누락 금지.** **이미 진행된 주총**(이날 주주총회에서 … 승인됐다, 선임했고, 재선임했다, 가결되었다 등)이면 personnel_timing 빈 문자열, **"주총 승인 후"·"예정" 절대 사용 금지.** 요약은 "'OO' 직함의 사내이사 선임, 'OO' 사외이사 재선임"처럼 확정 사실만. **재선임·연임**은 감사위원·사내이사·대표이사 등 **어느 직에** 재선임인지 previous_role·personnel_type·bullet에 반드시 명시. **'OO'의 재선임**만 쓰지 말 것. **조직개편 시기 필수**: 기사에 "지난해 말", "올해 3월" 등 조직개편 진행 시기가 나오면 org_changes 각 문장 **맨 앞에 반드시** 포함. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **조직 담당 업무**: 기사에 해당 조직이 담당하는 업무(▲… 등)가 나오면 org_changes/bullet_points에 그다음 줄로 요약 포함. **단행 시기**: 임원인사는 personnel_timing에. **연관 조직명**: "OO 산하에", "OO 소속" 등 상위·연관 조직이 있으면 요약에 포함. **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) 어떤 사업(OO) 중심인지, (2) 함께 진행하는 사업(협업·구축·제공 등)을 bullet_points/org_changes에 각각 포함. **부서명**: 알파벳 약어는 기사에 풀이 있으면 괄호 표기. **company**: 인사가 **발생한** 회사(선임된 쪽). A 출신이 C에 선임 시 **C**. **previous_company**: 이전 소속 회사(다른 회사일 때만, 위 예: A). **reason_for_change**: "이는 ~ 위한 조치다" 등에서 ~ 부분 추출. **명사형만**. 없으면 빈 문자열.
+[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **롯데케미칼·NCC·설비·석유화학산단 통합/해체/구조재편** 기사는 연관도 낮음 → is_exec_news: false, reason: "롯데케미칼 및 설비 관련된 기사는 연관도가 낮음". **주총 안건 상정/등록만** 나온 경우 bullet: "주주총회에서 '(이름)'이/가 (직책)으로 (선임·재선임 등) 되는 안건이 도출됨". **한 기사에 여러 명 임원인사(선임·사임·교체)가 나오면 선임·사임·교체된 모든 인물을 각각 item으로 넣고, 한 명이라도 누락 금지.** **이미 진행된 주총**(이날 주주총회에서 … 승인됐다, 선임했고, 재선임했다, 가결되었다 등)이면 personnel_timing 빈 문자열, **"주총 승인 후"·"예정" 절대 사용 금지.** 요약은 "'OO' 직함의 사내이사 선임, 'OO' 사외이사 재선임"처럼 확정 사실만. **재선임·연임**은 감사위원·사내이사·대표이사 등 **어느 직에** 재선임인지 previous_role·personnel_type·bullet에 반드시 명시. **'OO'의 재선임**만 쓰지 말 것. **조직개편 시기 필수**: 기사에 "지난해 말", "올해 3월" 등 조직개편 진행 시기가 나오면 org_changes 각 문장 **맨 앞에 반드시** 포함. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **조직 담당 업무**: 기사에 해당 조직이 담당하는 업무(▲… 등)가 나오면 org_changes/bullet_points에 그다음 줄로 요약 포함. **단행 시기**: 임원인사는 personnel_timing에. **연관 조직명**: "OO 산하에", "OO 소속" 등 상위·연관 조직이 있으면 요약에 포함. **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) 어떤 사업(OO) 중심인지, (2) 함께 진행하는 사업(협업·구축·제공 등)을 bullet_points/org_changes에 각각 포함. **부서명**: 알파벳 약어는 기사에 풀이 있으면 괄호 표기. **company**: 인사가 **발생한** 회사(선임된 쪽). A 출신이 C에 선임 시 **C**. **previous_company**: **다른 회사**일 때만; 없거나 동일 회사면 **빈 문자열**만. **'없음' 문자열 금지**. **승진함과 동시에 선임**: personnel_type에 `… 승진 및 … 선임` 한 문장. **reason_for_change**: "이는 ~ 위한 조치다" 등에서 ~ 부분 추출. **명사형만**. 없으면 빈 문자열.
 
 출력 형식 (이 키만 사용, JSON만 출력):
 {schema}"""
@@ -135,6 +137,38 @@ def _role_or_empty(val) -> str:
     """직함 값이 '없음'이면 빈 문자열, 아니면 strip한 값."""
     v = (val or "").strip()
     return "" if v == "없음" else v
+
+
+_INVALID_PREV_COMPANY = frozenset(
+    {
+        "없음",
+        "미상",
+        "불명",
+        "해당없음",
+        "해당 없음",
+        "해당사항없음",
+        "해당사항 없음",
+        "n/a",
+        "na",
+        "-",
+        "—",
+        "none",
+        "null",
+    }
+)
+
+
+def _normalize_previous_company_field(origin: str, appoint_company: str) -> str:
+    """이전 소속 회사. 기사에 타사 출신이 없거나 동일 회사면 빈 문자열 — '없음' 문자열 금지."""
+    o = (origin or "").strip()
+    ac = (appoint_company or "").strip()
+    if not o or o.lower() in ("n/a", "na", "none", "null"):
+        return ""
+    if o in _INVALID_PREV_COMPANY or "없음" in o:
+        return ""
+    if ac and (o == ac or o.replace(" ", "") == ac.replace(" ", "")):
+        return ""
+    return o
 
 
 def _build_article_text(article: dict) -> str:
@@ -178,7 +212,10 @@ def _one_item_to_summary(item: dict, url: str) -> dict:
     if not isinstance(bullet_points, list):
         bullet_points = []
     bullet_points = [str(s).strip() for s in bullet_points if s][:10]
-    prev_company = (item.get("previous_company") or "").strip()
+    prev_company = _normalize_previous_company_field(
+        (item.get("previous_company") or "").strip(),
+        company,
+    )
     out = {
         "회사명": company,
         "출신 회사": prev_company,
@@ -270,7 +307,10 @@ def _parse_llm_response(text: str, url: str) -> tuple[list[dict], dict]:
         bullet_points = [str(s).strip() for s in bullet_points if s][:10]
         summary = {
             "회사명": company,
-            "출신 회사": (data.get("previous_company") or "").strip(),
+            "출신 회사": _normalize_previous_company_field(
+                (data.get("previous_company") or "").strip(),
+                company,
+            ),
             "인사 유형": action_type,
             "대상 인물": person,
             "기존 직책": _role_or_empty(data.get("previous_role")),

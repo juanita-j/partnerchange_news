@@ -67,7 +67,7 @@ def josa_ro(word: str) -> str:
 
 
 def josa_i_ga(word: str) -> str:
-    """'이/가' 선택. 받침 있으면 '이', 없으면 '가'."""
+    """주격 조사 '이/가'. 표준 국어: 받침 있으면 '이', 없으면 '가' (예: 상무는 받침 없음→'가')."""
     ch = _last_meaningful_char(word)
     if not ch:
         return "가"
@@ -207,6 +207,87 @@ def _normalize_person_for_dedup(name: str) -> str:
     """이전 발송 여부 비교용 인물명 정규화 (따옴표 제거, trim)."""
     s = (name or "").strip().strip("'\"").strip()
     return s
+
+
+_INVALID_PREVIOUS_COMPANY = frozenset(
+    {
+        "",
+        "없음",
+        "미상",
+        "불명",
+        "해당없음",
+        "해당 없음",
+        "해당사항없음",
+        "해당사항 없음",
+        "n/a",
+        "na",
+        "-",
+        "—",
+        "none",
+        "null",
+    }
+)
+
+
+def _cross_hire_origin_usable(origin: str, appoint_company: str) -> bool:
+    """타사 출신 → 본 회사 선임 문장('A 출신 B가 C로 선임')을 쓸 수 있는지. 없음/동일회사 등이면 False."""
+    o = (origin or "").strip()
+    ac = (appoint_company or "").strip()
+    if not o or not ac:
+        return False
+    ol, acl = o.lower(), ac.lower()
+    if ol in _INVALID_PREVIOUS_COMPANY or "없음" in o:
+        return False
+    if ol in ("n/a", "na", "none", "null"):
+        return False
+    if o == ac or o.replace(" ", "") == ac.replace(" ", ""):
+        return False
+    return True
+
+
+def _subject_josa_after_role(prev: str, person_formatted: str) -> str:
+    """타사출신 선임 문장에서 주격 조사: 직함(prev)이 있으면 그 끝음절 기준, 없으면 실명(따옴표 제외) 기준."""
+    if (prev or "").strip():
+        return josa_i_ga(prev.strip())
+    return josa_i_ga(_normalize_person_for_dedup(person_formatted))
+
+
+def _format_promotion_concurrent_appoint_line(
+    person: str,
+    prev: str,
+    action_type: str,
+    company: str,
+    timing: str,
+) -> str | None:
+    """'상무로 승진함과 동시에 … 선임' 등 승진·선임이 한 기사에 같이 나오는 경우 한 줄로."""
+    at = (action_type or "").strip()
+    if "승진" not in at or "선임" not in at:
+        return None
+    pname = _normalize_person_for_dedup(person)
+    body = at
+    first_word = body.split()[0] if body else ""
+    name_already = bool(
+        pname
+        and (
+            first_word.strip("'\"") == pname
+            or first_word == person
+            or body.startswith(f"'{pname}'")
+        )
+    )
+    if name_already:
+        line = body
+    elif prev and prev not in body and f"{prev}의" not in body[: len(prev) + 4]:
+        line = f"{person} {prev}의 {body}"
+    else:
+        line = f"{person} {body}"
+    line = re.sub(r"\s+", " ", line).strip()
+    line = fix_josa(line)
+    if timing:
+        line = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", line).strip()
+        line = f"{timing}, {line}"
+        if "주총" in timing and "승인" in timing:
+            line = line + " 예정"
+    return line
 
 
 def _load_sent_dedup_store() -> dict:
@@ -369,13 +450,21 @@ def _action_line(it: dict) -> str:
         new = ""
     timing = (it.get("인사 시기") or "").strip()
     company = (it.get("회사명") or "").strip()
-    origin_company = (it.get("출신 회사") or "").strip()
+    origin_raw = (it.get("출신 회사") or "").strip()
+    origin_company = origin_raw if _cross_hire_origin_usable(origin_raw, company) else ""
+
+    # 승진과 선임이 한 건으로 묶인 기사 (동시에 ~ 선임): 통합 한 줄 우선. '없음 출신' 등 타사출신 문장은 쓰지 않음.
+    if "승진" in action_type and "선임" in action_type:
+        pc_line = _format_promotion_concurrent_appoint_line(
+            person, prev, action_type, company, timing,
+        )
+        if pc_line:
+            return pc_line
 
     # 타사 출신이 C회사에 선임된 경우: "A 출신 B 사장이 C 대표로 선임"
     if origin_company and company and person and ("선임" in action_type or "영입" in action_type or "임명" in action_type):
         prev_role_part = f" {prev}" if prev else ""
-        anchor = (prev or person)
-        subject_josa = josa_i_ga(anchor)
+        subject_josa = _subject_josa_after_role(prev, person)
         new_role_part = (new or action_type).replace("선임", "").replace("영입", "").strip() or "선임"
         ro = josa_ro(new_role_part)
         line = f"{origin_company} 출신 {person}{prev_role_part}{subject_josa} {company} {new_role_part}{ro} 선임"
