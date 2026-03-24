@@ -137,14 +137,27 @@ def _action_line_for_entry(entry: dict) -> str:
     if new == "없음":
         new = ""
     timing = (entry.get("personnel_timing") or "").strip()
-    if prev and ("재선임" in action_type or "연임" in action_type) and action_type.startswith(prev):
+    is_reappointment = "재선임" in action_type or "연임" in action_type
+    if prev and is_reappointment and action_type.startswith(prev):
         action_type = action_type[len(prev):].strip()
+    if is_reappointment:
+        new = ""
     if prev and new:
         part = f"{prev}의 {new} {action_type}" if action_type else f"{prev} → {new}"
         if new and (new in action_type or action_type.startswith(new)):
             part = f"{prev}의 {action_type}"
     elif prev:
-        part = f"{prev} {action_type}" if not (prev in action_type or action_type.startswith(prev)) else action_type
+        if prev in action_type or action_type.startswith(prev):
+            part = action_type
+        elif is_reappointment and action_type:
+            at = action_type.strip()
+            at_ns = at.replace(" ", "")
+            if at in ("재선임", "연임") or at_ns in ("재선임", "연임"):
+                part = f"{prev} {at}".strip()
+            else:
+                part = f"{prev}의 {action_type}"
+        else:
+            part = f"{prev} {action_type}"
     elif new:
         part = f"{new} {action_type}" if action_type else new
     else:

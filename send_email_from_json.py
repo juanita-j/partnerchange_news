@@ -404,6 +404,14 @@ def _action_line(it: dict) -> str:
     elif prev:
         if prev in action_type or action_type.startswith(prev):
             part = action_type
+        elif is_reappointment and action_type:
+            # 재선임·연임: '교수' + '감사위원 재선임' → '교수의 감사위원 재선임' / '대표이사' + '재선임' → '대표이사 재선임'
+            at = action_type.strip()
+            at_ns = at.replace(" ", "")
+            if at in ("재선임", "연임") or at_ns in ("재선임", "연임"):
+                part = f"{prev} {at}".strip()
+            else:
+                part = f"{prev}의 {action_type}"
         else:
             part = f"{prev} {action_type}"
     elif new:
