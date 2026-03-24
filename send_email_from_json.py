@@ -442,6 +442,24 @@ def _action_part_for_grouping(line: str) -> str:
     return s.strip() or line
 
 
+_C_LEVEL_TOKEN = re.compile(
+    r"\(C[A-Z]{1,5}\)|\bCFO\b|\bCEO\b|\bCTO\b|\bCOO\b|\bCMO\b|\bCRO\b|\bCHRO\b|\bCDO\b|\bCAO\b|\bCISO\b|\bCLO\b|\bCPO\b|\bCQO\b",
+    re.IGNORECASE,
+)
+
+
+def _exec_line_role_priority(line: str) -> int:
+    """임원인사 불렛 정렬 순위. 작을수록 위(먼저). 대표 > 최고·C레벨 직함 > 기타."""
+    s = line or ""
+    if "대표" in s:
+        return 0
+    if "최고" in s:
+        return 1
+    if _C_LEVEL_TOKEN.search(s):
+        return 1
+    return 2
+
+
 def _merge_same_person_agenda_and_action(exec_pairs: list[tuple[str, tuple]]) -> list[tuple[str, tuple]]:
     """동일 인물에 대해 '안건' 한 줄과 '재선임/선임' 한 줄이 있으면 하나로 합친다. 합친 형식: 주주총회에서 '(이름)' (직함)의 (인사유형) 안건이 도출됨."""
     from collections import defaultdict
@@ -693,7 +711,13 @@ def _build_html_from_summary(
         exec_pairs = _merge_same_person_agenda_and_action(exec_pairs)
         exec_pairs = _dedupe_similar_exec_pairs(exec_pairs)
         exec_pairs = _collapse_same_person_keep_longest_exec_pairs(exec_pairs)
-        exec_pairs.sort(key=lambda p: (_action_part_for_grouping(p[0]), p[0]))
+        exec_pairs.sort(
+            key=lambda p: (
+                _exec_line_role_priority(p[0]),
+                _action_part_for_grouping(p[0]),
+                p[0],
+            )
+        )
         exec_lines_out = [p[0] for p in exec_pairs]
         for _, c in exec_pairs:
             sent_exec_this.append(c)

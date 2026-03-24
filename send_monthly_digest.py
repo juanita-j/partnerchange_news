@@ -36,11 +36,31 @@ try:
         _merge_same_person_agenda_and_action,
         _dedupe_similar_exec_pairs,
         _collapse_same_person_keep_longest_exec_pairs,
+        _exec_line_role_priority,
     )
 except ImportError:
     _daily_action_line = _action_part_for_grouping = _normalize_display = _pubdate_to_mmdd = _is_valid_article_url = None
     _merge_same_person_agenda_and_action = _dedupe_similar_exec_pairs = None
     _collapse_same_person_keep_longest_exec_pairs = None
+    _exec_line_role_priority = None
+
+
+def _exec_line_role_priority_fallback(line: str) -> int:
+    """send_email_from_json import 실패 시 동일 규칙."""
+    import re as _re
+
+    s = line or ""
+    if "대표" in s:
+        return 0
+    if "최고" in s:
+        return 1
+    if _re.search(
+        r"\(C[A-Z]{1,5}\)|\bCFO\b|\bCEO\b|\bCTO\b|\bCOO\b|\bCMO\b|\bCRO\b|\bCHRO\b|\bCDO\b|\bCAO\b|\bCISO\b|\bCLO\b|\bCPO\b|\bCQO\b",
+        s,
+        _re.IGNORECASE,
+    ):
+        return 1
+    return 2
 
 
 def _now_kst() -> datetime:
@@ -272,7 +292,14 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
             exec_pairs_m = merged_pairs_m
 
         if _action_part_for_grouping is not None:
-            exec_pairs_m.sort(key=lambda r: (_action_part_for_grouping(r[0]), r[0]))
+            _prio = _exec_line_role_priority or _exec_line_role_priority_fallback
+            exec_pairs_m.sort(
+                key=lambda r: (
+                    _prio(r[0]),
+                    _action_part_for_grouping(r[0]),
+                    r[0],
+                )
+            )
         exec_rows = [(line, meta[1], meta[2]) for line, meta in exec_pairs_m]
 
         org_seen = set()
