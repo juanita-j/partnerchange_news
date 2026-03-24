@@ -29,6 +29,87 @@ SENT_DEDUP_STORE_JSON = OUTPUT_DIR / "sent_dedup_store.json"
 EMAIL_CONTENT_JSON = OUTPUT_DIR / "email_content.json"
 
 
+def _has_batchim(char: str) -> bool:
+    """한글 음절의 받침 유무 반환. 비한글이면 False."""
+    if not char:
+        return False
+    code = ord(char)
+    if 0xAC00 <= code <= 0xD7A3:
+        return (code - 0xAC00) % 28 != 0
+    return False
+
+
+def _last_meaningful_char(s: str) -> str:
+    """문자열에서 마지막 한글/영숫자 문자 반환. 조사 선택 기준."""
+    for ch in reversed(s or ""):
+        if ch.strip() and ch not in ("'", '"', ")", "(", " "):
+            return ch
+    return ""
+
+
+def josa_ro(word: str) -> str:
+    """'로/으로' 선택. 받침 없거나 받침=ㄹ이면 '로', 그 외 받침 있으면 '으로'."""
+    ch = _last_meaningful_char(word)
+    if not ch:
+        return "로"
+    code = ord(ch)
+    if 0xAC00 <= code <= 0xD7A3:
+        jongseong = (code - 0xAC00) % 28
+        if jongseong == 0:      # 받침 없음
+            return "로"
+        if jongseong == 8:      # ㄹ 받침
+            return "로"
+        return "으로"
+    # 영문·숫자 등 — 끝 글자 기준 간단 처리
+    if ch.isalpha():
+        return "로"             # 영문은 "로" 로 통일
+    return "로"
+
+
+def josa_i_ga(word: str) -> str:
+    """'이/가' 선택. 받침 있으면 '이', 없으면 '가'."""
+    ch = _last_meaningful_char(word)
+    if not ch:
+        return "가"
+    if _has_batchim(ch):
+        return "이"
+    return "가"
+
+
+def josa_eun_neun(word: str) -> str:
+    """'은/는' 선택. 받침 있으면 '은', 없으면 '는'."""
+    ch = _last_meaningful_char(word)
+    if not ch:
+        return "는"
+    if _has_batchim(ch):
+        return "은"
+    return "는"
+
+
+def fix_josa(text: str) -> str:
+    """텍스트 내 잘못된 조사(로/으로, 이/가, 은/는)를 자동 교정.
+    패턴: 한글단어 + 로/으로, 이/가, 은/는
+    """
+    def _replace_ro(m: re.Match) -> str:
+        word = m.group(1)
+        return word + josa_ro(word)
+
+    def _replace_i_ga(m: re.Match) -> str:
+        word, josa = m.group(1), m.group(2)
+        correct = josa_i_ga(word)
+        return word + correct
+
+    def _replace_eun_neun(m: re.Match) -> str:
+        word, josa = m.group(1), m.group(2)
+        correct = josa_eun_neun(word)
+        return word + correct
+
+    text = re.sub(r"([가-힣a-zA-Z0-9'\"]+)(?:으로|로)(?=\s|선임|임명|영입|취임|$)", _replace_ro, text)
+    text = re.sub(r"([가-힣'\"]+)(이|가)(?=\s|[가-힣]|$)", _replace_i_ga, text)
+    text = re.sub(r"([가-힣'\"]+)(은|는)(?=\s|[가-힣]|$)", _replace_eun_neun, text)
+    return text
+
+
 def _is_valid_article_url(s: str) -> bool:
     """실제 기사 URL만 허용. placeholder·설명 문구 포함 시 False."""
     if not s or not (s.startswith("http://") or s.startswith("https://")):
@@ -293,9 +374,12 @@ def _action_line(it: dict) -> str:
     # 타사 출신이 C회사에 선임된 경우: "A 출신 B 사장이 C 대표로 선임"
     if origin_company and company and person and ("선임" in action_type or "영입" in action_type or "임명" in action_type):
         prev_role_part = f" {prev}" if prev else ""
-        subject_josa = "이" if prev_role_part else "가"  # B 사장이 / B가
+        anchor = (prev or person)
+        subject_josa = josa_i_ga(anchor)
         new_role_part = (new or action_type).replace("선임", "").replace("영입", "").strip() or "선임"
-        line = f"{origin_company} 출신 {person}{prev_role_part}{subject_josa} {company} {new_role_part}로 선임"
+        ro = josa_ro(new_role_part)
+        line = f"{origin_company} 출신 {person}{prev_role_part}{subject_josa} {company} {new_role_part}{ro} 선임"
+        line = fix_josa(line)
         if timing:
             line = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", line).strip()
             line = f"{timing}, {line}"
@@ -333,6 +417,7 @@ def _action_line(it: dict) -> str:
     if timing:
         part = re.sub(r"\s*\(\s*" + re.escape(timing) + r"\s*\)\s*$", "", part).strip()
     line = f"{person}의 {part}" if (person and not prev) else (f"{person} {part}" if person else part)
+    line = fix_josa(line)
     if timing:
         line = f"{timing}, {line}"
         if "주총" in timing and "승인" in timing:
