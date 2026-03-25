@@ -61,7 +61,7 @@ COMPANY_DISPLAY_ORDER = [
 ]
 NEWS_API_URL = "https://openapi.naver.com/v1/search/news.json"
 OUTPUT_DIR = Path(__file__).resolve().parent
-EMAIL_JSON = OUTPUT_DIR / "email_samsung_hyundai.json"
+EMAIL_JSON = OUTPUT_DIR / "email_partners.json"
 
 # 타입 분류용 키워드
 ORG_KEYWORDS = ("조직개편", "조직 개편", "신설", "팀", "본부", "분사", "일원화", "통합", "개편")
@@ -331,7 +331,7 @@ def build_subject() -> str:
 
 
 def _build_from_news_summary() -> bool:
-    """news_summary.json 이 있으면 그 내용으로 email_samsung_hyundai.json 생성. 성공 시 True."""
+    """news_summary.json 이 있으면 그 내용으로 email_partners.json 생성. 성공 시 True."""
     try:
         from send_email_from_json import (
             _build_html_from_summary,

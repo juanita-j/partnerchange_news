@@ -1,4 +1,4 @@
-﻿# daily-exec-news
+# daily-exec-news
 
 네이버 뉴스 API로 **임원인사·조직개편** 기사를 수집하고, OpenAI로 요약한 뒤 **일일 브리핑 메일** HTML을 만드는 스크립트 모음입니다. GitHub Actions(평일 다회 Gmail)와 로컬(Cursor + WORKS MCP 등)에서 함께 쓸 수 있습니다.
 
@@ -12,7 +12,7 @@ cp .env.example .env
 python run_briefing_pipeline.py
 ```
 
-생성물: `news_raw.json` → `news_summary.json` → `email_samsung_hyundai.json`
+생성물: `news_raw.json` → `news_summary.json` → `email_partners.json`
 
 ## 인수인계·운영
 

@@ -1224,7 +1224,7 @@ def send_gmail_from_json(
 
 
 def record_sent_from_json(json_path: Path) -> int:
-    """JSON(예: email_samsung_hyundai.json)에 담긴 sent_exec_keys, sent_org_keys를 sent_dedup_store에 반영.
+    """JSON(예: email_partners.json)에 담긴 sent_exec_keys, sent_org_keys를 sent_dedup_store에 반영.
     WORKS 메일 발송 후 호출하면, 다음 자동 발송 시 해당 항목이 제외됨.
     """
     if not json_path.exists():

@@ -14,7 +14,7 @@ cd C:\Users\USER
 
 ```powershell
 git add .cursor/daily-exec-news/send_exec_news_timed.py
-git add .cursor/daily-exec-news/send_exec_news_samsung_hyundai.py
+git add .cursor/daily-exec-news/send_exec_news_partners.py
 git add .cursor/rules/daily-exec-news-mail.mdc
 ```
 
@@ -46,7 +46,7 @@ git push origin main
 
 ```powershell
 cd C:\Users\USER
-git add .cursor/daily-exec-news/send_exec_news_timed.py .cursor/daily-exec-news/send_exec_news_samsung_hyundai.py .cursor/rules/daily-exec-news-mail.mdc
+git add .cursor/daily-exec-news/send_exec_news_timed.py .cursor/daily-exec-news/send_exec_news_partners.py .cursor/rules/daily-exec-news-mail.mdc
 git commit -m "인사변동 뉴스 출력 형식 및 정리 포맷 적용"
 git push origin main
 ```
