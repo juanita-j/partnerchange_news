@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-24T20:10:15.867566+09:00",
+  "updated_at": "2026-03-25T09:30:14.295817+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -7700,6 +7700,422 @@
         "org_restructuring": false
       },
       "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK가스",
+      "origin_company": "",
+      "person": "전현정",
+      "action_type": "사외이사 사임",
+      "previous_role": "사외이사(감사위원)",
+      "new_role": "",
+      "important_point": "전현정 후보자, 청문회 직전 사임",
+      "bullet_points": [
+        "'전현정' 사외이사(감사위원) 사임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/082/0001372622?sid=101",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 09:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "GS건설",
+      "origin_company": "",
+      "person": "김태진",
+      "action_type": "사내이사 신규 선임",
+      "previous_role": "최고안전전략책임자(CSSO)",
+      "new_role": "",
+      "important_point": "GS건설, 안전관리 최고 임원을 사내이사로 선임",
+      "bullet_points": [
+        "'김태진' 최고안전전략책임자(CSSO)의 사내이사 신규 선임"
+      ],
+      "article_url": "https://www.newsinside.kr/news/articleView.html?idxno=4531928",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 09:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "GS건설",
+      "origin_company": "",
+      "person": "허창수",
+      "action_type": "사내이사 재선임",
+      "previous_role": "회장",
+      "new_role": "",
+      "important_point": "GS건설, 안전관리 최고 임원을 사내이사로 선임",
+      "bullet_points": [
+        "'허창수' 회장의 사내이사 재선임"
+      ],
+      "article_url": "https://www.newsinside.kr/news/articleView.html?idxno=4531928",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 09:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "현신균",
+      "action_type": "사내이사 재선임",
+      "previous_role": "LG CNS 대표이사",
+      "new_role": "",
+      "important_point": "현신균 대표이사 연임 확정",
+      "bullet_points": [
+        "'현신균' LG CNS 대표이사의 사내이사 재선임"
+      ],
+      "article_url": "https://www.seoulfn.com/news/articleView.html?idxno=624509",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 09:04:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "송광륜",
+      "action_type": "사내이사 선임",
+      "previous_role": "CFO",
+      "new_role": "",
+      "important_point": "송광륜 CFO 사내이사 선임",
+      "bullet_points": [
+        "'송광륜' LG CNS CFO의 사내이사 선임"
+      ],
+      "article_url": "https://www.seoulfn.com/news/articleView.html?idxno=624509",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 09:04:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "LG유플러스",
+      "origin_company": "",
+      "person": "남형두",
+      "action_type": "이사회 의장 선임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "이사회 중심의 책임경영 체제 확립",
+      "bullet_points": [
+        "'남형두' 사외이사의 이사회 의장 선임"
+      ],
+      "article_url": "http://www.newsbrite.net/news/articleView.html?idxno=197102",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 08:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "한진칼",
+      "origin_company": "",
+      "person": "조원태",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "한진그룹 회장",
+      "new_role": "",
+      "important_point": "주주총회에서 사내이사 재선임 안건 다룸",
+      "bullet_points": [
+        "주주총회에서 '조원태' 한진그룹 회장의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.sejungilbo.com/news/articleView.html?idxno=57671",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 08:12:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "카카오벤처스",
+      "origin_company": "",
+      "person": "장동욱",
+      "action_type": "파트너 선임",
+      "previous_role": "이사",
+      "new_role": "서비스 담당 파트너",
+      "important_point": "장동욱의 서비스 담당 파트너 선임",
+      "bullet_points": [
+        "'장동욱' 이사의 서비스 담당 파트너 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/031/0001016431?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 07:17:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "LG유플러스",
+      "origin_company": "",
+      "person": "오혜연",
+      "action_type": "사내이사 선임 안건",
+      "previous_role": "국가AI전략위 글로벌협력분과장",
+      "new_role": "",
+      "important_point": "정기 주주총회에서 6개 안건 의결",
+      "bullet_points": [
+        "주주총회에서 '오혜연' 국가AI전략위 글로벌협력분과장의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/023/0003966584?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 00:35:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "정관 사업 목적에 ‘데이터센터 설계·운영·구축(DBO) 관련 운용업’ 추가 완료"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK텔레콤",
+      "origin_company": "",
+      "person": "정재헌",
+      "action_type": "사내이사 선임 안건",
+      "previous_role": "CEO",
+      "new_role": "",
+      "important_point": "정기 주주총회에서 8개 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '정재헌' CEO의 사내이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/023/0003966584?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 00:35:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "KT",
+      "origin_company": "",
+      "person": "박윤영",
+      "action_type": "대표 선임",
+      "previous_role": "",
+      "new_role": "대표",
+      "important_point": "31일 주주총회에서 대표 선임 예정",
+      "bullet_points": [
+        "'박윤영'의 대표 선임이 31일 예정됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/023/0003966584?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 00:35:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "31일"
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "장용호",
+      "action_type": "대표이사 선임",
+      "previous_role": "SK이노베이션 총괄사장",
+      "new_role": "",
+      "important_point": "장용호 대표이사 선임",
+      "bullet_points": [
+        "주주총회에서 '장용호' SK이노베이션 총괄사장의 대표이사 선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.ngonews.kr/news/articleView.html?idxno=226917",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 22:54:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-25",
+      "company": "LG유플러스",
+      "origin_company": "",
+      "person": "남형두",
+      "action_type": "사외이사 선임",
+      "previous_role": "연세대 법학전문대학원 교수",
+      "new_role": "이사회 의장",
+      "important_point": "남형두 사외이사 이사회 의장 선임",
+      "bullet_points": [
+        "'남형두' 사외이사가 LG유플러스 이사회 의장으로 선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/032/0003435458?sid=101",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 21:10:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "GS건설",
+      "origin_company": "",
+      "person": "김태진",
+      "action_type": "사내이사 신규 선임 및 대표이사 선임",
+      "previous_role": "안전전략책임자",
+      "new_role": "대표이사",
+      "important_point": "각자대표 체제 구축",
+      "bullet_points": [
+        "'김태진' 안전전략책임자의 사내이사 신규 선임 및 대표이사 선임"
+      ],
+      "article_url": "https://www.businesspost.co.kr/BP?command=article_view&num=433926",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 19:42:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "현신균",
+      "action_type": "대표이사 연임",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "현신균 대표의 연임 확정",
+      "bullet_points": [
+        "'현신균' 대표이사의 연임 확정"
+      ],
+      "article_url": "https://www.ppss.kr/news/articleView.html?idxno=289501",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 19:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "LG CNS",
+      "origin_company": "",
+      "person": "현신균",
+      "action_type": "대표이사 재선임",
+      "previous_role": "LG CNS 대표이사",
+      "new_role": "",
+      "important_point": "정기 주주총회에서 재선임 가결",
+      "bullet_points": [
+        "'현신균' LG CNS 대표이사 재선임"
+      ],
+      "article_url": "https://www.m-i.kr/news/articleView.html?idxno=1357518",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 19:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "카카오페이",
+      "origin_company": "",
+      "person": "신원근",
+      "action_type": "대표이사 연임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "신원근 대표이사 연임 확정",
+      "bullet_points": [
+        "'신원근' 대표이사의 연임 확정"
+      ],
+      "article_url": "http://www.technoa.co.kr/news/articleView.html?idxno=100701",
+      "article_title": "",
+      "pub_date": "Tue, 24 Mar 2026 23:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "XBOX",
+      "origin_company": "",
+      "person": "아샤 샤르마",
+      "action_type": "CEO 선임",
+      "previous_role": "",
+      "new_role": "CEO",
+      "important_point": "'필 스펜서' 전 CEO 사임",
+      "bullet_points": [
+        "'아샤 샤르마'의 CEO 선임"
+      ],
+      "article_url": "https://m.sports.naver.com/esports/article/442/0000190791",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 08:42:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "현대차",
+      "origin_company": "",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "종속법인 구조 전면 재편",
+      "bullet_points": [
+        "2025년 현대차 유럽 품질센터 신설(예정)",
+        "2025년 현대캐피탈 카자흐스탄 신설(예정)",
+        "2025년 현대캐피탈 인도네시아 신설(예정)"
+      ],
+      "article_url": "https://www.ceoscoredaily.com/page/view/2026032411064609988",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 07:00:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "2025년 현대차 유럽 품질센터 신설(예정)",
+        "2025년 현대캐피탈 카자흐스탄 신설(예정)",
+        "2025년 현대캐피탈 인도네시아 신설(예정)",
+        "2023년 현대 모빌리티 매뉴팩처링 태국 신설(예정)",
+        "2025년 현대차 말레이시아 생산법인 신설(예정)",
+        "2025년 현대차 말레이시아 판매법인 신설(예정)",
+        "2024년 현대차그룹 메타플랜트 아메리카 신설(예정)",
+        "2024년 현대 수소 모빌리티 독일 신설(예정)",
+        "2025년 에이치투 로지스틱스 신설(예정)",
+        "2025년 블루월넛 아메리카·유럽 신설(예정)"
+      ]
     }
   ]
 }
