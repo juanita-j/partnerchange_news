@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-25T09:30:14.295817+09:00",
+  "updated_at": "2026-03-25T12:49:49.913754+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -8116,6 +8116,69 @@
         "2025년 에이치투 로지스틱스 신설(예정)",
         "2025년 블루월넛 아메리카·유럽 신설(예정)"
       ]
+    },
+    {
+      "date": "2026-03-25",
+      "company": "LG유플러스",
+      "origin_company": "",
+      "person": "남형두",
+      "action_type": "사외이사 의장 선임",
+      "previous_role": "사외이사",
+      "new_role": "이사회 의장",
+      "important_point": "첫 사외이사 의장 체제 도입",
+      "bullet_points": [
+        "'남형두' 사외이사의 이사회 의장 선임"
+      ],
+      "article_url": "https://weekly.cnbnews.com/news/article.html?no=209831",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 11:48:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "딥핑소스",
+      "origin_company": "SK브로드밴드",
+      "person": "금상호",
+      "action_type": "CBO 선임",
+      "previous_role": "SK브로드밴드 출신",
+      "new_role": "최고비즈니스책임자(CBO)",
+      "important_point": "딥핑소스의 첫 외부 C레벨 영입",
+      "bullet_points": [
+        "'금상호'의 최고비즈니스책임자(CBO) 선임"
+      ],
+      "article_url": "https://www.newstopkorea.com/news/articleView.html?idxno=44032",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 11:18:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "한진칼",
+      "origin_company": "",
+      "person": "조원태",
+      "action_type": "사내이사 재선임 안건",
+      "previous_role": "한진그룹 회장",
+      "new_role": "",
+      "important_point": "조원태 회장 사내이사 재선임 안건 상정",
+      "bullet_points": [
+        "주주총회에서 '조원태' 한진그룹 회장의 사내이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.pinpointnews.co.kr/news/articleView.html?idxno=439508",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 10:16:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
     }
   ]
 }
