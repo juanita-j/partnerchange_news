@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-25T12:49:49.913754+09:00",
+  "updated_at": "2026-03-25T14:41:08.903058+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -8179,6 +8179,99 @@
         "org_restructuring": false
       },
       "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "장용호",
+      "action_type": "사내이사 재선임",
+      "previous_role": "총괄사장",
+      "new_role": "",
+      "important_point": "정기주주총회에서 주요 안건 의결",
+      "bullet_points": [
+        "'장용호' 총괄사장의 사내이사 재선임",
+        "'김주연' 사외이사의 재선임",
+        "'이복희' 사외이사의 재선임"
+      ],
+      "article_url": "http://www.newsbrite.net/news/articleView.html?idxno=197104",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 14:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "김주연",
+      "action_type": "사외이사 재선임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "정기주주총회에서 주요 안건 의결",
+      "bullet_points": [
+        "'장용호' 총괄사장의 사내이사 재선임",
+        "'김주연' 사외이사의 재선임",
+        "'이복희' 사외이사의 재선임"
+      ],
+      "article_url": "http://www.newsbrite.net/news/articleView.html?idxno=197104",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 14:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "이복희",
+      "action_type": "사외이사 재선임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "정기주주총회에서 주요 안건 의결",
+      "bullet_points": [
+        "'장용호' 총괄사장의 사내이사 재선임",
+        "'김주연' 사외이사의 재선임",
+        "'이복희' 사외이사의 재선임"
+      ],
+      "article_url": "http://www.newsbrite.net/news/articleView.html?idxno=197104",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 14:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "코인원",
+      "origin_company": "",
+      "person": "차명훈",
+      "action_type": "COO 선임",
+      "previous_role": "창업자",
+      "new_role": "최고운영책임자(COO)",
+      "important_point": "차명훈 대표 단독 경영 체제 전환",
+      "bullet_points": [
+        "'차명훈'의 COO 선임"
+      ],
+      "article_url": "https://www.greened.kr/news/articleView.html?idxno=338466",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 13:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "기술 조직 강화",
+        "마케팅 조직 확대"
+      ]
     }
   ]
 }
