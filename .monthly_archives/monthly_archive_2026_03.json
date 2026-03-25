@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-25T14:41:08.903058+09:00",
+  "updated_at": "2026-03-25T17:02:10.708205+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -8271,6 +8271,140 @@
       "org_changes": [
         "기술 조직 강화",
         "마케팅 조직 확대"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "장용호",
+      "action_type": "사내이사 선임",
+      "previous_role": "",
+      "new_role": "대표이사",
+      "important_point": "각자 대표 체제 구축",
+      "bullet_points": [
+        "주주총회에서 '장용호'의 사내이사 선임 안건이 도출됨",
+        "'장용호'의 대표이사 선임"
+      ],
+      "article_url": "https://www.sisajournal-e.com/news/articleView.html?idxno=420025",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 16:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후",
+      "career": "SK실트론, SK머티리얼즈"
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK이노베이션",
+      "origin_company": "",
+      "person": "추형욱",
+      "action_type": "사내이사 선임",
+      "previous_role": "",
+      "new_role": "대표이사",
+      "important_point": "각자 대표 체제 구축",
+      "bullet_points": [
+        "주주총회에서 '추형욱'의 사내이사 선임 안건이 도출됨",
+        "'추형욱'의 대표이사 선임"
+      ],
+      "article_url": "https://www.sisajournal-e.com/news/articleView.html?idxno=420025",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 16:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK스퀘어",
+      "origin_company": "",
+      "person": "김정규",
+      "action_type": "대표이사 선임",
+      "previous_role": "",
+      "new_role": "대표이사",
+      "important_point": "AI·반도체 포트폴리오에 집중",
+      "bullet_points": [
+        "'김정규'의 대표이사 선임"
+      ],
+      "article_url": "http://www.lkp.news/news/articleView.html?idxno=78262",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 16:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK스퀘어",
+      "origin_company": "",
+      "person": "유영상",
+      "action_type": "기타비상무이사 선임",
+      "previous_role": "수펙스추구협의회 AI위원장",
+      "new_role": "기타비상무이사",
+      "important_point": "AI·반도체 포트폴리오에 집중",
+      "bullet_points": [
+        "'유영상'의 기타비상무이사 선임"
+      ],
+      "article_url": "http://www.lkp.news/news/articleView.html?idxno=78262",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 16:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "SK스퀘어",
+      "origin_company": "",
+      "person": "서영호",
+      "action_type": "사외이사 선임",
+      "previous_role": "전 KB금융지주 글로벌 사업부문장 부사장",
+      "new_role": "사외이사",
+      "important_point": "AI·반도체 포트폴리오에 집중",
+      "bullet_points": [
+        "'서영호'의 사외이사 선임"
+      ],
+      "article_url": "http://www.lkp.news/news/articleView.html?idxno=78262",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 16:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-25",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "",
+      "action_type": "",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "정신아 대표의 경영 효율화 주도",
+      "bullet_points": [
+        "카카오는 핵심 사업 위주로 조직 슬림화 추진 중(예정)"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/469/0000921610?sid=105",
+      "article_title": "",
+      "pub_date": "Wed, 25 Mar 2026 16:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": false,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "조직 슬림화(예정)",
+        "핵심 사업 위주로 조직 재편(예정)"
       ]
     }
   ]
