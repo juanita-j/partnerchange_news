@@ -13,6 +13,7 @@ import json
 import os
 import re
 import smtplib
+import unicodedata
 import ssl
 import sys
 from datetime import datetime, timezone, timedelta
@@ -86,16 +87,81 @@ def josa_eun_neun(word: str) -> str:
     return "는"
 
 
+# 조사 교정 전 일시 치환(복원 시 인덱스 기준). 본문에 거의 나오지 않는 문자열.
+_JOSA_STASH_TMPL = "\ufff0JOSA{}\ufff0"
+
+# ([가-힣]+)(이|가) 가 '사외'+'이'+'사…' 처럼 **사외이사** 안쪽을 쪼개 오교정하는 것을 막기 위한 접두어.
+# (뒤가 '사…'로 이어져 직함 이사가 붙는 경우만 스킵)
+_JOSA_SKIP_I_BEFORE_SA = frozenset(
+    {"사외", "대표", "사내", "기타비상무", "상무", "전무"}
+)
+
+# 공백·호환 문자로 쪼개진 직함을 한 덩어리로 붙임 (플레이스홀더 단계 전에 적용)
+_JOSA_GLUE_COMPOUNDS = (
+    (re.compile(r"사외\s+이사"), "사외이사"),
+    (re.compile(r"대표\s+이사"), "대표이사"),
+    (re.compile(r"사내\s+이사"), "사내이사"),
+    (re.compile(r"기타비상무\s*이사"), "기타비상무이사"),
+    (re.compile(r"상무\s+이사"), "상무이사"),
+    (re.compile(r"전무\s+이사"), "전무이사"),
+)
+
+
 def fix_josa(text: str) -> str:
     """텍스트 내 잘못된 조사(로/으로, 이/가, 은/는)를 자동 교정.
-    패턴: 한글단어 + 로/으로, 이/가, 은/는
+    '이상현'→'가상현', 사외이사→사외가사 등 오교정을 막기 위해 유니코드 정규화·복합어 접합·
+    작은따옴표 인명·복합어 플레이스홀더와, **사외+이+사** 패턴 명시 스킵을 병행한다.
     """
+    if not text:
+        return text
+
+    text = unicodedata.normalize("NFKC", text)
+
+    vault: list[str] = []
+
+    def _stash(fragment: str) -> str:
+        vault.append(fragment)
+        return _JOSA_STASH_TMPL.format(len(vault) - 1)
+
+    for rx, repl in _JOSA_GLUE_COMPOUNDS:
+        text = rx.sub(repl, text)
+
+    # 1) 브리핑용 인명 전체 보호 — ASCII '…' 및 유니코드 ‘…’ (이씨 성 등 앞글자 오인 방지)
+    text = re.sub(r"'[^']{1,40}'", lambda m: _stash(m.group(0)), text)
+    text = re.sub(r"\u2018[^\u2019]{1,40}\u2019", lambda m: _stash(m.group(0)), text)
+
+    # 2) 복합어 — 내부 '이'가 조사 교정에 걸리지 않게 (긴 것부터)
+    for compound in (
+        "기타비상무이사",
+        "사외이사",
+        "대표이사",
+        "사내이사",
+        "상무이사",
+        "전무이사",
+        "이사회",
+        "감사위원",
+    ):
+        while compound in text:
+            text = text.replace(compound, _stash(compound), 1)
+
     def _replace_ro(m: re.Match) -> str:
         word = m.group(1)
         return word + josa_ro(word)
 
     def _replace_i_ga(m: re.Match) -> str:
         word, josa = m.group(1), m.group(2)
+        full = m.group(0)
+        rest = m.string[m.end() :]
+        rest_n = unicodedata.normalize("NFKC", rest).lstrip()
+        wn = unicodedata.normalize("NFKC", word).strip("'\"")
+
+        # 사외이사, 대표이사 등: [가-힣]+ 가 '사외'에서 멈추고 다음 '이'만 조사로 잡는 오탐 방지
+        if josa == "이" and rest_n.startswith("사") and wn in _JOSA_SKIP_I_BEFORE_SA:
+            return full
+
+        w_clean = word.strip("'\"")
+        if not w_clean or not any(0xAC00 <= ord(c) <= 0xD7A3 for c in w_clean):
+            return full
         correct = josa_i_ga(word)
         return word + correct
 
@@ -107,6 +173,9 @@ def fix_josa(text: str) -> str:
     text = re.sub(r"([가-힣a-zA-Z0-9'\"]+)(?:으로|로)(?=\s|선임|임명|영입|취임|$)", _replace_ro, text)
     text = re.sub(r"([가-힣'\"]+)(이|가)(?=\s|[가-힣]|$)", _replace_i_ga, text)
     text = re.sub(r"([가-힣'\"]+)(은|는)(?=\s|[가-힣]|$)", _replace_eun_neun, text)
+
+    for i in range(len(vault) - 1, -1, -1):
+        text = text.replace(_JOSA_STASH_TMPL.format(i), vault[i])
     return text
 
 
@@ -207,6 +276,46 @@ def _normalize_person_for_dedup(name: str) -> str:
     """이전 발송 여부 비교용 인물명 정규화 (따옴표 제거, trim)."""
     s = (name or "").strip().strip("'\"").strip()
     return s
+
+
+def _merge_career_line_segments(segments: list[str]) -> str:
+    """여러 '경력' 문자열을 회사명 단위로 합침(콤마 분리·순서 유지·중복 제거)."""
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for block in segments:
+        for part in re.split(r"[,，]\s*", block or ""):
+            p = part.strip()
+            if p and p not in seen:
+                seen.add(p)
+                ordered.append(p)
+    return ", ".join(ordered)
+
+
+def _career_text_for_person_in_group(
+    group: list[dict],
+    company: str,
+    person_norm: str,
+    *,
+    archive_entries: bool = False,
+) -> str:
+    """임원인사 불렛 바로 아래 넣을 '경력: …' 본문. 기사/요약에 경력이 없으면 빈 문자열."""
+    if not person_norm:
+        return ""
+    blobs: list[str] = []
+    for it in group:
+        if archive_entries:
+            it_co = (it.get("company") or "").strip() or "(회사명 없음)"
+            pn = (it.get("person") or "").strip().strip("'\"").strip()
+            raw = (it.get("career") or "").strip()
+        else:
+            it_co = (it.get("회사명") or "").strip() or "(회사명 없음)"
+            pn = _normalize_person_for_dedup(it.get("대상 인물") or "")
+            raw = (it.get("경력") or "").strip()
+        if it_co != company or pn != person_norm:
+            continue
+        if raw:
+            blobs.append(raw)
+    return _merge_career_line_segments(blobs)
 
 
 _INVALID_PREVIOUS_COMPANY = frozenset(
@@ -835,7 +944,6 @@ def _build_html_from_summary(
         exec_items = []
         org_changes_list = []
         org_changes_seen = set()
-        exec_lines_out = []
         for it in group:
             cf = it.get("category_flags") or {}
             is_exec = cf.get("exec_personnel", True)
@@ -881,7 +989,6 @@ def _build_html_from_summary(
                 p[0],
             )
         )
-        exec_lines_out = [p[0] for p in exec_pairs]
         for _, c in exec_pairs:
             sent_exec_this.append(c)
 
@@ -896,10 +1003,10 @@ def _build_html_from_summary(
         org_changes_list = org_filtered
 
         # 새 소식만 있던 항목이 하나도 없으면 이 회사 블록 생략
-        if not exec_lines_out and not org_changes_list:
+        if not exec_pairs and not org_changes_list:
             continue
 
-        if exec_lines_out and org_changes_list:
+        if exec_pairs and org_changes_list:
             section_label = f"{company}, 임원인사 및 조직개편 진행"
         elif org_changes_list:
             section_label = f"{company}, 조직개편 진행"
@@ -915,12 +1022,19 @@ def _build_html_from_summary(
         lines.append("  <li>")
         lines.append("    <p>" + " ".join(p_parts) + "</p>")
         # 임원인사/조직개편: 한 가지만 있으면 라벨 없이 내용만. 둘 다 있으면 라벨을 두 번째 단계, 내용을 세 번째 단계로
-        if exec_lines_out and org_changes_list:
+        if exec_pairs and org_changes_list:
             lines.append("    <ul>")
             lines.append("      <li>임원인사")
             lines.append("        <ul>")
-            for line in exec_lines_out:
+            for line, c in exec_pairs:
                 lines.append(f"          <li>{_normalize_display(line)}</li>")
+                career_line = _career_text_for_person_in_group(
+                    group, company, c[1], archive_entries=False
+                )
+                if career_line:
+                    lines.append(
+                        f"          <li>경력: {_normalize_display(career_line)}</li>"
+                    )
             lines.append("        </ul>")
             lines.append("      </li>")
             lines.append("      <li>조직개편")
@@ -932,10 +1046,17 @@ def _build_html_from_summary(
             if rep_reason:
                 lines.append(f"      <li>진행 이유: {_reason_to_noun_form(rep_reason)}</li>")
             lines.append("    </ul>")
-        elif exec_lines_out:
+        elif exec_pairs:
             lines.append("    <ul>")
-            for line in exec_lines_out:
+            for line, c in exec_pairs:
                 lines.append(f"      <li>{_normalize_display(line)}</li>")
+                career_line = _career_text_for_person_in_group(
+                    group, company, c[1], archive_entries=False
+                )
+                if career_line:
+                    lines.append(
+                        f"      <li>경력: {_normalize_display(career_line)}</li>"
+                    )
             if rep_reason:
                 lines.append(f"      <li>진행 이유: {_reason_to_noun_form(rep_reason)}</li>")
             lines.append("    </ul>")

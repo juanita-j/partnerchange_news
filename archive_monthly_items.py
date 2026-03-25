@@ -67,6 +67,9 @@ def _item_to_archive_entry(it: dict, date_iso: str) -> dict:
     }
     if personnel_timing:
         out["personnel_timing"] = personnel_timing
+    career = (it.get("경력") or "").strip()
+    if career:
+        out["career"] = career
     return out
 
 

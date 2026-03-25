@@ -37,12 +37,14 @@ try:
         _dedupe_similar_exec_pairs,
         _collapse_same_person_keep_longest_exec_pairs,
         _exec_line_role_priority,
+        _career_text_for_person_in_group,
     )
 except ImportError:
     _daily_action_line = _action_part_for_grouping = _normalize_display = _pubdate_to_mmdd = _is_valid_article_url = None
     _merge_same_person_agenda_and_action = _dedupe_similar_exec_pairs = None
     _collapse_same_person_keep_longest_exec_pairs = None
     _exec_line_role_priority = None
+    _career_text_for_person_in_group = None
 
 
 def _exec_line_role_priority_fallback(line: str) -> int:
@@ -300,7 +302,7 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
                     r[0],
                 )
             )
-        exec_rows = [(line, meta[1], meta[2]) for line, meta in exec_pairs_m]
+        exec_rows = [(line, meta[1], meta[2], meta[0]) for line, meta in exec_pairs_m]
 
         org_seen = set()
         org_rows = []
@@ -327,11 +329,21 @@ def _build_digest_html(entries: list[dict], month: int) -> str:
         if exec_rows:
             lines.append("    <li>임원인사")
             lines.append("      <ul>")
-            for text, date_part, link in exec_rows:
+            _career_fn = _career_text_for_person_in_group
+            for text, date_part, link, c_triple in exec_rows:
                 suffix = f" ({date_part})" if date_part else ""
                 if link and is_valid_url(link):
                     suffix += f" <a href=\"{link}\">기사</a>"
                 lines.append(f"        <li>{text}{suffix}</li>")
+                if _career_fn is not None and isinstance(c_triple, (list, tuple)) and len(c_triple) >= 2:
+                    pn = str(c_triple[1]).strip().strip("'\"").strip()
+                    career_html = _career_fn(
+                        group, company, pn, archive_entries=True
+                    )
+                    if career_html:
+                        lines.append(
+                            f"        <li>경력: {norm_display(career_html)}{suffix if career_html else ''}</li>"
+                        )
             lines.append("      </ul>")
             lines.append("    </li>")
         if org_rows:

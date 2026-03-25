@@ -14,6 +14,13 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 OUTPUT_DIR = Path(__file__).resolve().parent
+
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(OUTPUT_DIR / ".env")
+except ImportError:
+    pass
 NEWS_RAW_JSON = OUTPUT_DIR / "news_raw.json"
 NEWS_SUMMARY_JSON = OUTPUT_DIR / "news_summary.json"
 DEBUG_SUMMARY_JSON = OUTPUT_DIR / "debug_summary.json"
@@ -34,6 +41,7 @@ SUMMARY_SCHEMA = """
       "person_name": "대상 인물 이름",
       "previous_role": "기존 직책·소속. **재선임·연임**이면 반드시 **어떤 직(당)에** 재선임·연임인지 드러나게 쓴다. 예: '서울대 산업공학과 교수의 감사위원', '고려대 통계학과 교수의 감사위원', '대표이사'. 기사에 'OO 교수가 감사위원으로 재선임' 구조면 소속(교수·직함)과 재선임 대상 직위(감사위원 등)를 **둘 다** previous_role 또는 personnel_type에 반영해, 요약 불렛이 '이름'의 재선임처럼 직무 없이 끊기지 않게 할 것.",
       "new_role": "신규 직책",
+      "career_companies": ["기사 본문에 **해당 인물의 과거 근무·합류·거쳤다** 등으로 **드러나는 회사·법인명**만 시간순. 예: 'OO에 합류한 이후', 'OO에서 근무한 바', 'OO를 거쳐', '주요 경력'에 나온 법인명. **같은 회사(company) 내 직급 이동만** 있고 타사·이전 고용주 언급이 없으면 **빈 배열 [].** 인사변동 당사(company)만 반복 언급이면 넣지 않거나 한 번만. 없으면 [].",
       "org_changes": ["조직개편 내용 (예정은 (예정), 완료는 띄어쓰기 후 '완료')"],
       "summary_2sent": "해당 기업 관련 2문장 요약",
       "key_points": ["중요 포인트"],
@@ -86,6 +94,8 @@ SYSTEM_PROMPT = """당신은 한국 기업의 **임원인사**와 **주요 조�
 
 [previous_role·new_role·personnel_type] 기존 직책(previous_role)은 현재/이전 직위 또는 소속(예: CFO, 사외이사, 현대모비스 FTCI 담당(전무)). 신규 직책(new_role)은 취임·선임되는 직위·담당(예: 감사위원회 위원장 담당 전망). **재선임·연임의 경우 new_role은 빈 문자열로 두고 previous_role만 채울 것** (동일 직위이므로 중복 불필요). **재선임·연임 시 직무 명시 필수**: 기사에 소속·신분(OO대 교수, CFO 등)과 이사회·위원회 역할(감사위원, 사내이사 등)이 함께 나오면 **반드시** bullet·personnel_type·previous_role 중 어디에든 **재선임·연임 대상 직위**가 보이게 할 것. 금지: "'OO'의 재선임"처럼 **직무 없이** 재선임·연임만. 좋은 예: previous_role='서울대 산업공학과 교수', personnel_type='감사위원 재선임' 또는 previous_role='서울대 산업공학과 교수의 감사위원', personnel_type='재선임'. 문장 구조가 '~가 감사위원으로 재선임됐다'이면 **감사위원**을 빼먹지 말 것. **기사에 직함이 없으면 previous_role·new_role은 빈 문자열로 두고 '없음'이라고 쓰지 말 것.** 인사 유형(personnel_type)은 변동 내용(예: 사내이사 재선임, 감사위원 재선임, 신규 사내이사 선임). personnel_type에 직함이 이미 들어가면 previous_role에는 이전 직함/소속만 넣어 중복 없이. 연임 포기처럼 직책이 하나면 previous_role만 채우고 personnel_type은 '연임 포기'만.
 
+[경력·career_companies] 기사에 **그 사람의 이전(또는 과거) 근무/합류 경로**가 나올 때만 채운다. 신호 예: '주요 경력', 'OO(회사)에 합류한 이후 …를 거치며', 'OO에서 근무한 바 있다', 'OO를 거쳤다', 'OO 직무를 맡았다' 등 **법인·회사명**을 **career_companies** 배열에 **콤마로 나열할 회사명만** 순서대로(기사 순서). **해당 인물에 대한 경력 언급이 전혀 없으면 빈 배열 [].** 메일에서는 임원인사 불렛 **바로 아래**에 `- 경력: 회사1, 회사2` 로 나가므로 **인사 한 줄과 중복되는 문장은 bullet_points에 넣지 말 것.**
+
 [company·previous_company] **company**는 인사가 **발생한(선임·사임이 이뤄진)** 회사. A회사 B 사장이 C회사 대표로 선임된 경우 → company=**C**(선임된 회사). **previous_company**는 선임된 인물의 **이전 소속 회사**로, **다른 회사**일 때만 채움(위 예: A). 같은 회사 내 재선임·승진·이동이면 previous_company 빈 문자열. 제목은 "C, 임원인사 진행"이 되도록 company를 선임된 쪽으로 통일.
 
 [bullet_points] 각 item은 **한 명의 인물(또는 한 조직개편)** 만 담음. 브리핑 스타일, 해당 인물/항목 관련 1~3개. 명사형 또는 "~함"체. **진행 단계(내정/선임/안건 등)와 실행 시기(언급 시) 포함.** 인물명은 작은따옴표(')로 감쌈. **한 기사·한 회사에 임원인사 bullet이 여러 개일 때 나열 순서**: (1) 직위에 **대표**가 들어가는 인사 (2) **최고**가 들어가는 직위 또는 **C레벨 약어**(CFO·CEO·CRO 등, 괄호 표기 포함)가 들어가는 직위 (3) 그 외(감사위원·사내이사 등). **이름 불명 시 제외**: 기사에서 인물 이름을 파악할 수 없으면(person_name이 빈 문자열이거나 "없음") **해당 item 자체를 만들지 말 것**. "'없음' 공동대표의 단독대표 선임"처럼 이름 없는 불렛 금지. **직함·역할명을 이름으로 쓰지 말 것**: "사외이사", "대표이사", "이사회", "감사위원" 같은 직함/역할 단어만 있으면 실명이 아니므로 person_name을 빈 문자열로 두고 item 자체를 만들지 말 것. 예) "사외이사가 이사회 의장으로 선임" → 특정 실명이 없으면 item 생성 금지. **중복 불렛 금지**: 같은 인사에 대해 이름만 다르고 뒤 문장이 같으면 **실명 한 줄만** 쓴다. **동일 인물에 대해 '사외이사 재선임'과 '사외이사 선임'을 동시에 쓰지 말 것** — 기사에 재선임·연임이면 **재선임·연임 한 줄만**(예: '김주연'의 사외이사 재선임). 신규 선임만 명시된 인물과 재선임 인물을 혼동하지 말 것. "'임재철' 재무본부장의 사내이사 선임"과 "'임재철' 롯데쇼핑 재무본부장의 사내이사 선임"처럼 같은 인물·같은 인사면 **회사·부서까지 포함한 더 구체적인 한 줄만** 쓴다. **주주총회에서 안건 상정/등록만 된 경우**(아직 결의 전): 같은 인물에 대해 "안건"과 "재선임/선임"을 **두 개로 쓰지 말고**, **한 문장**으로만 쓴다. **"주주총회에서 '(이름)' (현재 직함)의 (사내이사 재선임 등) 안건이 도출됨"**. 예: 주주총회에서 '이재원' 대표이사의 사내이사 재선임 안건이 도출됨. **다른 회사 출신이 타사에 선임·영입된 경우** bullet_points·요약에 반드시 "A 출신 B 사장이 C 대표로 선임" 형식으로 쓴다. 한 기사에 여러 명이면 인물별로 나눔.
@@ -116,7 +126,7 @@ USER_PROMPT_TEMPLATE = """아래 뉴스가 **임원인사** 또는 **주요 조�
 요약: {description}
 본문(일부): {body}
 
-[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **롯데케미칼·NCC·설비·석유화학산단 통합/해체/구조재편** 기사는 연관도 낮음 → is_exec_news: false, reason: "롯데케미칼 및 설비 관련된 기사는 연관도가 낮음". **주총 안건 상정/등록만** 나온 경우 bullet: "주주총회에서 '(이름)'이/가 (직책)으로 (선임·재선임 등) 되는 안건이 도출됨". **한 기사에 여러 명 임원인사(선임·사임·교체)가 나오면 선임·사임·교체된 모든 인물을 각각 item으로 넣고, 한 명이라도 누락 금지.** **이미 진행된 주총**(이날 주주총회에서 … 승인됐다, 선임했고, 재선임했다, 가결되었다 등)이면 personnel_timing 빈 문자열, **"주총 승인 후"·"예정" 절대 사용 금지.** 요약은 "'OO' 직함의 사내이사 선임, 'OO' 사외이사 재선임"처럼 확정 사실만. **재선임·연임**은 감사위원·사내이사·대표이사 등 **어느 직에** 재선임인지 previous_role·personnel_type·bullet에 반드시 명시. **'OO'의 재선임**만 쓰지 말 것. **조직개편 시기 필수**: 기사에 "지난해 말", "올해 3월" 등 조직개편 진행 시기가 나오면 org_changes 각 문장 **맨 앞에 반드시** 포함. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **조직 담당 업무**: 기사에 해당 조직이 담당하는 업무(▲… 등)가 나오면 org_changes/bullet_points에 그다음 줄로 요약 포함. **단행 시기**: 임원인사는 personnel_timing에. **연관 조직명**: "OO 산하에", "OO 소속" 등 상위·연관 조직이 있으면 요약에 포함. **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) 어떤 사업(OO) 중심인지, (2) 함께 진행하는 사업(협업·구축·제공 등)을 bullet_points/org_changes에 각각 포함. **부서명**: 알파벳 약어는 기사에 풀이 있으면 괄호 표기. **company**: 인사가 **발생한** 회사(선임된 쪽). A 출신이 C에 선임 시 **C**. **previous_company**: **다른 회사**일 때만; 없거나 동일 회사면 **빈 문자열**만. **'없음' 문자열 금지**. **승진함과 동시에 선임**: personnel_type에 `… 승진 및 … 선임` 한 문장. **reason_for_change**: "이는 ~ 위한 조치다" 등에서 ~ 부분 추출. **명사형만**. 없으면 빈 문자열.
+[참고] 임원인사만: exec_personnel=true, org_restructuring=false. 조직개편만: exec_personnel=false, org_restructuring=true, org_changes 채움. 둘 다: 둘 다 true. 스포츠/연예/보수/채용확대/소규모 팀 변경 → 제외. **롯데케미칼·NCC·설비·석유화학산단 통합/해체/구조재편** 기사는 연관도 낮음 → is_exec_news: false, reason: "롯데케미칼 및 설비 관련된 기사는 연관도가 낮음". **주총 안건 상정/등록만** 나온 경우 bullet: "주주총회에서 '(이름)'이/가 (직책)으로 (선임·재선임 등) 되는 안건이 도출됨". **한 기사에 여러 명 임원인사(선임·사임·교체)가 나오면 선임·사임·교체된 모든 인물을 각각 item으로 넣고, 한 명이라도 누락 금지.** **이미 진행된 주총**(이날 주주총회에서 … 승인됐다, 선임했고, 재선임했다, 가결되었다 등)이면 personnel_timing 빈 문자열, **"주총 승인 후"·"예정" 절대 사용 금지.** 요약은 "'OO' 직함의 사내이사 선임, 'OO' 사외이사 재선임"처럼 확정 사실만. **재선임·연임**은 감사위원·사내이사·대표이사 등 **어느 직에** 재선임인지 previous_role·personnel_type·bullet에 반드시 명시. **'OO'의 재선임**만 쓰지 말 것. **조직개편 시기 필수**: 기사에 "지난해 말", "올해 3월" 등 조직개편 진행 시기가 나오면 org_changes 각 문장 **맨 앞에 반드시** 포함. 예: "지난해 말 고객가치혁신실 산하에 CX(Customer Experience) 조직 신설". **조직 담당 업무**: 기사에 해당 조직이 담당하는 업무(▲… 등)가 나오면 org_changes/bullet_points에 그다음 줄로 요약 포함. **단행 시기**: 임원인사는 personnel_timing에. **연관 조직명**: "OO 산하에", "OO 소속" 등 상위·연관 조직이 있으면 요약에 포함. **사업구조 재편**: "OO 중심으로 사업구조 재편"이 있으면 (1) 어떤 사업(OO) 중심인지, (2) 함께 진행하는 사업(협업·구축·제공 등)을 bullet_points/org_changes에 각각 포함. **부서명**: 알파벳 약어는 기사에 풀이 있으면 괄호 표기. **company**: 인사가 **발생한** 회사(선임된 쪽). A 출신이 C에 선임 시 **C**. **previous_company**: **다른 회사**일 때만; 없거나 동일 회사면 **빈 문자열**만. **'없음' 문자열 금지**. **승진함과 동시에 선임**: personnel_type에 `… 승진 및 … 선임` 한 문장. **경력**: 기사에 과거 근무·합류 회사가 있으면 **career_companies** 배열만 채우고, 없으면 []. **reason_for_change**: "이는 ~ 위한 조치다" 등에서 ~ 부분 추출. **명사형만**. 없으면 빈 문자열.
 
 출력 형식 (이 키만 사용, JSON만 출력):
 {schema}"""
@@ -156,6 +166,17 @@ _INVALID_PREV_COMPANY = frozenset(
         "null",
     }
 )
+
+
+def _career_string_from_llm_item(item: dict) -> str:
+    """career_companies 배열 → '회사1, 회사2' 문자열. 비어 있으면 ''."""
+    raw = item.get("career_companies")
+    if not isinstance(raw, list):
+        return ""
+    parts = [str(x).strip() for x in raw if x and str(x).strip() and str(x).strip() != "없음"]
+    if not parts:
+        return ""
+    return ", ".join(parts)
 
 
 def _normalize_previous_company_field(origin: str, appoint_company: str) -> str:
@@ -236,6 +257,9 @@ def _one_item_to_summary(item: dict, url: str) -> dict:
     reason = (item.get("reason_for_change") or "").strip()
     if reason:
         out["진행 이유"] = reason
+    career_s = _career_string_from_llm_item(item)
+    if career_s:
+        out["경력"] = career_s
     return out
 
 
@@ -329,6 +353,9 @@ def _parse_llm_response(text: str, url: str) -> tuple[list[dict], dict]:
         reason = (data.get("reason_for_change") or "").strip()
         if reason:
             summary["진행 이유"] = reason
+        career_s = _career_string_from_llm_item(data) if isinstance(data.get("career_companies"), list) else ""
+        if career_s:
+            summary["경력"] = career_s
         summaries.append(summary)
 
     if not summaries:
