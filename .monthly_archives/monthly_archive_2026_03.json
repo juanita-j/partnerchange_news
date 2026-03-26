@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-26T13:03:57.583647+09:00",
+  "updated_at": "2026-03-26T14:58:04.328981+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -9322,6 +9322,625 @@
       },
       "org_changes": [
         "AI 중심으로 사업 재편"
+      ]
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "정신아",
+      "action_type": "사내이사 재선임 및 대표이사 선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "정신아 대표이사 재선임",
+      "bullet_points": [
+        "'정신아'의 사내이사 재선임 및 대표이사 선임 확정"
+      ],
+      "article_url": "https://www.epnc.co.kr/news/articleView.html?idxno=330469",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:46:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "정신아",
+      "action_type": "대표이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "정신아 대표이사 재선임",
+      "bullet_points": [
+        "'정신아' 대표이사의 재선임"
+      ],
+      "article_url": "http://www.hansbiz.co.kr/news/articleView.html?idxno=827829",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:42:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "정신아",
+      "action_type": "사내이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "정신아 대표의 연임 확정",
+      "bullet_points": [
+        "'정신아' 대표이사의 사내이사 재선임"
+      ],
+      "article_url": "https://www.getnews.co.kr/news/articleView.html?idxno=866019",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:42:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "차경진",
+      "action_type": "사외이사 재선임",
+      "previous_role": "한양대 경영정보시스템전공 교수",
+      "new_role": "",
+      "important_point": "정신아 대표 연임 확정",
+      "bullet_points": [
+        "'차경진' 한양대 경영정보시스템전공 교수의 사외이사 재선임"
+      ],
+      "article_url": "https://www.newswhoplus.com/news/articleView.html?idxno=57571",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:20:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "김영준",
+      "action_type": "사외이사 선임",
+      "previous_role": "고려대 기술경영전문대학원 교수",
+      "new_role": "",
+      "important_point": "김영준 교수의 사외이사 신규 선임",
+      "bullet_points": [
+        "'김영준' 고려대 기술경영전문대학원 교수의 사외이사 신규 선임"
+      ],
+      "article_url": "https://www.getnews.co.kr/news/articleView.html?idxno=866019",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:42:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "SK텔레콤",
+      "origin_company": "",
+      "person": "정재헌",
+      "action_type": "대표이사 선임",
+      "previous_role": "사내이사",
+      "new_role": "대표이사",
+      "important_point": "정재헌 CEO 체제 출범",
+      "bullet_points": [
+        "'정재헌' 사내이사의 대표이사 선임"
+      ],
+      "article_url": "http://www.4th.kr/news/articleView.html?idxno=2109619",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "김환수",
+      "action_type": "사외이사 선임",
+      "previous_role": "전 서울고등법원 부장판사",
+      "new_role": "",
+      "important_point": "LG그룹 이사회 독립 경영 강화",
+      "bullet_points": [
+        "'김환수' 전 서울고등법원 부장판사의 사외이사 선임",
+        "'박종수' 고려대 교수의 사외이사 선임 및 이사회 의장 선출"
+      ],
+      "article_url": "https://www.techm.kr/news/articleView.html?idxno=150573",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "박종수",
+      "action_type": "사외이사 선임",
+      "previous_role": "고려대 교수",
+      "new_role": "",
+      "important_point": "LG그룹 이사회 독립 경영 강화",
+      "bullet_points": [
+        "'박종수' 고려대 교수의 사외이사 선임 및 이사회 의장 선출"
+      ],
+      "article_url": "https://www.techm.kr/news/articleView.html?idxno=150573",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "한진칼",
+      "origin_company": "",
+      "person": "조원태",
+      "action_type": "사내이사 재선임",
+      "previous_role": "한진그룹 회장",
+      "new_role": "",
+      "important_point": "조원태 회장, 13년 연속 사내이사 유지",
+      "bullet_points": [
+        "'조원태' 한진그룹 회장의 사내이사 재선임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/629/0000485568?sid=101",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:32:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "현대차",
+      "origin_company": "",
+      "person": "최영일",
+      "action_type": "사내이사 선임",
+      "previous_role": "부사장",
+      "new_role": "",
+      "important_point": "최영일 부사장 사내이사 선임",
+      "bullet_points": [
+        "주주총회에서 '최영일' 부사장의 사내이사 선임 안건이 도출됨",
+        "주주총회에서 '최윤희' 건국대 법학전문대학원 교수의 사외이사 재선임 안건이 도출됨"
+      ],
+      "article_url": "https://www.newspim.com/news/view/20260326000751",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 13:57:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "SKT",
+      "origin_company": "",
+      "person": "이성엽",
+      "action_type": "사외이사 선임",
+      "previous_role": "고려대 교수",
+      "new_role": "",
+      "important_point": "사외이사로 이성엽, 임태섭 신규 선임",
+      "bullet_points": [
+        "'이성엽' 고려대 교수의 사외이사 선임",
+        "'임태섭' 성균관대 교수의 사외이사 선임",
+        "'오혜연' 카이스트 교수의 사외이사 재선임"
+      ],
+      "article_url": "http://www.metroseoul.co.kr/article/20260326500327",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 13:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "SKT",
+      "origin_company": "",
+      "person": "임태섭",
+      "action_type": "사외이사 선임",
+      "previous_role": "성균관대 교수",
+      "new_role": "",
+      "important_point": "사외이사로 이성엽, 임태섭 신규 선임",
+      "bullet_points": [
+        "'이성엽' 고려대 교수의 사외이사 선임",
+        "'임태섭' 성균관대 교수의 사외이사 선임",
+        "'오혜연' 카이스트 교수의 사외이사 재선임"
+      ],
+      "article_url": "http://www.metroseoul.co.kr/article/20260326500327",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 13:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "SKT",
+      "origin_company": "",
+      "person": "오혜연",
+      "action_type": "사외이사 재선임",
+      "previous_role": "카이스트 교수",
+      "new_role": "",
+      "important_point": "사외이사로 이성엽, 임태섭 신규 선임",
+      "bullet_points": [
+        "'이성엽' 고려대 교수의 사외이사 선임",
+        "'임태섭' 성균관대 교수의 사외이사 선임",
+        "'오혜연' 카이스트 교수의 사외이사 재선임"
+      ],
+      "article_url": "http://www.metroseoul.co.kr/article/20260326500327",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 13:52:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "현대차",
+      "origin_company": "",
+      "person": "호세 무뇨스",
+      "action_type": "사내이사 재선임",
+      "previous_role": "사장",
+      "new_role": "",
+      "important_point": "이사 보수 한도 284억원으로 확대",
+      "bullet_points": [
+        "'호세 무뇨스' 사장의 사내이사 재선임",
+        "'이승조' 부사장의 사내이사 재선임",
+        "'최영일' 부사장의 사내이사 신규 선임",
+        "'장승화' 사외이사의 재선임",
+        "'최윤희' 사외이사의 재선임"
+      ],
+      "article_url": "https://www.ceoscoredaily.com/page/view/2026032613054822547",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 13:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "SKT",
+      "origin_company": "",
+      "person": "정재헌",
+      "action_type": "대표이사 선임",
+      "previous_role": "CEO",
+      "new_role": "",
+      "important_point": "정재헌 CEO의 대표이사 선임",
+      "bullet_points": [
+        "'정재헌' CEO의 대표이사 선임"
+      ],
+      "article_url": "https://www.koit.co.kr/news/articleView.html?idxno=206420",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 13:26:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "클로봇",
+      "origin_company": "LG CNS",
+      "person": "손준배",
+      "action_type": "사장 선임",
+      "previous_role": "LG CNS 출신",
+      "new_role": "사장",
+      "important_point": "산업별 맞춤형 로봇 사업 고도화",
+      "bullet_points": [
+        "'손준배'의 사장 선임"
+      ],
+      "article_url": "https://www.newstopkorea.com/news/articleView.html?idxno=44069",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "career": "LG CNS, 오스템임플란트"
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오",
+      "origin_company": "",
+      "person": "정신아",
+      "action_type": "대표이사 연임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "정신아 대표이사 연임",
+      "bullet_points": [
+        "'정신아'의 대표이사 연임"
+      ],
+      "article_url": "https://www.techm.kr/news/articleView.html?idxno=150569",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [
+        "'카나나 연구소' 신설(예정)"
+      ]
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "박종수",
+      "action_type": "사외이사 의장 선임",
+      "previous_role": "고려대법학전문대학원 교수의 감사위원",
+      "new_role": "",
+      "important_point": "사외이사 의장 체제 전환 완료",
+      "bullet_points": [
+        "'박종수' 고려대법학전문대학원 교수의 감사위원 선임",
+        "'김환수' 전 서울고등법원 부장판사의 사외이사 선임"
+      ],
+      "article_url": "https://www.cstimes.com/news/articleView.html?idxno=699525",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:38:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "김환수",
+      "action_type": "사외이사 및 감사위원회 위원 선임",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "LG그룹 11개 상장사 사외이사 의장 체제 완성",
+      "bullet_points": [
+        "'김환수' 전 서울고등법원 부장판사의 사외이사 및 감사위원회 위원 선임"
+      ],
+      "article_url": "https://www.industrynews.co.kr/news/articleView.html?idxno=79360",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "박종수",
+      "action_type": "사외이사 재선임",
+      "previous_role": "고려대 교수의 감사위원",
+      "new_role": "",
+      "important_point": "LG그룹 11개 상장사 사외이사 의장 체제 완성",
+      "bullet_points": [
+        "'박종수' 고려대 교수의 감사위원이 되는 사외이사 재선임"
+      ],
+      "article_url": "https://www.industrynews.co.kr/news/articleView.html?idxno=79360",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오엔터테인먼트",
+      "origin_company": "",
+      "person": "고정희",
+      "action_type": "대표이사 선임",
+      "previous_role": "",
+      "new_role": "공동대표이사",
+      "important_point": "고정희·장윤중 공동대표 체제 출범",
+      "bullet_points": [
+        "'고정희'의 공동대표이사 선임"
+      ],
+      "article_url": "https://news.mtn.co.kr/news-detail/2026032613233084641",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "글로벌 그로스 센터 신설 완료"
+      ],
+      "career": "카카오뱅크"
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오엔터테인먼트",
+      "origin_company": "",
+      "person": "장윤중",
+      "action_type": "대표이사 선임",
+      "previous_role": "",
+      "new_role": "공동대표이사",
+      "important_point": "고정희·장윤중 공동대표 체제 출범",
+      "bullet_points": [
+        "'장윤중'의 공동대표이사 선임"
+      ],
+      "article_url": "https://news.mtn.co.kr/news-detail/2026032613233084641",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "박종수",
+      "action_type": "감사위원 재선임",
+      "previous_role": "고려대법학전문대학원 교수",
+      "new_role": "",
+      "important_point": "정관 변경 및 이사 선임 의결",
+      "bullet_points": [
+        "'박종수' 고려대법학전문대학원 교수의 감사위원으로 분리 선임 및 이사회 의장 선임"
+      ],
+      "article_url": "https://www.s-journal.co.kr/news/articleView.html?idxno=39753",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:00:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "박종수",
+      "action_type": "이사회 의장 선임",
+      "previous_role": "고려대 법학전문대학원 교수",
+      "new_role": "",
+      "important_point": "박종수 의장 선임",
+      "bullet_points": [
+        "'박종수' 고려대 법학전문대학원 교수의 이사회 의장 선임"
+      ],
+      "article_url": "https://www.youthdaily.co.kr/news/article.html?no=216239",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 13:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "SK텔레콤",
+      "origin_company": "",
+      "person": "정재헌",
+      "action_type": "사내이사 선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "정재헌 대표이사 체제 본격화",
+      "bullet_points": [
+        "주총에서 '정재헌' 대표이사의 사내이사 선임 안건이 도출됨",
+        "'한명진' MNO 사내독립기업(CIC)장의 사내이사 신규 선임"
+      ],
+      "article_url": "http://www.newstomato.com/ReadNews.aspx?no=1295664&inflow=N",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:02:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "사내이사 전면 교체 완료",
+        "사외이사 보강 완료",
+        "정재헌 체제의 이사회 재편 완료"
+      ],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "김환수",
+      "action_type": "사외이사 및 감사위원 선임",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "LG가 정기주총에서 사외이사 의장 체제로 전환 완료",
+      "bullet_points": [
+        "'김환수'의 사외이사 및 감사위원 선임",
+        "'박종수'의 이사회 의장 선임"
+      ],
+      "article_url": "http://www.popcornnews.net/news/articleView.html?idxno=116537",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:34:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-26",
+      "company": "카카오엔터테인먼트",
+      "origin_company": "",
+      "person": "고정희",
+      "action_type": "공동대표 선임",
+      "previous_role": "",
+      "new_role": "공동대표 및 최고플랫폼책임자(CPO)",
+      "important_point": "고정희, 장윤중 공동대표 체제 출범",
+      "bullet_points": [
+        "'고정희'의 공동대표 및 최고플랫폼책임자(CPO) 선임",
+        "'장윤중'의 공동대표 및 글로벌 그로스 센터장 선임"
+      ],
+      "article_url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=646071",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:32:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "글로벌 그로스 센터 신설"
+      ]
+    },
+    {
+      "date": "2026-03-26",
+      "company": "LG",
+      "origin_company": "",
+      "person": "구광모",
+      "action_type": "사외이사 의장 체제 전환",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "LG, 11개 상장사 사외이사 의장 체제 완성",
+      "bullet_points": [
+        "'구광모'의 사외이사 의장 체제 전환"
+      ],
+      "article_url": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202603261351218660790",
+      "article_title": "",
+      "pub_date": "Thu, 26 Mar 2026 14:22:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "LG전자, LG화학, LG에너지솔루션 등 그룹 내 11개 상장사 사외이사 의장 체제로 전환 완료"
       ]
     }
   ]
