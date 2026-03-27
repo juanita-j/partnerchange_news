@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-27T14:53:20.173594+09:00",
+  "updated_at": "2026-03-27T17:06:26.807972+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -11249,6 +11249,228 @@
         "기술혁신부문 및 AI 조직 개편 예정"
       ],
       "career": "NASA, 마이크로소프트, 현대카드"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "KT",
+      "origin_company": "",
+      "person": "오승필",
+      "action_type": "사임",
+      "previous_role": "KT 기술혁신부문장(CTO·부사장)",
+      "new_role": "",
+      "important_point": "KT의 대규모 임원 인사 예정",
+      "bullet_points": [
+        "'오승필' KT 기술혁신부문장(CTO·부사장)의 사임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/422/0000848863?sid=105",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:30:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "career": "NASA, 야후, 마이크로소프트, 현대카드"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "KT",
+      "origin_company": "",
+      "person": "박윤영",
+      "action_type": "대표이사 선임 안건",
+      "previous_role": "",
+      "new_role": "대표이사",
+      "important_point": "박윤영 대표이사 선임 안건 도출",
+      "bullet_points": [
+        "주주총회에서 '박윤영'의 대표이사 선임 안건이 도출됨",
+        "기술·AI 라인 전면 개편(예정)"
+      ],
+      "article_url": "https://www.industrynews.co.kr/news/articleView.html?idxno=79422",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:28:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "기술·AI 라인 전면 개편(예정)"
+      ],
+      "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "KT",
+      "origin_company": "",
+      "person": "박윤영",
+      "action_type": "대표이사 후보 선임(안건)",
+      "previous_role": "",
+      "new_role": "",
+      "important_point": "박윤영 대표이사 후보 선임 예정",
+      "bullet_points": [
+        "주주총회에서 '박윤영' 대표이사 후보의 선임 안건이 도출됨"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/117/0004047838?sid=105",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:02:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "AI·디지털 기업으로 전환을 위한 조직 재편(예정)"
+      ],
+      "personnel_timing": "주주총회에서"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "SK하이닉스",
+      "origin_company": "",
+      "person": "고승범",
+      "action_type": "사외이사 겸 이사회 의장 선임",
+      "previous_role": "",
+      "new_role": "사외이사 겸 이사회 의장",
+      "important_point": "고승범 전 금융위원장 선임",
+      "bullet_points": [
+        "주주총회에서 '고승범' 전 금융위원장의 사외이사 겸 이사회 의장 선임이 승인됐다."
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/031/0001017499?sid=101",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:53:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "career": "법무법인 태평양"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "KT알파",
+      "origin_company": "SK그룹",
+      "person": "박정민",
+      "action_type": "대표이사 선임",
+      "previous_role": "SK그룹에서 30여 년간 커머스·플랫폼·모바일 분야를 두루 경험한 전문경영인",
+      "new_role": "",
+      "important_point": "박정민 신임 대표이사 선임",
+      "bullet_points": [
+        "'박정민'의 대표이사 선임(2026년 3월 27일)"
+      ],
+      "article_url": "https://news.mtn.co.kr/news-detail/2026032716093093577",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "2026년 3월 27일",
+      "career": "SK그룹"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "티머니",
+      "origin_company": "LG CNS",
+      "person": "최문근",
+      "action_type": "대표이사 선임",
+      "previous_role": "LG CNS 엔트루 부사장",
+      "new_role": "",
+      "important_point": "최문근 신임 대표이사 선임",
+      "bullet_points": [
+        "'최문근'의 대표이사 선임"
+      ],
+      "article_url": "https://www.cstimes.com/news/articleView.html?idxno=699734",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "career": "LG CNS"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "크래프톤",
+      "origin_company": "",
+      "person": "김창한",
+      "action_type": "대표이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "김창한 대표의 세 번째 연임",
+      "bullet_points": [
+        "'김창한' 대표이사의 재선임"
+      ],
+      "article_url": "https://www.insightkorea.co.kr/news/articleView.html?idxno=243656",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-27",
+      "company": "넥슨",
+      "origin_company": "",
+      "person": "이정헌",
+      "action_type": "사내이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "이정헌 대표의 재선임",
+      "bullet_points": [
+        "'이정헌' 사내이사의 재선임"
+      ],
+      "article_url": "https://www.insightkorea.co.kr/news/articleView.html?idxno=243656",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-27",
+      "company": "카카오게임즈",
+      "origin_company": "",
+      "person": "한상우",
+      "action_type": "대표이사 재선임",
+      "previous_role": "대표이사",
+      "new_role": "",
+      "important_point": "한상우 대표의 재선임",
+      "bullet_points": [
+        "'한상우' 대표이사의 재선임"
+      ],
+      "article_url": "https://www.insightkorea.co.kr/news/articleView.html?idxno=243656",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-27",
+      "company": "넷마블",
+      "origin_company": "",
+      "person": "방준혁",
+      "action_type": "사내이사 재선임",
+      "previous_role": "이사회 의장",
+      "new_role": "",
+      "important_point": "방준혁 의장의 재선임",
+      "bullet_points": [
+        "'방준혁' 사내이사의 재선임"
+      ],
+      "article_url": "https://www.insightkorea.co.kr/news/articleView.html?idxno=243656",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 16:08:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
     }
   ]
 }
