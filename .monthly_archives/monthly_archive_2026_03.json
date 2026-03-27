@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-26T20:15:45.672262+09:00",
+  "updated_at": "2026-03-27T13:06:40.758897+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -11069,6 +11069,27 @@
         "AI 조직 신설 완료"
       ],
       "personnel_timing": "주총 승인 후"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "한진칼",
+      "origin_company": "",
+      "person": "조원태",
+      "action_type": "사내이사 재선임",
+      "previous_role": "한진칼 회장",
+      "new_role": "",
+      "important_point": "조원태 회장 사내이사 재선임",
+      "bullet_points": [
+        "'조원태' 한진칼 회장의 사내이사 재선임"
+      ],
+      "article_url": "https://www.naeil.com/news/read/582960?ref=naver",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 13:04:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
     }
   ]
 }
