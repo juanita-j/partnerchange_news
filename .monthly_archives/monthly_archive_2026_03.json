@@ -1,7 +1,7 @@
 {
   "year": 2026,
   "month": 3,
-  "updated_at": "2026-03-27T13:06:40.758897+09:00",
+  "updated_at": "2026-03-27T14:53:20.173594+09:00",
   "items": [
     {
       "date": "2026-03-18",
@@ -11090,6 +11090,165 @@
         "org_restructuring": false
       },
       "org_changes": []
+    },
+    {
+      "date": "2026-03-27",
+      "company": "티머니",
+      "origin_company": "LG CNS",
+      "person": "최문근",
+      "action_type": "대표이사 선임",
+      "previous_role": "LG CNS Entrue 사업부장",
+      "new_role": "대표이사",
+      "important_point": "최문근 신임 대표이사 선임",
+      "bullet_points": [
+        "'최문근'의 대표이사 선임"
+      ],
+      "article_url": "http://www.efnews.co.kr/news/articleView.html?idxno=128586",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 14:14:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "career": "LG CNS"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "한진칼",
+      "origin_company": "",
+      "person": "최종구",
+      "action_type": "사외이사 선임",
+      "previous_role": "법무법인화우 특별고문",
+      "new_role": "",
+      "important_point": "사외이사 2명 신규 선임",
+      "bullet_points": [
+        "'최종구'의 사외이사 선임(2026년 3월 26일)"
+      ],
+      "article_url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=647408",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 13:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "2026년 3월 26일",
+      "career": "법무법인화우, 금융위원회, 한국수출입은행"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "한진칼",
+      "origin_company": "",
+      "person": "채준",
+      "action_type": "사외이사 선임",
+      "previous_role": "서울대학교 경영대학 교수",
+      "new_role": "",
+      "important_point": "사외이사 2명 신규 선임",
+      "bullet_points": [
+        "'채준'의 사외이사 선임(2026년 3월 26일)"
+      ],
+      "article_url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=647408",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 13:40:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "2026년 3월 26일",
+      "career": "서울대학교, 재무관리학회, 한국파생상품학회"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "현대이지웰",
+      "origin_company": "",
+      "person": "정항기",
+      "action_type": "사외이사 재선임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "사외이사 2명 재선임",
+      "bullet_points": [
+        "'정항기' 사외이사의 재선임이 2026년 3월 26일에 이루어짐"
+      ],
+      "article_url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=647400",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 13:36:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "2026년 3월 26일",
+      "career": "대우건설"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "현대이지웰",
+      "origin_company": "",
+      "person": "이승윤",
+      "action_type": "사외이사 재선임",
+      "previous_role": "사외이사",
+      "new_role": "",
+      "important_point": "사외이사 2명 재선임",
+      "bullet_points": [
+        "'이승윤' 사외이사가 2026년 3월 26일 자진사임"
+      ],
+      "article_url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=647400",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 13:36:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": [],
+      "personnel_timing": "2026년 3월 26일",
+      "career": "KAIST, 홍익대학교"
+    },
+    {
+      "date": "2026-03-27",
+      "company": "한진칼",
+      "origin_company": "",
+      "person": "조원태",
+      "action_type": "사내이사 재선임",
+      "previous_role": "한진그룹 회장",
+      "new_role": "",
+      "important_point": "조원태 회장 사내이사 재선임",
+      "bullet_points": [
+        "'조원태' 한진그룹 회장의 사내이사 재선임"
+      ],
+      "article_url": "https://www.naeil.com/news/read/582960?ref=naver",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 13:04:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": false
+      },
+      "org_changes": []
+    },
+    {
+      "date": "2026-03-27",
+      "company": "KT",
+      "origin_company": "",
+      "person": "오승필",
+      "action_type": "사임",
+      "previous_role": "KT 기술혁신부문장(CTO)",
+      "new_role": "",
+      "important_point": "오승필 CTO 사임",
+      "bullet_points": [
+        "'오승필' KT 기술혁신부문장(CTO)의 사임"
+      ],
+      "article_url": "https://n.news.naver.com/mnews/article/030/0003412045?sid=105",
+      "article_title": "",
+      "pub_date": "Fri, 27 Mar 2026 14:31:00 +0900",
+      "category_flags": {
+        "exec_personnel": true,
+        "org_restructuring": true
+      },
+      "org_changes": [
+        "기술혁신부문 및 AI 조직 개편 예정"
+      ],
+      "career": "NASA, 마이크로소프트, 현대카드"
     }
   ]
 }
