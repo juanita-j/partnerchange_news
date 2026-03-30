@@ -1,6 +1,6 @@
-# 평일(월~금) 4회 발송 (KST 10:05 / 13:05 / 16:05 / 19:05) — 직전 슬롯 이후 기사만 포함
+# 자동 발송(cron) 비활성화됨 — 필요 시 Actions에서 "Run workflow"로만 실행.
+# (이전) 평일 KST 10:05/13:05/16:05/19:05 cron 은 제거됨.
 # 발송 규칙: ① 이전 발송된 모든 메일 내용과 중복 제거 ② 직전 슬롯 이후 발표된 기사만 수집
-#   슬롯별 수집 범위: 10시→전날19시, 13시→당일10시, 16시→당일13시, 19시→당일16시
 # 필수 Secrets: GMAIL_APP_PASSWORD, NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, OPENAI_API_KEY
 #
 # 파이프라인: send_exec_news_timed → news_raw → summarize_exec_news_llm → news_summary → send_email_from_json → archive_monthly_items
@@ -9,13 +9,7 @@
 name: Send News Mail
 
 on:
-  schedule:
-    # KST 10:05 / 13:05 / 16:05 / 19:05 평일(월~금). UTC 1·4·7·10시 5분
-    - cron: '5 1 * * 1-5'
-    - cron: '5 4 * * 1-5'
-    - cron: '5 7 * * 1-5'
-    - cron: '5 10 * * 1-5'
-  # 수시 발송: "Run workflow" 클릭 → 전날 19:00 KST~요청 시각 기사로 메일 발송
+  # 수동만: Actions → Send News Mail → Run workflow
   workflow_dispatch:
 
 env:

@@ -71,10 +71,9 @@ Gmail은 일반 비밀번호가 아니라 **앱 비밀번호**를 사용합니�
 
 ## 스케줄
 
-- **GitHub Actions (`Send News Mail`):** 평일 **KST 10:05 / 13:05 / 16:05 / 19:05** (`.github/workflows/send-news-mail.yml`의 `cron`, UTC 1·4·7·10시 5분). **Run workflow** 로 수동 실행 시 당일 범위 등으로 분기(`REQUEST_SCOPE` 등).
-- **수집·중복:** 직전 발송 슬롯 이후 기사 위주, `sent_dedup_store` 캐시로 이전 메일과 중복 제외. cron 실행은 플랫폼 특성상 **수 분~지연**될 수 있음.
-- **로컬 Windows:** [작업스케줄러_설정방법.md](작업스케줄러_설정방법.md) 에서 `python run_briefing_pipeline.py`(또는 원하는 스크립트) 등록.
-- **월간:** `send-monthly-briefing.yml` 별도 스케줄·수동 실행.
+- **GitHub Actions:** 일일·월간 워크플로의 **cron 자동 실행은 꺼 둔 상태**입니다. 메일이 필요할 때만 저장소 **Actions**에서 해당 워크플로를 골라 **Run workflow** 로 수동 실행하세요.
+- **수집·중복(수동 실행 시):** `sent_dedup_store` 캐시·요청 범위(`REQUEST_SCOPE` 등)는 기존과 동일하게 동작합니다.
+- **로컬 Windows:** [작업스케줄러_설정방법.md](작업스케줄러_설정방법.md) 로 등록해 두었다면 **작업 스케줄러에서 작업 비활성화 또는 삭제**해야 로컬 자동 실행도 멈춥니다.
 
 ---
 

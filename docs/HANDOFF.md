@@ -131,7 +131,7 @@ python run_briefing_pipeline.py
 ## 5. GitHub Actions
 
 - **Secrets**: `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`, `OPENAI_API_KEY`, `GMAIL_APP_PASSWORD`, `GMAIL_SENDER`, `GMAIL_TO`
-- **스케줄**: 워크플로 YAML의 cron(평일 KST 다회) 참고.
+- **스케줄**: 일일·월간 워크플로 **cron 자동 실행은 비활성화**됨. 필요 시 Actions에서 **Run workflow** 만 사용.
 - **중복 저장소**: `sent_dedup_store.json`은 캐시로 복원·저장됩니다.
 - 수동 실행: Actions에서 **Run workflow** → 당일 범위 등은 `REQUEST_SCOPE` 등 env로 분기(워크플로 주석 참고).
 
